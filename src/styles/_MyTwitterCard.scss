@@ -1,0 +1,147 @@
+@use "./mixin" as mx;
+@use "./variables" as v;
+
+#MyTwitterCard {
+    $twitterGrayColor: rgb(139, 152, 165);
+    $twitterBlueColor: rgb(29, 155, 240);
+    display: flex;
+    align-items: end;
+    gap: 20px;
+
+    height: 230px;
+    width: 100%;
+
+    padding: 20px;
+
+    @media (max-width: 950px) {
+        height: auto; // Allow auto height on mobile
+        min-height: 80px;
+        padding: 15px !important; // More padding
+        gap: 15px;
+        flex-direction: column; // Stack on very small screens? No, keep flex but adjust
+        align-items: center; // Center on mobile?
+        text-align: center;
+    }
+
+    margin: 0 auto;
+    background-color: rgba(21, 32, 43, 0.6); // Semi-transparent Twitter Dark
+    backdrop-filter: blur(v.$glass-blur);
+    border: 1px solid v.$glass-border;
+    box-shadow: v.$glass-shadow;
+
+    color: white;
+    line-height: 1.3rem;
+    border-radius: 1rem; // More rounded
+    overflow-x: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    a {
+        color: $twitterBlueColor;
+        text-decoration: none;
+    }
+
+    svg {
+        color: $twitterGrayColor;
+        transform: scale(0.8);
+        margin-right: 5px;
+
+        @media (max-width: 950px) {
+            width: 13px;
+            height: 13px;
+        }
+    }
+
+    .iconContainer {
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        @media (max-width: 950px) {
+            height: 80px;
+        }
+
+        > a {
+            display: block;
+            height: 100%;
+            width: auto;
+            aspect-ratio: 1/1;
+
+            .icon {
+                height: 100%;
+                border-radius: 999px;
+                border: 4px solid $twitterBlueColor;
+                transform: scale(0.95);
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                box-shadow: 0 4px 15px rgba(29, 155, 240, 0.3);
+            }
+
+            &:hover {
+                .icon {
+                    transform: scale(1.05) rotate(5deg);
+                }
+            }
+        }
+    }
+
+    .name {
+        font-size: 20px;
+        font-weight: 700;
+        font-family: v.$font-heading;
+
+        @media (max-width: 950px) {
+            font-size: 18px;
+        }
+    }
+
+    .twitterId {
+        font-size: 15px;
+        color: $twitterGrayColor;
+
+        @media (max-width: 950px) {
+            font-size: 14px;
+            line-height: 1rem;
+        }
+    }
+
+    .description {
+        margin-top: 10px;
+
+        @media (max-width: 950px) {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            line-height: 1.2rem;
+        }
+    }
+
+    .underBlock {
+        margin-top: 10px;
+        line-height: 0.9rem;
+
+        @media (max-width: 950px) {
+            display: none; // Keep hidden on mobile as per original, or show? Original hid it.
+        }
+
+        .litlink,
+        .birthday {
+            @include mx.centering();
+            display: inline-flex;
+        }
+
+        .birthday {
+            margin-left: 10px;
+            color: $twitterGrayColor;
+        }
+
+        .twitterStarted {
+            @include mx.centering();
+            justify-content: start;
+            color: $twitterGrayColor;
+            margin-top: 5px;
+        }
+    }
+}

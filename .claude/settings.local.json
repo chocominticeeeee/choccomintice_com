@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(copy \"I:\\\\CreativeProjects\\\\CursorProjects\\\\choccomintice_com\\\\src\\\\assets\\\\images\\\\ヘッダー.jpg\" \"I:\\\\CreativeProjects\\\\CursorProjects\\\\choccomintice_com\\\\public\\\\ogp-image.jpg\")"
+    ]
+  }
+}

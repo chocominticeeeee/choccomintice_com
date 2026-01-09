@@ -1,0 +1,135 @@
+@use "../../styles/variables" as v;
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+    position: fixed;
+    width: 25px;
+    height: 21px;
+    right: 20px;
+    top: 28px; // Align with Nav
+    // z-index managed by HamburgerMenuContainer
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+    background: v.$color-primary-mint;
+    border-radius: 2px;
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+    background: v.$color-secondary-mint;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+    height: 30px;
+    width: 30px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+    background: v.$color-primary-mint;
+}
+
+/* Sidebar wrapper styles */
+.bm-menu-wrap {
+    position: fixed;
+    height: 100%;
+    top: 0;
+}
+
+/* General sidebar styles */
+.bm-menu {
+    background: rgba(26, 10, 10, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 2.5em 1.5em 0;
+    font-size: 1.15em;
+    border-left: 1px solid v.$glass-border;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+    fill: v.$glass-bg;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+    color: v.$color-text-main;
+    padding: 0.8em;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Individual item */
+.bm-item {
+    display: block;
+    outline: none;
+
+    // Style nav links inside mobile menu
+    .navigationBar {
+        display: flex !important; // Override the display: none from media query
+        position: static !important;
+        width: 100%;
+        height: auto;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+        padding: 0 !important;
+        backdrop-filter: none !important;
+        top: auto !important;
+        left: auto !important;
+
+        ul {
+            flex-direction: column !important;
+            gap: 20px;
+            width: 100%;
+            display: flex !important;
+
+            li {
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: flex-start;
+                margin: 0;
+
+                a {
+                    font-size: 1.3rem;
+                    padding: 15px 20px;
+                    color: v.$color-text-main !important;
+                    width: 100%;
+                    text-align: left;
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 8px;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background: rgba(0, 242, 230, 0.1);
+                        color: v.$color-primary-mint !important;
+                        transform: translateX(5px);
+                    }
+
+                    // Hide desktop-specific elements in mobile menu
+                    .nav-hover-bg,
+                    .nav-active-indicator {
+                        display: none;
+                    }
+                }
+
+                &.active a {
+                    background: rgba(0, 242, 230, 0.15);
+                    color: v.$color-primary-mint !important;
+                    border-left: 3px solid v.$color-primary-mint;
+                }
+            }
+        }
+    }
+}
+
+/* Styling of overlay */
+.bm-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+}

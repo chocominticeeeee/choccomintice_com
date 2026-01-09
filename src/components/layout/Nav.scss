@@ -1,0 +1,111 @@
+@use "../../styles/mixin.scss" as mx;
+@use "../../styles/variables" as v;
+
+// Floating Island Navigation
+.navigationBar {
+    @include mx.centering();
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: v.$z-nav;
+
+    width: fit-content;
+    height: 50px;
+    padding: 0 10px;
+
+    background-color: v.$glass-bg;
+    backdrop-filter: blur(v.$glass-blur);
+    border: 1px solid v.$glass-border;
+    border-radius: 3rem;
+    box-shadow: v.$glass-shadow;
+
+    img {
+        height: 15px;
+        margin-right: 5px;
+    }
+
+    ul {
+        @include mx.centering();
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        height: 100%;
+
+        li {
+            position: relative;
+            margin: 0 4px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+
+            a {
+                @include mx.centering();
+                position: relative;
+                padding: 0 16px;
+                height: 100%;
+                width: 100%;
+
+                color: v.$color-text-sub;
+                font-family: v.$font-heading;
+                font-weight: 600;
+                font-size: 0.9rem;
+                text-decoration: none;
+                z-index: 1;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: v.$color-primary-mint;
+                }
+
+                // Framer Motion Elements
+                .nav-hover-bg {
+                    position: absolute;
+                    inset: 0;
+                    background-color: rgba(255, 255, 255, 0.1);
+                    border-radius: 2rem;
+                    z-index: -1;
+                }
+
+                .nav-active-indicator {
+                    position: absolute;
+                    bottom: 0px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 4px;
+                    height: 4px;
+                    background-color: v.$color-primary-mint;
+                    border-radius: 50%;
+                    box-shadow: 0 0 8px v.$color-primary-mint;
+                }
+            }
+
+            &.active a {
+                color: v.$color-text-main;
+                text-shadow: 0 0 10px rgba(0, 242, 230, 0.4);
+            }
+        }
+    }
+}
+
+.HamburgerMenuContainer {
+    display: none;
+}
+
+@media (max-width: 950px) {
+    // Hide desktop navigation bar
+    body > div > .navigationBar,
+    header > .navigationBar {
+        display: none;
+    }
+
+    .HamburgerMenuContainer {
+        display: block;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: v.$z-nav + 1;
+
+        // Mobile specific styles inside HamburgerMenu component...
+    }
+}

@@ -1,0 +1,23 @@
+/* Color Palette */
+$color-primary-mint: #00f2e6;
+$color-primary-dark: #1a0a0a; /* Deep Chocolate/Coffee */
+$color-secondary-mint: #00bfa5;
+$color-accent-pink: #ff007a;
+$color-text-main: #f0f0f0;
+$color-text-sub: #b0b0b0;
+
+/* Glassmorphism */
+$glass-bg: rgba(255, 255, 255, 0.05);
+$glass-border: rgba(255, 255, 255, 0.1);
+$glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+$glass-blur: 10px;
+
+/* Fonts */
+$font-heading: "Outfit", sans-serif;
+$font-body: "Inter", sans-serif;
+$font-jp: "M PLUS Rounded 1c", sans-serif;
+
+/* Z-Index */
+$z-nav: 1000;
+$z-modal: 2000;
+$z-background: -1;

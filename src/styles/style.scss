@@ -1,0 +1,119 @@
+@use "./reset";
+@use "./variables" as v;
+@use "./utils";
+@use "./mixin" as mx;
+@use "./common";
+@use "./backgroundAnimation";
+@use "./notionStyle";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@400;700;900&family=M+PLUS+Rounded+1c:wght@400;700&display=swap");
+
+#root {
+    width: 100%;
+    height: 100%;
+    min-height: 100dvh;
+
+    background-color: v.$color-primary-dark;
+    background-image: radial-gradient(at 0% 0%, rgba(0, 242, 230, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(255, 0, 122, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(0, 242, 230, 0.1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(43, 27, 23, 1) 0px, transparent 50%);
+    background-attachment: fixed;
+
+    color: v.$color-text-main;
+    font-family: v.$font-body;
+
+    /* Japanese Fallback */
+    &.ja {
+        font-family: v.$font-jp, v.$font-body;
+    }
+
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.7rem;
+}
+
+.PageContainer {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    .mainWrapper {
+        flex: 1;
+        padding: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        main {
+            @include mx.shadow1();
+            padding: 40px;
+            padding-bottom: 60px;
+            width: 100%;
+            max-width: 1000px;
+            margin-block: 20px;
+            margin-inline: auto;
+
+            background-color: v.$glass-bg;
+            backdrop-filter: blur(v.$glass-blur);
+            border: 1px solid v.$glass-border;
+            border-radius: 1rem;
+
+            color: v.$color-text-main;
+
+            @media (max-width: 950px) {
+                padding: 20px;
+                margin-block: 0;
+                border-radius: 0.5rem;
+            }
+
+            &.isArticle {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+
+                width: 100%;
+                max-width: 1200px;
+
+                > .article {
+                    flex: 1;
+                    min-width: 0; // Fix flex overflow
+
+                    img {
+                        display: block;
+                        max-width: 100%;
+                        height: auto;
+                        margin-inline: auto;
+                        margin-block: 20px;
+                        border: 1px solid v.$glass-border;
+                        border-radius: 0.5rem;
+                    }
+
+                    h2 {
+                        padding-bottom: 20px;
+                        margin-top: 50px;
+                        border-bottom: 1px solid v.$glass-border;
+                    }
+                }
+
+                > .articleNavigation {
+                    flex: 0 0 300px;
+                    padding: 20px;
+                    height: fit-content;
+
+                    background-color: v.$glass-bg; // Glass
+                    backdrop-filter: blur(10px);
+                    border: 1px solid v.$glass-border;
+                    border-radius: 0.5rem;
+
+                    @media (max-width: 950px) {
+                        flex: 100%;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

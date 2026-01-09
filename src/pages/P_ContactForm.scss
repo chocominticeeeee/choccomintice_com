@@ -1,0 +1,87 @@
+@use "../styles/variables" as v;
+@use "../styles/mixin" as mx;
+
+#P_ContactForm {
+    width: 100%;
+
+    form {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 3rem;
+
+        background-color: v.$glass-bg;
+        backdrop-filter: blur(v.$glass-blur);
+        border: 1px solid v.$glass-border;
+        border-radius: 1rem;
+        box-shadow: v.$glass-shadow;
+
+        div.form-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: v.$color-secondary-mint;
+            font-family: v.$font-heading;
+            letter-spacing: 0.05em;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid v.$glass-border;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+
+            background: rgba(0, 0, 0, 0.2);
+            color: v.$color-text-main;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+
+            &::placeholder {
+                color: rgba(v.$color-text-sub, 0.5);
+            }
+
+            &:focus {
+                border-color: v.$color-primary-mint;
+                outline: none;
+                background: rgba(0, 0, 0, 0.4);
+                box-shadow: 0 0 15px rgba(v.$color-primary-mint, 0.2);
+            }
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1rem;
+
+            background: linear-gradient(135deg, v.$color-primary-mint, v.$color-secondary-mint);
+            color: v.$color-primary-dark;
+            border: none;
+            border-radius: 0.5rem;
+
+            font-size: 1.2rem;
+            font-weight: 800;
+            font-family: v.$font-heading;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+
+            box-shadow: 0 4px 15px rgba(0, 242, 230, 0.3);
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 242, 230, 0.5);
+                filter: brightness(1.1);
+            }
+
+            &:active {
+                transform: translateY(1px);
+            }
+        }
+    }
+}
