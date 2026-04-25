@@ -1,2 +1,0 @@
-デプロイは
-netlify deploy --prod

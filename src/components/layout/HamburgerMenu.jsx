@@ -15,7 +15,7 @@ export default function HamburgerMenu({ nav }) {
 
     return (
         <Menu isOpen={isOpen} onStateChange={handleStateChange} width={230} right>
-            {navWithProps}
+            <div className="hamburger-menu">{navWithProps}</div>
         </Menu>
     );
 }

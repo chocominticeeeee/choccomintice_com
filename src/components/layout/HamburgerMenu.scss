@@ -1,45 +1,45 @@
 @use "../../styles/variables" as v;
 
-/* Position and sizing of burger button */
+/* バーガーボタンの位置とサイズ */
 .bm-burger-button {
     position: fixed;
     width: 25px;
     height: 21px;
     right: 20px;
-    top: 28px; // Align with Nav
-    // z-index managed by HamburgerMenuContainer
+    top: 28px; // ナビゲーションバーに揃える
+    // z-index は HamburgerMenuContainer で管理
 }
 
-/* Color/shape of burger icon bars */
+/* バーガーアイコンの色・形状 */
 .bm-burger-bars {
     background: v.$color-primary-mint;
     border-radius: 2px;
 }
 
-/* Color/shape of burger icon bars on hover*/
+/* ホバー時のバーガーアイコンの色・形状 */
 .bm-burger-bars-hover {
     background: v.$color-secondary-mint;
 }
 
-/* Position and sizing of clickable cross button */
+/* 閉じるボタン（×）の位置とサイズ */
 .bm-cross-button {
     height: 30px;
     width: 30px;
 }
 
-/* Color/shape of close button cross */
+/* 閉じるボタン（×）の色・形状 */
 .bm-cross {
     background: v.$color-primary-mint;
 }
 
-/* Sidebar wrapper styles */
+/* サイドバーのラッパースタイル */
 .bm-menu-wrap {
     position: fixed;
     height: 100%;
     top: 0;
 }
 
-/* General sidebar styles */
+/* サイドバーの全般スタイル */
 .bm-menu {
     background: rgba(26, 10, 10, 0.95);
     backdrop-filter: blur(20px);
@@ -48,12 +48,12 @@
     border-left: 1px solid v.$glass-border;
 }
 
-/* Morph shape necessary with bubble or elastic */
+/* bubble・elastic エフェクト用のモーフ形状 */
 .bm-morph-shape {
     fill: v.$glass-bg;
 }
 
-/* Wrapper for item list */
+/* アイテムリストのラッパー */
 .bm-item-list {
     color: v.$color-text-main;
     padding: 0.8em;
@@ -62,14 +62,14 @@
     gap: 15px;
 }
 
-/* Individual item */
+/* 個別アイテム */
 .bm-item {
     display: block;
     outline: none;
 
-    // Style nav links inside mobile menu
+    // モバイルメニュー内のナビリンクのスタイル
     .navigationBar {
-        display: flex !important; // Override the display: none from media query
+        display: flex !important; // メディアクエリの display: none を上書き
         position: static !important;
         width: 100%;
         height: auto;
@@ -111,7 +111,7 @@
                         transform: translateX(5px);
                     }
 
-                    // Hide desktop-specific elements in mobile menu
+                    // デスクトップ専用の要素をモバイルメニューでは非表示
                     .nav-hover-bg,
                     .nav-active-indicator {
                         display: none;
@@ -128,7 +128,7 @@
     }
 }
 
-/* Styling of overlay */
+/* オーバーレイのスタイル */
 .bm-overlay {
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
