@@ -44,16 +44,8 @@ export default function Footer() {
                     >
                         <FaTwitter />
                     </a>
-                    <a href="/ContactForm" aria-label="Contact">
-                        <FaEnvelope />
-                    </a>
+                    <span>お問い合わせはTwitterのDMまでお願いします。</span>
                 </div>
-
-                <div className="links">
-                    <a href="/">Home</a> |<a href="/Introduction"> Introduction</a> |
-                    <a href="/PrivacyPolicy"> Privacy Policy</a>
-                </div>
-
                 <div className="copyright">&copy; {new Date().getFullYear()} ChoccomintIce. All rights reserved.</div>
             </div>
         </footer>

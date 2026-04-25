@@ -16,7 +16,7 @@ export default function ImagesImport({ images, onImageClick }: ImagesImportProps
     return (
         <div className="ImagesImport">
             {Object.entries(images)
-                .reverse()
+                .sort(([a], [b]) => a.localeCompare(b))
                 .map(([, module], index) => {
                     const url = module.default;
                     const fileName =

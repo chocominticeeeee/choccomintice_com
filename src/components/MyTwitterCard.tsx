@@ -1,5 +1,4 @@
-import "../styles/_MyTwitterCard.scss";
-import twitterIcon from "../assets/images/twitterIcon.jpg";
+import "./MyTwitterCard.scss";
 import { Cake, Link, CalendarDays } from "lucide-react";
 
 export default function MyTwitterCard() {
@@ -7,18 +6,16 @@ export default function MyTwitterCard() {
         <div id="MyTwitterCard">
             <div className="iconContainer">
                 <a href="https://x.com/Choccomintice" target="_blank" rel="noopener noreferrer">
-                    <img className="icon" src={twitterIcon} />
+                    <img className="icon" src="https://pbs.twimg.com/profile_images/2043548465326940160/XQ7zRbjc_400x400.jpg" />
                 </a>
             </div>
             <div>
                 <p className="name">ばぶ宮ちょこみん🍼🌱</p>
                 <p className="twitterId">@Choccomintice</p>
                 <p className="description">
-                    VRChatしたり、お絵描きしたり、not書いたり、プログラミングしたり、おいしいご飯を食べることが大好きな人だよ𓂃
-                    𓈒𓏸◌
+                    超健康VRchatter
                 </p>
                 <div className="underBlock">
-                    z
                     <div>
                         <span className="litlink">
                             <Link />
