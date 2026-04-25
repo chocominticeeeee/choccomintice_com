@@ -1,59 +1,50 @@
 @use "../../styles/variables" as v;
 
-/* バーガーボタンの位置とサイズ */
 .bm-burger-button {
     position: fixed;
     width: 25px;
     height: 21px;
     right: 20px;
-    top: 28px; // ナビゲーションバーに揃える
-    // z-index は HamburgerMenuContainer で管理
+    top: 28px;
 }
 
-/* バーガーアイコンの色・形状 */
 .bm-burger-bars {
-    background: v.$color-primary-mint;
-    border-radius: 2px;
+    background: v.$color-accent-purple;
+    border-radius: 3px;
 }
 
-/* ホバー時のバーガーアイコンの色・形状 */
 .bm-burger-bars-hover {
-    background: v.$color-secondary-mint;
+    background: v.$color-accent-pink;
 }
 
-/* 閉じるボタン（×）の位置とサイズ */
 .bm-cross-button {
     height: 30px;
     width: 30px;
 }
 
-/* 閉じるボタン（×）の色・形状 */
 .bm-cross {
-    background: v.$color-primary-mint;
+    background: v.$color-accent-purple;
 }
 
-/* サイドバーのラッパースタイル */
 .bm-menu-wrap {
     position: fixed;
     height: 100%;
     top: 0;
 }
 
-/* サイドバーの全般スタイル */
 .bm-menu {
-    background: rgba(26, 10, 10, 0.95);
+    background: rgba(255, 248, 255, 0.97);
     backdrop-filter: blur(20px);
     padding: 2.5em 1.5em 0;
     font-size: 1.15em;
-    border-left: 1px solid v.$glass-border;
+    border-left: 1.5px solid rgba(220, 190, 240, 0.5);
+    box-shadow: -8px 0 32px rgba(160, 100, 200, 0.12);
 }
 
-/* bubble・elastic エフェクト用のモーフ形状 */
 .bm-morph-shape {
-    fill: v.$glass-bg;
+    fill: rgba(255, 255, 255, 0.8);
 }
 
-/* アイテムリストのラッパー */
 .bm-item-list {
     color: v.$color-text-main;
     padding: 0.8em;
@@ -62,14 +53,12 @@
     gap: 15px;
 }
 
-/* 個別アイテム */
 .bm-item {
     display: block;
     outline: none;
 
-    // モバイルメニュー内のナビリンクのスタイル
     .navigationBar {
-        display: flex !important; // メディアクエリの display: none を上書き
+        display: flex !important;
         position: static !important;
         width: 100%;
         height: auto;
@@ -84,7 +73,7 @@
 
         ul {
             flex-direction: column !important;
-            gap: 20px;
+            gap: 12px;
             width: 100%;
             display: flex !important;
 
@@ -96,22 +85,23 @@
                 margin: 0;
 
                 a {
-                    font-size: 1.3rem;
-                    padding: 15px 20px;
+                    font-size: 1.2rem;
+                    padding: 14px 20px;
                     color: v.$color-text-main !important;
                     width: 100%;
                     text-align: left;
-                    background: rgba(255, 255, 255, 0.05);
-                    border-radius: 8px;
+                    background: rgba(220, 207, 250, 0.18);
+                    border-radius: 1.2rem;
                     transition: all 0.3s ease;
+                    border: 1.5px solid transparent;
 
                     &:hover {
-                        background: rgba(0, 242, 230, 0.1);
-                        color: v.$color-primary-mint !important;
+                        background: linear-gradient(135deg, rgba(220, 207, 250, 0.4), rgba(255, 200, 222, 0.3));
+                        color: v.$color-accent-purple !important;
                         transform: translateX(5px);
+                        border-color: rgba(220, 190, 240, 0.5);
                     }
 
-                    // デスクトップ専用の要素をモバイルメニューでは非表示
                     .nav-hover-bg,
                     .nav-active-indicator {
                         display: none;
@@ -119,17 +109,18 @@
                 }
 
                 &.active a {
-                    background: rgba(0, 242, 230, 0.15);
-                    color: v.$color-primary-mint !important;
-                    border-left: 3px solid v.$color-primary-mint;
+                    background: linear-gradient(135deg, rgba(220, 207, 250, 0.5), rgba(255, 200, 222, 0.35));
+                    color: v.$color-accent-purple !important;
+                    border-color: rgba(155, 127, 224, 0.4);
+                    border-left: 3px solid v.$color-accent-purple;
+                    padding-left: 17px;
                 }
             }
         }
     }
 }
 
-/* オーバーレイのスタイル */
 .bm-overlay {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
+    background: rgba(200, 180, 230, 0.25);
+    backdrop-filter: blur(6px);
 }

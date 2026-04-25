@@ -9,11 +9,11 @@
         margin: 2rem auto;
         padding: 3rem;
 
-        background-color: v.$glass-bg;
+        background: linear-gradient(135deg, rgba(255,255,255,0.88), rgba(255,240,252,0.82));
         backdrop-filter: blur(v.$glass-blur);
-        border: 1px solid v.$glass-border;
-        border-radius: 1rem;
-        box-shadow: v.$glass-shadow;
+        border: 1.5px solid rgba(220, 190, 240, 0.5);
+        border-radius: 2rem;
+        box-shadow: 0 8px 32px rgba(160, 100, 200, 0.1);
 
         div.form-group {
             margin-bottom: 2rem;
@@ -22,34 +22,36 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: v.$color-secondary-mint;
+            font-weight: 700;
+            color: v.$color-accent-purple;
             font-family: v.$font-heading;
             letter-spacing: 0.05em;
+            font-size: 0.95rem;
         }
 
         input,
         textarea {
             width: 100%;
-            padding: 1rem;
-            border: 1px solid v.$glass-border;
-            border-radius: 0.5rem;
+            padding: 1rem 1.2rem;
+            border: 1.5px solid rgba(220, 190, 240, 0.5);
+            border-radius: 1.2rem;
             font-size: 1rem;
 
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.85);
             color: v.$color-text-main;
             transition: all 0.3s ease;
             box-sizing: border-box;
+            font-family: v.$font-jp, v.$font-body;
 
             &::placeholder {
-                color: rgba(v.$color-text-sub, 0.5);
+                color: v.$color-text-light;
             }
 
             &:focus {
-                border-color: v.$color-primary-mint;
+                border-color: rgba(155, 127, 224, 0.6);
                 outline: none;
-                background: rgba(0, 0, 0, 0.4);
-                box-shadow: 0 0 15px rgba(v.$color-primary-mint, 0.2);
+                background: rgba(255, 255, 255, 0.95);
+                box-shadow: 0 0 0 3px rgba(220, 207, 250, 0.4);
             }
         }
 
@@ -58,25 +60,24 @@
             padding: 1rem;
             margin-top: 1rem;
 
-            background: linear-gradient(135deg, v.$color-primary-mint, v.$color-secondary-mint);
-            color: v.$color-primary-dark;
+            background: linear-gradient(135deg, v.$color-accent-purple, v.$color-accent-pink);
+            color: #ffffff;
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 3rem;
 
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 800;
             font-family: v.$font-heading;
             letter-spacing: 0.1em;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-transform: uppercase;
 
-            box-shadow: 0 4px 15px rgba(0, 242, 230, 0.3);
+            box-shadow: 0 4px 18px rgba(155, 127, 224, 0.3);
 
             &:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(0, 242, 230, 0.5);
-                filter: brightness(1.1);
+                transform: translateY(-3px);
+                box-shadow: 0 8px 28px rgba(155, 127, 224, 0.45);
+                filter: brightness(1.05);
             }
 
             &:active {

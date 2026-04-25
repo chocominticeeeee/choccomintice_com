@@ -1,23 +1,47 @@
-/* Color Palette */
-$color-primary-mint: #00f2e6;
-$color-primary-dark: #1a0a0a; /* Deep Chocolate/Coffee */
-$color-secondary-mint: #00bfa5;
-$color-accent-pink: #ff007a;
-$color-text-main: #f0f0f0;
-$color-text-sub: #b0b0b0;
+/* ===== Pastel Color Palette ===== */
 
-/* Glassmorphism */
-$glass-bg: rgba(255, 255, 255, 0.05);
-$glass-border: rgba(255, 255, 255, 0.1);
-$glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-$glass-blur: 10px;
+/* Backgrounds */
+$color-bg:           #fef8ff;   /* soft lavender-white */
+$color-bg-card:      #ffffff;   /* pure white for cards */
+$color-bg-secondary: #fff0f8;   /* soft pink-white */
+
+/* Pastel swatches */
+$color-pastel-mint:     #c8f5ef;
+$color-pastel-pink:     #ffc8de;
+$color-pastel-lavender: #dccffa;
+$color-pastel-peach:    #ffddc8;
+$color-pastel-sky:      #c8e8ff;
+$color-pastel-yellow:   #fff8c8;
+
+/* Strong accents (still soft but visible) */
+$color-accent-mint:   #4ecdc4;
+$color-accent-pink:   #f47db5;
+$color-accent-purple: #9b7fe0;
+$color-accent-peach:  #f4a56a;
+
+/* Text */
+$color-text-main: #3d2c4a;   /* dark purple-gray */
+$color-text-sub:  #9480a8;   /* muted lavender-gray */
+$color-text-light:#c4b5d4;   /* very light for placeholders */
+
+/* Legacy aliases (keep compatibility with pages that use them) */
+$color-primary-mint:    $color-accent-mint;
+$color-primary-dark:    $color-bg;
+$color-secondary-mint:  $color-accent-mint;
+$color-accent-pink-old: $color-accent-pink;
+
+/* Light Glassmorphism */
+$glass-bg:     rgba(255, 255, 255, 0.72);
+$glass-border: rgba(220, 190, 240, 0.45);
+$glass-shadow: 0 8px 32px rgba(160, 100, 200, 0.1);
+$glass-blur:   14px;
 
 /* Fonts */
 $font-heading: "Outfit", sans-serif;
-$font-body: "Inter", sans-serif;
-$font-jp: "M PLUS Rounded 1c", sans-serif;
+$font-body:    "Inter", sans-serif;
+$font-jp:      "M PLUS Rounded 1c", sans-serif;
 
 /* Z-Index */
-$z-nav: 1000;
-$z-modal: 2000;
+$z-nav:        1000;
+$z-modal:      2000;
 $z-background: -1;

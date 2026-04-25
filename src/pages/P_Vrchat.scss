@@ -18,12 +18,14 @@
                 font-family: v.$font-heading;
                 font-size: 2rem;
                 margin-bottom: 1.5rem;
-                color: v.$color-primary-mint;
+                color: v.$color-accent-purple;
+                border-bottom-color: v.$color-pastel-lavender;
             }
 
             p {
                 line-height: 2;
                 margin-bottom: 1rem;
+                color: v.$color-text-main;
             }
         }
 
@@ -33,10 +35,11 @@
                 font-size: 1.8rem;
                 text-align: center;
                 margin-bottom: 2rem;
-                background: linear-gradient(to right, v.$color-secondary-mint, v.$color-accent-pink);
+                background: linear-gradient(to right, v.$color-accent-purple, v.$color-accent-pink);
                 -webkit-background-clip: text;
                 background-clip: text;
                 -webkit-text-fill-color: transparent;
+                border-bottom: none;
             }
 
             .gallery-grid {
@@ -54,12 +57,13 @@
                 .photo-card {
                     break-inside: avoid;
                     margin-bottom: 1.5rem;
-                    border-radius: 0.5rem;
+                    border-radius: 1.2rem;
                     overflow: hidden;
                     cursor: pointer;
-                    border: 1px solid v.$glass-border;
+                    border: 1.5px solid rgba(220, 190, 240, 0.4);
                     transition: transform 0.3s ease, box-shadow 0.3s ease;
                     position: relative;
+                    background: rgba(255, 255, 255, 0.5);
 
                     img {
                         width: 100%;
@@ -69,9 +73,9 @@
                     }
 
                     &:hover {
-                        transform: translateY(-5px);
-                        box-shadow: 0 5px 15px rgba(0, 242, 230, 0.2);
-                        border-color: v.$color-primary-mint;
+                        transform: translateY(-6px);
+                        box-shadow: 0 8px 28px rgba(155, 127, 224, 0.2);
+                        border-color: rgba(155, 127, 224, 0.55);
 
                         img {
                             transform: scale(1.05);
@@ -84,8 +88,8 @@
                     text-align: center;
                     color: v.$color-text-sub;
                     padding: 2rem;
-                    background: rgba(0, 0, 0, 0.1);
-                    border-radius: 8px;
+                    background: rgba(255, 255, 255, 0.5);
+                    border-radius: 1.2rem;
                 }
             }
         }

@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Nav.scss";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 
-export default function Nav({ navigations, setIsOpen }) {
-    const [hoveredPath, setHoveredPath] = useState(null);
+interface NavProps {
+    navigations: [string, string][];
+    setIsOpen?: (open: boolean) => void;
+}
+
+export default function Nav({ navigations, setIsOpen }: NavProps) {
+    const [hoveredPath, setHoveredPath] = useState<string | null>(null);
     const location = useLocation();
 
     return (

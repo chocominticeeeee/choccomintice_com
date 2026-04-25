@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./P_Artworks.scss";
 import PageTitle from "../components/PageTitle";
 import Lightbox from "../components/Lightbox";
 import ImagesImport from "../components/ImagesImport";
 
-const ArtworksImages = import.meta.glob("../assets/images/Artworks/Resize/*", { eager: true });
-const FavoritesImages = import.meta.glob("../assets/images/Artworks/Favorites/*", { eager: true });
+interface ImageModule {
+    default: string;
+}
+
+interface SelectedImage {
+    src: string;
+    alt: string;
+}
+
+const ArtworksImages = import.meta.glob<ImageModule>("../assets/images/Artworks/Resize/*", { eager: true });
+const FavoritesImages = import.meta.glob<ImageModule>("../assets/images/Artworks/Favorites/*", { eager: true });
 
 export default function P_Artworks() {
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
 
     return (
         <div id="P_Artworks">

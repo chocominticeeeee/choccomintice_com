@@ -1,4 +1,3 @@
-import React from "react";
 import "./P_ContactForm.scss";
 import PageTitle from "../components/PageTitle";
 
@@ -10,7 +9,7 @@ export default function P_ContactForm() {
                 <input type="hidden" name="form-name" value="contact" />
                 <p className="hidden">
                     <label>
-                        Don’t fill this out if you’re human: <input name="bot-field" />
+                        Don't fill this out if you're human: <input name="bot-field" />
                     </label>
                 </p>
                 <div className="form-group">
@@ -26,7 +25,7 @@ export default function P_ContactForm() {
                     <textarea
                         id="message"
                         name="message"
-                        rows="6"
+                        rows={6}
                         required
                         placeholder="お問い合わせ内容を入力してください"
                     ></textarea>

@@ -1,10 +1,16 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import "./Lightbox.scss";
 
-export default function Lightbox({ src, alt, onClose }) {
+interface LightboxProps {
+    src: string;
+    alt: string;
+    onClose: () => void;
+}
+
+export default function Lightbox({ src, alt, onClose }: LightboxProps) {
     useEffect(() => {
-        const handleKeyDown = (e) => {
+        const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === "Escape") {
                 onClose();
             }

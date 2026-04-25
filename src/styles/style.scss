@@ -13,17 +13,17 @@
     height: 100%;
     min-height: 100dvh;
 
-    background-color: v.$color-primary-dark;
-    background-image: radial-gradient(at 0% 0%, rgba(0, 242, 230, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(255, 0, 122, 0.05) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(0, 242, 230, 0.1) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(43, 27, 23, 1) 0px, transparent 50%);
+    background-color: v.$color-bg;
+    background-image:
+        radial-gradient(at 10% 0%,  rgba(220, 207, 250, 0.50) 0px, transparent 55%),
+        radial-gradient(at 90% 0%,  rgba(255, 200, 222, 0.40) 0px, transparent 55%),
+        radial-gradient(at 80% 90%, rgba(200, 245, 239, 0.45) 0px, transparent 55%),
+        radial-gradient(at 20% 90%, rgba(255, 221, 200, 0.35) 0px, transparent 55%);
     background-attachment: fixed;
 
     color: v.$color-text-main;
     font-family: v.$font-body;
 
-    /* Japanese Fallback */
     &.ja {
         font-family: v.$font-jp, v.$font-body;
     }
@@ -58,15 +58,15 @@
 
             background-color: v.$glass-bg;
             backdrop-filter: blur(v.$glass-blur);
-            border: 1px solid v.$glass-border;
-            border-radius: 1rem;
+            border: 1.5px solid v.$glass-border;
+            border-radius: 2rem;
 
             color: v.$color-text-main;
 
             @media (max-width: 950px) {
                 padding: 20px;
                 margin-block: 0;
-                border-radius: 0.5rem;
+                border-radius: 1.5rem;
             }
 
             &.isArticle {
@@ -79,7 +79,7 @@
 
                 > .article {
                     flex: 1;
-                    min-width: 0; // Fix flex overflow
+                    min-width: 0;
 
                     img {
                         display: block;
@@ -87,14 +87,14 @@
                         height: auto;
                         margin-inline: auto;
                         margin-block: 20px;
-                        border: 1px solid v.$glass-border;
-                        border-radius: 0.5rem;
+                        border: 1.5px solid v.$glass-border;
+                        border-radius: 1rem;
                     }
 
                     h2 {
                         padding-bottom: 20px;
                         margin-top: 50px;
-                        border-bottom: 1px solid v.$glass-border;
+                        border-bottom: 1.5px solid v.$glass-border;
                     }
                 }
 
@@ -103,10 +103,10 @@
                     padding: 20px;
                     height: fit-content;
 
-                    background-color: v.$glass-bg; // Glass
+                    background-color: v.$glass-bg;
                     backdrop-filter: blur(10px);
-                    border: 1px solid v.$glass-border;
-                    border-radius: 0.5rem;
+                    border: 1.5px solid v.$glass-border;
+                    border-radius: 1.5rem;
 
                     @media (max-width: 950px) {
                         flex: 100%;

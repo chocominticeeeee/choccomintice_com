@@ -6,8 +6,8 @@ h2 {
     font-size: 1.8rem;
     margin-top: 20px;
     margin-bottom: 8px;
-    border-bottom: 1px solid v.$glass-border;
-    color: v.$color-primary-mint;
+    border-bottom: 2px solid v.$color-pastel-lavender;
+    color: v.$color-accent-purple;
 
     line-height: 2.2rem;
 }
@@ -17,7 +17,7 @@ h3 {
     font-size: 1.5rem;
     margin-top: 15px;
     margin-bottom: 8px;
-    border-bottom: 1px solid v.$glass-border;
+    border-bottom: 1.5px solid v.$color-pastel-pink;
     color: v.$color-text-main;
 
     line-height: 2rem;
@@ -31,20 +31,23 @@ h3 {
         align-items: end;
 
         margin-bottom: 20px;
-        padding: 10px;
+        padding: 12px 18px;
 
-        background-color: v.$glass-bg;
+        background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,240,252,0.85));
         backdrop-filter: blur(v.$glass-blur);
-        border: 1px solid v.$glass-border;
-        border-radius: 0.4rem;
+        border: 1.5px solid v.$glass-border;
+        border-radius: 1.5rem;
+        box-shadow: 0 4px 18px rgba(180, 100, 220, 0.08);
 
         > h2 {
             font-weight: 700;
             letter-spacing: 0.05rem;
             margin: 0 !important;
             border-bottom: none !important;
-            color: v.$color-primary-mint;
-            text-shadow: 0 0 10px rgba(0, 242, 230, 0.3);
+            background: linear-gradient(135deg, v.$color-accent-purple 0%, v.$color-accent-pink 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         > .updateDate {
@@ -62,8 +65,8 @@ h3 {
             width: 100%;
             object-fit: contain;
             background-color: transparent;
-            border-radius: 0.4rem;
-            border: 1px solid v.$glass-border;
+            border-radius: 1rem;
+            border: 1.5px solid v.$glass-border;
 
             margin-inline: 0;
         }
@@ -71,5 +74,11 @@ h3 {
 }
 
 a {
-    color: rgb(29, 155, 240);
+    color: v.$color-accent-purple;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: v.$color-accent-pink;
+    }
 }

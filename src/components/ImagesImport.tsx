@@ -1,12 +1,26 @@
-export default function ImagesImport({ images, onImageClick }) {
+interface ImageModule {
+    default: string;
+}
+
+interface ImageInfo {
+    src: string;
+    alt: string;
+}
+
+interface ImagesImportProps {
+    images: Record<string, ImageModule>;
+    onImageClick: (image: ImageInfo) => void;
+}
+
+export default function ImagesImport({ images, onImageClick }: ImagesImportProps) {
     return (
         <div className="ImagesImport">
             {Object.entries(images)
                 .reverse()
-                .map(([path, module], index) => {
+                .map(([, module], index) => {
                     const url = module.default;
                     const fileName =
-                        decodeURIComponent(url.split("/").pop()).split("_")[1]?.replace(".jpg", "") || "Artwork";
+                        decodeURIComponent(url.split("/").pop() ?? "").split("_")[1]?.replace(".jpg", "") || "Artwork";
                     return (
                         <div
                             className="artwork"

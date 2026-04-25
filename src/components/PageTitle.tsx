@@ -1,6 +1,11 @@
 import "./PageTitle.scss";
 
-export default function PageTitle({ title, description }) {
+interface PageTitleProps {
+    title: string;
+    description?: string;
+}
+
+export default function PageTitle({ title, description }: PageTitleProps) {
     return (
         <div className="PageTitle">
             <h2>{title}</h2>

@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./P_Vrchat.scss";
 import PageTitle from "../components/PageTitle";
 import Lightbox from "../components/Lightbox";
 
-const VRChatImages = import.meta.glob("../assets/images/VRChat/Resize/Resize/*", { eager: true });
+interface ImageModule {
+    default: string;
+}
+
+interface SelectedImage {
+    src: string;
+    alt: string;
+}
+
+const VRChatImages = import.meta.glob<ImageModule>("../assets/images/VRChat/Resize/Resize/*", { eager: true });
 
 export default function P_Vrchat() {
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
 
     return (
         <div id="P_Vrchat">
@@ -32,7 +41,7 @@ export default function P_Vrchat() {
                     <div className="gallery-grid">
                         {Object.entries(VRChatImages)
                             .reverse()
-                            .map(([path, module], index) => {
+                            .map(([, module], index) => {
                                 const url = module.default;
                                 const fileName = "VRChat Photo";
                                 return (

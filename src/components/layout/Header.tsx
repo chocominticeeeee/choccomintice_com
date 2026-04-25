@@ -1,12 +1,15 @@
-import React from "react";
 import { motion } from "framer-motion";
 import HeaderImg from "../../assets/images/ヘッダー.jpg";
 import Nav from "./Nav";
 import HamburgerMenu from "./HamburgerMenu";
-import "./Nav.scss"; // Ensure we have the styles if not imported by main
+import "./Nav.scss";
 
-export default function Header({ navigations, isHome }) {
-    // If not home, just render the navigation (which is fixed)
+interface HeaderProps {
+    navigations: [string, string][];
+    isHome: boolean;
+}
+
+export default function Header({ navigations, isHome }: HeaderProps) {
     if (!isHome) {
         return (
             <>
@@ -30,7 +33,7 @@ export default function Header({ navigations, isHome }) {
                 justifyContent: "center",
             }}
         >
-            {/* Background Image with Parallax Effect */}
+            {/* Background Image */}
             <motion.div
                 className="hero-bg"
                 initial={{ scale: 1.1, opacity: 0 }}
@@ -45,11 +48,13 @@ export default function Header({ navigations, isHome }) {
                     zIndex: 0,
                 }}
             >
+                {/* Pastel soft overlay */}
                 <div
                     style={{
                         position: "absolute",
                         inset: 0,
-                        background: "linear-gradient(to bottom, rgba(26,10,10,0.3) 0%, rgba(26,10,10,0.8) 100%)",
+                        background:
+                            "linear-gradient(to bottom, rgba(255,240,252,0.45) 0%, rgba(230,210,255,0.70) 100%)",
                         zIndex: 1,
                     }}
                 />
@@ -65,14 +70,14 @@ export default function Header({ navigations, isHome }) {
                 />
             </motion.div>
 
-            {/* Navigation (Fixed) */}
+            {/* Navigation */}
             <Nav navigations={navigations} />
             <div className="HamburgerMenuContainer">
                 <HamburgerMenu nav={<Nav navigations={navigations} />} />
             </div>
 
             {/* Hero Content */}
-            <div className="hero-content" style={{ zIndex: 2, textAlign: "center", color: "white" }}>
+            <div className="hero-content" style={{ zIndex: 2, textAlign: "center" }}>
                 <motion.h1
                     initial={{ y: 50, opacity: 0, filter: "blur(10px)" }}
                     animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
@@ -81,30 +86,44 @@ export default function Header({ navigations, isHome }) {
                         fontSize: "clamp(3rem, 8vw, 5rem)",
                         fontWeight: 900,
                         fontFamily: "'Outfit', sans-serif",
-                        background: "linear-gradient(135deg, #fff 0%, #00f2e6 100%)",
+                        background: "linear-gradient(135deg, #9b7fe0 0%, #f47db5 50%, #4ecdc4 100%)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
                         marginBottom: "1rem",
                         letterSpacing: "-2px",
+                        filter: "drop-shadow(0 2px 12px rgba(155,127,224,0.3))",
                     }}
                 >
                     CHOCCOMINTICE
                 </motion.h1>
 
-                <motion.p
+                <motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.8, duration: 0.8 }}
                     style={{
-                        fontSize: "clamp(1rem, 2vw, 1.2rem)",
-                        fontFamily: "'Inter', sans-serif",
-                        color: "rgba(255,255,255,0.8)",
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase",
+                        display: "inline-block",
+                        padding: "10px 28px",
+                        borderRadius: "3rem",
+                        background: "rgba(255,255,255,0.72)",
+                        backdropFilter: "blur(12px)",
+                        border: "1.5px solid rgba(220,190,240,0.5)",
+                        boxShadow: "0 4px 20px rgba(160,100,200,0.15)",
                     }}
                 >
-                    ばぶ宮ちょこみんをもっと知って仲良くなろう💕
-                </motion.p>
+                    <p
+                        style={{
+                            fontSize: "clamp(0.9rem, 2vw, 1.1rem)",
+                            fontFamily: "'M PLUS Rounded 1c', sans-serif",
+                            color: "#3d2c4a",
+                            letterSpacing: "0.05em",
+                            margin: 0,
+                        }}
+                    >
+                        ばぶ宮ちょこみんをもっと知って仲良くなろう💕
+                    </p>
+                </motion.div>
             </div>
 
             {/* Scroll Indicator */}
@@ -124,14 +143,25 @@ export default function Header({ navigations, isHome }) {
                     gap: "10px",
                 }}
             >
-                <span style={{ fontSize: "0.8rem", letterSpacing: "2px", opacity: 0.7 }}>SCROLL</span>
+                <span
+                    style={{
+                        fontSize: "0.75rem",
+                        letterSpacing: "2px",
+                        color: "#9b7fe0",
+                        fontFamily: "'Outfit', sans-serif",
+                        fontWeight: 600,
+                    }}
+                >
+                    SCROLL
+                </span>
                 <motion.div
                     animate={{ y: [0, 10, 0] }}
                     transition={{ repeat: Infinity, duration: 1.5 }}
                     style={{
                         width: "2px",
                         height: "40px",
-                        background: "linear-gradient(to bottom, #00f2e6, transparent)",
+                        background: "linear-gradient(to bottom, #9b7fe0, #f47db5)",
+                        borderRadius: "2px",
                     }}
                 />
             </motion.div>

@@ -1,7 +1,6 @@
-import React from "react";
 import Wave from "react-wavify";
 import "./Footer.scss";
-import { FaTwitter, FaGithub, FaEnvelope } from "react-icons/fa";
+import { FaTwitter, FaEnvelope } from "react-icons/fa";
 
 export default function Footer() {
     return (
@@ -9,7 +8,7 @@ export default function Footer() {
             <div className="waves">
                 <div className="wave wave1">
                     <Wave
-                        fill="rgba(0, 242, 230, 0.1)" // Neon Mint Glass
+                        fill="rgba(220, 207, 250, 0.45)"
                         paused={false}
                         style={{ display: "flex" }}
                         options={{
@@ -22,7 +21,7 @@ export default function Footer() {
                 </div>
                 <div className="wave wave2" style={{ position: "absolute", top: 0, width: "100%" }}>
                     <Wave
-                        fill="#1a0a0a" // Dark Chocolate
+                        fill="rgba(255, 200, 222, 0.35)"
                         paused={false}
                         style={{ display: "flex" }}
                         options={{

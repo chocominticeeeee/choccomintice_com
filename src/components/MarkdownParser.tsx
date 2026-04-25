@@ -1,7 +1,11 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-export default function MarkdownParser({ md }) {
+interface MarkdownParserProps {
+    md: string;
+}
+
+export default function MarkdownParser({ md }: MarkdownParserProps) {
     return (
         <div className="notionStyle">
             <Markdown remarkPlugins={[remarkGfm]}>{md}</Markdown>

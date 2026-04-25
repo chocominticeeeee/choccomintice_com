@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/_MyTwitterCard.scss";
 import twitterIcon from "../assets/images/twitterIcon.jpg";
 import { Cake, Link, CalendarDays } from "lucide-react";

@@ -1,10 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import type { ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "./Header";
 import Footer from "./Footer";
 
-export default function PageContainer({ navigations, id, content, isArticle }) {
+interface PageContainerProps {
+    navigations: [string, string][];
+    id: string;
+    content: ReactNode;
+    isArticle?: boolean;
+}
+
+export default function PageContainer({ navigations, id, content, isArticle }: PageContainerProps) {
     const location = useLocation();
     const isHome = location.pathname === "/";
 
