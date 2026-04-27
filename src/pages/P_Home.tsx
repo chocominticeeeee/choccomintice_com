@@ -4,6 +4,7 @@ import ArtworksCarousel from "../components/ArtworksCarousel";
 import Lightbox from "../components/Lightbox";
 import "./P_Home.scss";
 import KeyVisual from "../components/layout/KeyVisual";
+import Uni from "../components/Uni";
 
 interface ImageModule {
     default: string;
@@ -25,7 +26,7 @@ export default function P_Home() {
         Promise.all(
             Object.entries(VRChatGlob)
                 .reverse()
-                .map(async ([, loader]) => (await loader()).default)
+                .map(async ([, loader]) => (await loader()).default),
         ).then(setVrChatUrls);
     }, []);
 
@@ -42,7 +43,7 @@ export default function P_Home() {
                     }
                 });
             },
-            { threshold: 0.05 }
+            { threshold: 0.05 },
         );
 
         requestAnimationFrame(() => {
@@ -192,6 +193,9 @@ export default function P_Home() {
                         <a href="https://x.com/Choccomintice_" target="_blank" rel="noopener noreferrer">
                             @Choccomintice_ 🗝
                         </a>
+                    </p>
+                    <p>
+                        <Uni />
                     </p>
                 </section>
             </main>
