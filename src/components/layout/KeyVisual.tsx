@@ -66,7 +66,7 @@ export default function KeyVisual() {
                 <img
                     src={HEADER_URL}
                     alt="Key Visual"
-                    style={{ width: "100%", height: "120%", objectFit: "cover", objectPosition: "center" }}
+                    style={{ width: "100%", height: "120%", objectFit: "cover", objectPosition: "center", filter: "blur(6px)" }}
                 />
             </motion.div>
 

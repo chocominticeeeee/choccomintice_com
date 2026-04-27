@@ -8,7 +8,7 @@
     height: auto;
 
     @media (max-width: 950px) {
-        width: 330px;
+        width: 270px;
     }
 }
 
@@ -34,8 +34,8 @@
     z-index: -1;
 
     @media (max-width: 950px) {
-        top: -85%;
-        left: 52%;
+        top: -110%;
+        left: 40%;
         transform: translateX(-50%);
     }
 
@@ -53,7 +53,7 @@
 
         @media (max-width: 950px) {
             img {
-                height: 500px;
+                height: 450px;
             }
         }
     }

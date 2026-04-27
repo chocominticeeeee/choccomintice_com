@@ -42,7 +42,7 @@ export default function P_Home() {
                     }
                 });
             },
-            { threshold: 0.1 }
+            { threshold: 0.05 }
         );
 
         sections.forEach((section) => observer.observe(section));
