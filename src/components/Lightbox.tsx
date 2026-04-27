@@ -21,6 +21,7 @@ export default function Lightbox({ src, alt, onClose }: LightboxProps) {
 
     return createPortal(
         <div className="lightbox-overlay" onClick={onClose} aria-modal="true" role="dialog">
+            <button className="lightbox-close" onClick={onClose} aria-label="閉じる">✕</button>
             <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
                 <img src={src} alt={alt} />
             </div>

@@ -36,18 +36,19 @@
     width: fit-content;
     position: relative;
     will-change: transform;
-}
 
-.embla__parallax__bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    // filter: blur(18px) brightness(0.55) saturate(1.2);
-    transform: scale(1.08);
-    transform-origin: center;
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-image: var(--slide-bg);
+        background-size: cover;
+        background-position: center center;
+        filter: blur(18px) brightness(1) saturate(1.2);
+        transform: scale(1.08);
+        transform-origin: center;
+    }
 }
 
 .embla__parallax__img {

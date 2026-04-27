@@ -8,9 +8,7 @@ interface ImageModule {
     default: string;
 }
 
-const ArtworksImages = import.meta.glob<ImageModule>("../assets/images/Artworks/*", {
-    eager: true,
-});
+const ArtworksGlob = import.meta.glob<ImageModule>("../assets/images/Artworks/*");
 
 const TWEEN_FACTOR_BASE = 0.2;
 
@@ -27,10 +25,24 @@ export default function ArtworksCarousel({ startIndex = 0 }: Props) {
     const tweenNodes = useRef<HTMLElement[]>([]);
     const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
     const dragDistance = useRef(0);
+    const [slides, setSlides] = useState<{ src: string; alt: string }[]>([]);
 
-    const slides = Object.entries(ArtworksImages)
-        .sort(([a], [b]) => a.localeCompare(b))
-        .map(([key, mod]) => ({ src: mod.default, alt: key.split("/").pop() ?? "" }));
+    useEffect(() => {
+        Promise.all(
+            Object.entries(ArtworksGlob)
+                .sort(([a], [b]) => a.localeCompare(b))
+                .map(async ([key, loader]) => ({
+                    src: (await loader()).default,
+                    alt: key.split("/").pop() ?? "",
+                }))
+        ).then(setSlides);
+    }, []);
+
+    useEffect(() => {
+        if (emblaApi && slides.length > 0) {
+            emblaApi.reInit({ startIndex });
+        }
+    }, [emblaApi, slides, startIndex]);
 
     const setTweenNodes = useCallback((api: EmblaCarouselType) => {
         tweenNodes.current = api.slideNodes().map(
@@ -103,13 +115,10 @@ export default function ArtworksCarousel({ startIndex = 0 }: Props) {
                         {slides.map(({ src, alt }, index) => (
                             <div className="embla__slide" key={index}>
                                 <div className="embla__parallax">
-                                    <div className="embla__parallax__layer">
-                                        <img
-                                            className="embla__parallax__bg"
-                                            src={src}
-                                            alt=""
-                                            aria-hidden="true"
-                                        />
+                                    <div
+                                        className="embla__parallax__layer"
+                                        style={{ '--slide-bg': `url(${src})` } as CSSProperties}
+                                    >
                                         <img
                                             className="embla__parallax__img"
                                             src={src}

@@ -14,11 +14,20 @@ interface SelectedImage {
     alt: string;
 }
 
-const VRChatImages = import.meta.glob<ImageModule>("../assets/images/VRChat/*", { eager: true });
+const VRChatGlob = import.meta.glob<ImageModule>("../assets/images/VRChat/*");
 
 export default function P_Home() {
     const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
+    const [vrChatUrls, setVrChatUrls] = useState<string[]>([]);
     const mainRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        Promise.all(
+            Object.entries(VRChatGlob)
+                .reverse()
+                .map(async ([, loader]) => (await loader()).default)
+        ).then(setVrChatUrls);
+    }, []);
 
     useEffect(() => {
         const sections = mainRef.current?.querySelectorAll("section");
@@ -148,21 +157,16 @@ export default function P_Home() {
                     <h2 className="vrchat-section__memories-title">📸 Memories</h2>
                     <div className="vrchat-section__gallery-scroll">
                         <div className="vrchat-section__gallery">
-                            {Object.entries(VRChatImages)
-                                .reverse()
-                                .map(([, module], index) => {
-                                    const url = module.default;
-                                    return (
-                                        <div
-                                            className="photo-card"
-                                            key={index}
-                                            onClick={() => setSelectedImage({ src: url, alt: "VRChat Photo" })}
-                                        >
-                                            <img src={url} alt="VRChat Photo" loading="lazy" />
-                                        </div>
-                                    );
-                                })}
-                            {Object.keys(VRChatImages).length === 0 && <p className="no-images">No images found.</p>}
+                            {vrChatUrls.map((url, index) => (
+                                <div
+                                    className="photo-card"
+                                    key={index}
+                                    onClick={() => setSelectedImage({ src: url, alt: "VRChat Photo" })}
+                                >
+                                    <img src={url} alt="VRChat Photo" loading="lazy" />
+                                </div>
+                            ))}
+                            {Object.keys(VRChatGlob).length === 0 && <p className="no-images">No images found.</p>}
                         </div>
                     </div>
                 </section>
