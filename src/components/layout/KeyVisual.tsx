@@ -1,9 +1,10 @@
 import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
 import { useRef, useEffect } from "react";
 import "./KeyVisual.scss";
-import backgroundImage from "../../assets/images/header.jpg";
+// import backgroundImage from "../../assets/images/header.jpg";
 import avatarImage from "../../assets/images/アバター透過.png";
 import logoImage from "../../assets/images/ロゴ.png";
+import { HEADER_URL } from "../../CONFIG";
 
 export default function KeyVisual() {
     const ref = useRef<HTMLElement>(null);
@@ -38,7 +39,7 @@ export default function KeyVisual() {
             className="hero-section"
             style={{
                 position: "relative",
-                height: "100vh",
+                height: "70dvh",
                 overflow: "hidden",
                 display: "flex",
                 alignItems: "center",
@@ -63,7 +64,7 @@ export default function KeyVisual() {
                     }}
                 />
                 <img
-                    src={backgroundImage}
+                    src={HEADER_URL}
                     alt="Key Visual"
                     style={{ width: "100%", height: "120%", objectFit: "cover", objectPosition: "center" }}
                 />
