@@ -1,7 +1,9 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { AVATAR_URL, HEADER_URL } from "../../CONFIG";
+import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
+import { useRef, useEffect } from "react";
 import "./Header.scss";
+import backgroundImage from "../../assets/images/header.jpg";
+import avatarImage from "../../assets/images/アバター透過.png";
+import logoImage from "../../assets/images/ロゴ.png";
 
 export default function KeyVisual() {
     const ref = useRef<HTMLElement>(null);
@@ -9,6 +11,27 @@ export default function KeyVisual() {
     const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
     const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
     const heroY = useTransform(scrollYProgress, [0, 0.6], [0, -50]);
+    const logoControls = useAnimation();
+
+    useEffect(() => {
+        // ロゴのエントリーアニメーション
+        logoControls.start({
+            x: 0,
+            opacity: 1,
+            rotate: 0,
+            transition: { delay: 0.5, duration: 0.8, type: "spring", stiffness: 80, damping: 18 },
+        });
+
+        // アバターが登場してから少し後にロゴを左へシフト
+        const t = setTimeout(() => {
+            logoControls.start({
+                x: -40,
+                transition: { duration: 1, type: "spring", stiffness: 60, damping: 18 },
+            });
+        }, 2000);
+
+        return () => clearTimeout(t);
+    }, [logoControls]);
 
     return (
         <header
@@ -23,7 +46,7 @@ export default function KeyVisual() {
                 justifyContent: "center",
             }}
         >
-            {/* Parallax background */}
+            {/* パララックス背景 */}
             <motion.div
                 className="hero-bg"
                 style={{ position: "absolute", inset: 0, zIndex: 0, y: bgY }}
@@ -41,113 +64,83 @@ export default function KeyVisual() {
                     }}
                 />
                 <img
-                    src={HEADER_URL}
+                    src={backgroundImage}
                     alt="Key Visual"
                     style={{ width: "100%", height: "120%", objectFit: "cover", objectPosition: "center" }}
                 />
             </motion.div>
 
-            {/* Hero content – scroll fade/rise wrapper */}
+            {/* ヒーローコンテンツ – ロゴを中央に配置 */}
             <motion.div
+                className="hero-layout"
                 style={{
                     position: "relative",
                     zIndex: 2,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "100%",
-                    padding: "0 24px",
                     opacity: heroOpacity,
                     y: heroY,
                 }}
             >
-                {/* Glass card */}
+                {/* ロゴ＋サブタイトル＋アバター */}
                 <motion.div
-                    className="hero-content"
                     style={{
-                        position: "relative",
-                        textAlign: "center",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        gap: "18px",
-                        padding: "40px 48px",
-                        maxWidth: "560px",
-                        width: "100%",
-                        backgroundColor: "rgba(255, 255, 255, 0.52)",
-                        backdropFilter: "blur(22px)",
-                        WebkitBackdropFilter: "blur(22px)",
-                        borderRadius: "2rem",
-                        border: "1.5px solid rgba(220, 190, 240, 0.5)",
-                        boxShadow: "0 12px 60px rgba(155, 127, 224, 0.18), 0 2px 16px rgba(244, 125, 181, 0.12)",
+                        gap: "14px",
+                        position: "relative",
                     }}
-                    initial={{ y: 60, opacity: 0, scale: 0.94 }}
-                    animate={{ y: 0, opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4, duration: 1.0, type: "spring", bounce: 0.2 }}
+                    initial={{ x: -60, opacity: 0, rotate: -4 }}
+                    animate={logoControls}
                 >
-                    {/* Avatar – entrance then float */}
-                    <motion.div
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.65, duration: 0.9, type: "spring", bounce: 0.4 }}
-                    >
-                        <motion.div
-                            className="hero-avatar-ring"
-                            animate={{ y: [0, -7, 0] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.6 }}
-                        >
-                            <img src={AVATAR_URL} alt="ばぶ宮ちょこみん" />
-                        </motion.div>
-                    </motion.div>
+                    {/* ロゴ画像 */}
+                    <motion.img
+                        src={logoImage}
+                        alt="ばぶ宮ちょこみん"
+                        className="hero-logo"
+                        initial={{ scale: 0.7, opacity: 0, filter: "blur(12px)" }}
+                        animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+                        transition={{ delay: 0.85, duration: 0.7, type: "spring", bounce: 0.3 }}
+                        style={{
+                            filter: "drop-shadow(0 4px 20px rgba(155,127,224,0.4))",
+                        }}
+                    />
 
-                    {/* Title */}
-                    <motion.div
-                        className="hero-title-wrap"
-                        initial={{ y: 30, opacity: 0, filter: "blur(10px)" }}
-                        animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                        transition={{ delay: 0.8, duration: 0.9 }}
+                    {/* サブタイトル */}
+                    <motion.p
+                        style={{
+                            fontSize: "0.82rem",
+                            fontFamily: "'Outfit', sans-serif",
+                            fontWeight: 600,
+                            color: "rgba(61,44,74,0.6)",
+                            margin: 0,
+                            letterSpacing: "0.22em",
+                        }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1.1, duration: 0.7 }}
                     >
-                        <h1
-                            style={{
-                                fontSize: "clamp(2rem, 6.5vw, 4rem)",
-                                fontWeight: 900,
-                                fontFamily: "'Outfit', sans-serif",
-                                background: "linear-gradient(135deg, #9b7fe0 0%, #f47db5 55%, #4ecdc4 100%)",
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                                backgroundClip: "text",
-                                margin: 0,
-                                letterSpacing: "-2px",
-                                filter: "drop-shadow(0 2px 16px rgba(155,127,224,0.32))",
-                                lineHeight: 1,
-                            }}
-                        >
-                            CHOCCOMINTICE
-                        </h1>
-                        <motion.p
-                            style={{
-                                fontSize: "0.88rem",
-                                fontFamily: "'M PLUS Rounded 1c', sans-serif",
-                                color: "rgba(61,44,74,0.6)",
-                                margin: "8px 0 0",
-                                letterSpacing: "0.12em",
-                            }}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 1.05, duration: 0.8 }}
-                        >
-                            ばぶ宮ちょこみん🍼🌱
-                        </motion.p>
-                    </motion.div>
+                        CHOCCOMINTICE
+                    </motion.p>
 
+                    {/* 全身アバター – ロゴ基準で絶対配置 */}
+                    <motion.div
+                        className="hero-avatar-wrapper"
+                        initial={{ x: 150, y: 20, opacity: 0 }}
+                        animate={{ x: 0, y: 0, opacity: 1 }}
+                        transition={{ delay: 2, duration: 4.5, type: "spring", stiffness: 80, damping: 18 }}
+                    >
+                        <div className="hero-avatar-full">
+                            <img src={avatarImage} alt="ばぶ宮ちょこみん" />
+                        </div>
+                    </motion.div>
                 </motion.div>
             </motion.div>
 
-            {/* Scroll indicator */}
+            {/* スクロールインジケーター */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 2.3, duration: 1 }}
+                transition={{ delay: 2.5, duration: 1 }}
                 style={{
                     position: "absolute",
                     bottom: "84px",

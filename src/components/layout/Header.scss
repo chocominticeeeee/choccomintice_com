@@ -1,146 +1,60 @@
 @use "../../styles/variables" as v;
 
 // ================================================================
-// Avatar – rotating conic-gradient ring + glow pulse
+// ロゴ画像
 // ================================================================
-.hero-avatar-ring {
-    position: relative;
-    width: 130px;
-    height: 130px;
-    flex-shrink: 0;
+.hero-logo {
+    width: 600px;
+    height: auto;
 
     @media (max-width: 950px) {
-        width: 100px;
-        height: 100px;
-    }
-
-    // Rotating gradient ring
-    &::before {
-        content: "";
-        position: absolute;
-        inset: -3px;
-        border-radius: 50%;
-        background: conic-gradient(
-            from 0deg,
-            v.$color-accent-purple,
-            v.$color-accent-pink,
-            v.$color-accent-mint,
-            v.$color-pastel-lavender,
-            v.$color-accent-purple
-        );
-        animation: heroAvatarSpin 5s linear infinite;
-        will-change: transform;
-        z-index: 0;
-    }
-
-    // Outer glow pulse
-    &::after {
-        content: "";
-        position: absolute;
-        inset: -16px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(155, 127, 224, 0.28) 0%, transparent 65%);
-        animation: heroGlowPulse 2.8s ease-in-out infinite;
-        z-index: -1;
-        pointer-events: none;
-    }
-
-    img {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        border: 4px solid white;
-        object-fit: cover;
-        display: block;
-        background: white;
+        width: 300px;
     }
 }
 
 // ================================================================
-// Title wrapper – gradient underline via ::after
+// ヒーローレイアウト – アバターとコンテンツの横並び
 // ================================================================
-.hero-title-wrap {
-    position: relative;
-    display: inline-block;
-
-    &::after {
-        content: "";
-        display: block;
-        width: 65%;
-        height: 2px;
-        margin: 6px auto 0;
-        background: linear-gradient(
-            90deg,
-            transparent 0%,
-            v.$color-accent-purple 30%,
-            v.$color-accent-pink 70%,
-            transparent 100%
-        );
-        border-radius: 1px;
-        opacity: 0.65;
-    }
+.hero-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 24px;
 }
 
 // ================================================================
-// Hero content – corner bracket accents (desktop only)
+// アバターラッパー – ロゴコンテナ基準で絶対配置
 // ================================================================
-.hero-content {
+.hero-avatar-wrapper {
+    position: absolute;
+    left: 80%;
+    top: -30%;
+    transform: translateY(-50%);
+    z-index: -1;
 
     @media (max-width: 950px) {
-        gap: 12px !important;
+        left: 50%;
+        top: -30%;
+        transform: translateX(-50%);
     }
 
-    &::before,
-    &::after {
-        content: "";
-        position: absolute;
-        width: 32px;
-        height: 32px;
-        pointer-events: none;
+    // ================================================================
+    // 全身アバター画像
+    // ================================================================
+    .hero-avatar-full {
+        img {
+            height: 520px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 12px 48px rgba(155, 127, 224, 0.4));
+            display: block;
+        }
 
         @media (max-width: 950px) {
-            display: none;
+            img {
+                height: 260px;
+            }
         }
-    }
-
-    // Top-left bracket
-    &::before {
-        top: -18px;
-        left: -28px;
-        border-top: 2px solid rgba(155, 127, 224, 0.42);
-        border-left: 2px solid rgba(155, 127, 224, 0.42);
-        border-radius: 5px 0 0 0;
-    }
-
-    // Bottom-right bracket
-    &::after {
-        bottom: -18px;
-        right: -28px;
-        border-bottom: 2px solid rgba(244, 125, 181, 0.42);
-        border-right: 2px solid rgba(244, 125, 181, 0.42);
-        border-radius: 0 0 5px 0;
-    }
-}
-
-// ================================================================
-// Keyframes
-// ================================================================
-@keyframes heroAvatarSpin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes heroGlowPulse {
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 0.65;
-    }
-    50% {
-        transform: scale(1.22);
-        opacity: 1;
     }
 }
