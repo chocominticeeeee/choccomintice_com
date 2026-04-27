@@ -1,10 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import MyTwitterCard from "../components/MyTwitterCard";
 import ArtworksCarousel from "../components/ArtworksCarousel";
 import Lightbox from "../components/Lightbox";
 import "./P_Home.scss";
-import "../components/layout/Header.scss";
-
 import KeyVisual from "../components/layout/KeyVisual";
 
 interface ImageModule {
@@ -20,11 +18,32 @@ const VRChatImages = import.meta.glob<ImageModule>("../assets/images/VRChat/*", 
 
 export default function P_Home() {
     const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
+    const mainRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        const sections = mainRef.current?.querySelectorAll("section");
+        if (!sections) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        sections.forEach((section) => observer.observe(section));
+        return () => observer.disconnect();
+    }, []);
 
     return (
         <>
             <KeyVisual />
-            <main>
+            <main ref={mainRef}>
                 <section>
                     <h2>💬 自己紹介</h2>
                     <MyTwitterCard />

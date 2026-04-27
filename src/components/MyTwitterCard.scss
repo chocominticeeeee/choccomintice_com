@@ -6,9 +6,10 @@
 
     display: flex;
     align-items: center;
-    gap: 20px;
+    flex-flow: column;
+    gap: 10px;
 
-    height: 230px;
+    min-height: 230px;
     width: 100%;
     padding: 20px;
     margin: 30px auto;
@@ -32,7 +33,7 @@
         padding: 15px !important;
         margin: 10px auto;
 
-        gap: 15px;
+        gap: 0px;
         align-items: center;
         text-align: start;
         justify-content: start;
@@ -58,8 +59,16 @@
         }
     }
 
+    .top {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 30px;
+    }
+
     .iconContainer {
-        height: 100%;
+        height: 200px;
         display: flex;
         align-items: center;
 
@@ -84,7 +93,7 @@
 
             &:hover {
                 .icon {
-                    transform: scale(1.05) rotate(4deg);
+                    transform: scale(1.03) rotate(4deg);
                     border-color: v.$color-accent-purple;
                     box-shadow: 0 6px 24px rgba(155, 127, 224, 0.35);
                 }
@@ -150,6 +159,77 @@
             justify-content: start;
             color: v.$color-text-sub;
             margin-top: 5px;
+        }
+    }
+
+    .hero-social-btns {
+        display: flex;
+        justify-content: start;
+        gap: 8px;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-top: 10px;
+
+        @media (max-width: 950px) {
+            gap: 6px;
+            margin-top: 6px;
+        }
+    }
+
+    .btn-icon {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+        flex-shrink: 0;
+        border-radius: 0.2rem;
+
+        @media (max-width: 950px) {
+            width: 14px;
+            height: 14px;
+        }
+    }
+
+    .hero-btn-secondary {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 18px;
+        border-radius: 2rem;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1.5px solid rgba(155, 127, 224, 0.45);
+        color: v.$color-accent-purple;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 700;
+        font-family: v.$font-heading;
+        letter-spacing: 0.03em;
+        overflow: hidden;
+        transition: border-color 0.3s ease;
+
+        @media (max-width: 950px) {
+            padding: 5px 12px;
+            font-size: 0.76rem;
+            gap: 4px;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(155, 127, 224, 0.12), rgba(244, 125, 181, 0.08));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        &:hover {
+            border-color: rgba(155, 127, 224, 0.68);
+
+            &::before {
+                opacity: 1;
+            }
         }
     }
 }
