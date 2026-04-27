@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import MyTwitterCard from "../components/MyTwitterCard";
 import ArtworksCarousel from "../components/ArtworksCarousel";
 import Lightbox from "../components/Lightbox";
 import "./P_Home.scss";
 import "../components/layout/Header.scss";
 
-import HeaderImg from "../assets/images/ヘッダー.jpg";
 import KeyVisual from "../components/layout/KeyVisual";
 
 interface ImageModule {
@@ -25,97 +23,7 @@ export default function P_Home() {
 
     return (
         <>
-            <header
-                className="hero-section"
-                style={{
-                    position: "relative",
-                    height: "60vh",
-                    overflow: "hidden",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                {/* Background Image */}
-                <motion.div
-                    className="hero-bg"
-                    initial={{ scale: 1.1, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                    style={{ position: "absolute", inset: 0, zIndex: 0 }}
-                >
-                    <div
-                        style={{
-                            position: "absolute",
-                            inset: 0,
-                            background:
-                                "linear-gradient(to bottom, rgba(255,240,252,0.28) 0%, rgba(218,198,255,0.60) 100%)",
-                            zIndex: 1,
-                        }}
-                    />
-                    <img
-                        src={HeaderImg}
-                        alt="Key Visual"
-                        style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
-                    />
-                </motion.div>
-
-                {/* ── Hero Content ── */}
-                <KeyVisual />
-
-                {/* Scroll Indicator – mouse icon with animated wheel */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.7, duration: 1 }}
-                    style={{
-                        position: "absolute",
-                        bottom: "36px",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        zIndex: 2,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: "8px",
-                        pointerEvents: "none",
-                    }}
-                >
-                    <span
-                        style={{
-                            fontSize: "0.68rem",
-                            letterSpacing: "3px",
-                            color: "#9b7fe0",
-                            fontFamily: "'Outfit', sans-serif",
-                            fontWeight: 600,
-                        }}
-                    >
-                        SCROLL
-                    </span>
-                    <div
-                        style={{
-                            width: "22px",
-                            height: "36px",
-                            borderRadius: "11px",
-                            border: "2px solid rgba(155,127,224,0.65)",
-                            display: "flex",
-                            justifyContent: "center",
-                            paddingTop: "7px",
-                        }}
-                    >
-                        <motion.div
-                            animate={{ y: [0, 12, 0], opacity: [1, 0.2, 1] }}
-                            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-                            style={{
-                                width: "4px",
-                                height: "8px",
-                                borderRadius: "2px",
-                                background: "linear-gradient(to bottom, #9b7fe0, #f47db5)",
-                            }}
-                        />
-                    </div>
-                </motion.div>
-            </header>
+            <KeyVisual />
 
             <div className="home-content-wrapper">
                 <main>
