@@ -9,7 +9,6 @@ export default function KeyVisual() {
     const ref = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
     const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-    const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
     const heroY = useTransform(scrollYProgress, [0, 0.6], [0, -50]);
     const logoControls = useAnimation();
 
@@ -76,7 +75,6 @@ export default function KeyVisual() {
                 style={{
                     position: "relative",
                     zIndex: 2,
-                    opacity: heroOpacity,
                     y: heroY,
                 }}
             >
