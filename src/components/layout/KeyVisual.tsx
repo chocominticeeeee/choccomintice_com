@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
 import { useRef, useEffect } from "react";
-import "./Header.scss";
+import "./KeyVisual.scss";
 import backgroundImage from "../../assets/images/header.jpg";
 import avatarImage from "../../assets/images/アバター透過.png";
 import logoImage from "../../assets/images/ロゴ.png";
@@ -105,29 +105,13 @@ export default function KeyVisual() {
                         }}
                     />
 
-                    {/* サブタイトル */}
-                    <motion.p
-                        style={{
-                            fontSize: "0.82rem",
-                            fontFamily: "'Outfit', sans-serif",
-                            fontWeight: 600,
-                            color: "rgba(61,44,74,0.6)",
-                            margin: 0,
-                            letterSpacing: "0.22em",
-                        }}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.1, duration: 0.7 }}
-                    >
-                        CHOCCOMINTICE
-                    </motion.p>
-
                     {/* 全身アバター – ロゴ基準で絶対配置 */}
                     <motion.div
                         className="hero-avatar-wrapper"
-                        initial={{ x: 150, y: 20, opacity: 0 }}
-                        animate={{ x: 0, y: 0, opacity: 1 }}
-                        transition={{ delay: 2, duration: 4.5, type: "spring", stiffness: 80, damping: 18 }}
+                        initial={{ x: 150, y: 20, rotateZ: 20, opacity: 0 }}
+                        animate={{ x: 0, y: 0, rotateZ: 5, opacity: 1 }}
+                        transition={{ delay: 2, duration: 1, type: "tween", ease: [0.16, 1, 0.3, 1] }}
+                        style={{ transformOrigin: "bottom" }}
                     >
                         <div className="hero-avatar-full">
                             <img src={avatarImage} alt="ばぶ宮ちょこみん" />

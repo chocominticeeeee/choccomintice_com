@@ -8,7 +8,7 @@
     height: auto;
 
     @media (max-width: 950px) {
-        width: 300px;
+        width: 330px;
     }
 }
 
@@ -29,13 +29,13 @@
 .hero-avatar-wrapper {
     position: absolute;
     left: 80%;
-    top: -30%;
+    top: -60%;
     transform: translateY(-50%);
     z-index: -1;
 
     @media (max-width: 950px) {
-        left: 50%;
-        top: -30%;
+        top: -85%;
+        left: 52%;
         transform: translateX(-50%);
     }
 
@@ -44,7 +44,7 @@
     // ================================================================
     .hero-avatar-full {
         img {
-            height: 520px;
+            height: 720px;
             width: auto;
             object-fit: contain;
             filter: drop-shadow(0 12px 48px rgba(155, 127, 224, 0.4));
@@ -53,7 +53,7 @@
 
         @media (max-width: 950px) {
             img {
-                height: 260px;
+                height: 500px;
             }
         }
     }
