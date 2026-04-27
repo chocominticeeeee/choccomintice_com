@@ -11,20 +11,9 @@
     height: 230px;
     width: 100%;
     padding: 20px;
+    margin: 30px auto;
 
-    @media (max-width: 950px) {
-        height: auto;
-        min-height: 80px;
-        padding: 15px !important;
-        gap: 15px;
-        align-items: center;
-        text-align: start;
-        justify-content: center;
-    }
-
-    margin: 0 auto;
-    margin-bottom: 40px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.82), rgba(255,240,252,0.75));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 240, 252, 0.75));
     backdrop-filter: blur(v.$glass-blur);
     border: 1.5px solid rgba(220, 190, 240, 0.5);
     box-shadow: 0 6px 28px rgba(160, 100, 200, 0.1);
@@ -33,7 +22,21 @@
     line-height: 1.4rem;
     border-radius: 1.8rem;
     overflow-x: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+    @media (max-width: 950px) {
+        height: auto;
+        min-height: 80px;
+        padding: 15px !important;
+        margin: 10px auto;
+
+        gap: 15px;
+        align-items: center;
+        text-align: start;
+        justify-content: start;
+    }
 
     a {
         color: $linkColor;

@@ -1,28 +1,6 @@
 @use "./variables" as v;
 @use "./mixin" as mx;
 
-h2 {
-    font-family: v.$font-heading;
-    font-size: 1.8rem;
-    margin-top: 20px;
-    margin-bottom: 8px;
-    border-bottom: 2px solid v.$color-pastel-lavender;
-    color: v.$color-accent-purple;
-
-    line-height: 2.2rem;
-}
-
-h3 {
-    font-family: v.$font-heading;
-    font-size: 1.5rem;
-    margin-top: 15px;
-    margin-bottom: 8px;
-    border-bottom: 1.5px solid v.$color-pastel-pink;
-    color: v.$color-text-main;
-
-    line-height: 2rem;
-}
-
 .PageTitle {
     margin-bottom: 20px;
 

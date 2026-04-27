@@ -8,6 +8,10 @@ footer {
     background: linear-gradient(to bottom, transparent, rgba(220, 207, 250, 0.2));
     overflow: hidden;
 
+    @media (max-width: 950px) {
+        margin-top: 40px;
+    }
+
     .waves {
         position: relative;
         width: 100%;

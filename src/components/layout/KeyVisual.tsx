@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-import HeaderImg from "../../assets/images/ヘッダー.jpg";
-
-const AVATAR_URL = "https://pbs.twimg.com/profile_images/2043548465326940160/XQ7zRbjc_400x400.jpg";
+import { AVATAR_URL, HEADER_URL } from "../../CONFIG";
 
 export default function KeyVisual() {
     return (
@@ -9,7 +7,7 @@ export default function KeyVisual() {
             className="hero-section"
             style={{
                 position: "relative",
-                height: "60vh",
+                height: "80vh",
                 overflow: "hidden",
                 display: "flex",
                 alignItems: "center",
@@ -34,7 +32,7 @@ export default function KeyVisual() {
                     }}
                 />
                 <img
-                    src={HeaderImg}
+                    src={HEADER_URL}
                     alt="Key Visual"
                     style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
                 />
@@ -51,7 +49,10 @@ export default function KeyVisual() {
                     flexDirection: "column",
                     alignItems: "center",
                     gap: "16px",
-                    padding: "0 32px",
+                    padding: "15px 32px",
+                    width: "100%",
+                    backgroundColor: "rgba(255, 255, 255, 0.74)",
+                    backdropFilter: "blur(3px)",
                 }}
             >
                 {/* Avatar — SCSS handles rotating ring + glow via ::before / ::after */}

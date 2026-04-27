@@ -1,12 +1,13 @@
+import { AVATAR_URL } from "../CONFIG";
 import "./MyTwitterCard.scss";
 import { Cake, Link, CalendarDays } from "lucide-react";
 
 export default function MyTwitterCard() {
     return (
-        <div id="MyTwitterCard">
+        <div id="MyTwitterCard" className="mt-3">
             <div className="iconContainer">
                 <a href="https://x.com/Choccomintice" target="_blank" rel="noopener noreferrer">
-                    <img className="icon" src="https://pbs.twimg.com/profile_images/2043548465326940160/XQ7zRbjc_400x400.jpg" />
+                    <img className="icon" src={AVATAR_URL} />
                 </a>
             </div>
             <div>

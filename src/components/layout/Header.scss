@@ -114,7 +114,9 @@
     color: v.$color-text-main;
     overflow: hidden;
     cursor: default;
-    transition: border-color 0.3s ease, background 0.3s ease;
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease;
 
     // Shimmer sweep
     &::before {
@@ -255,7 +257,7 @@
     gap: 7px;
     padding: 10px 24px;
     border-radius: 2rem;
-    background: rgba(255, 255, 255, 0.60);
+    background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(10px);
     border: 1.5px solid rgba(155, 127, 224, 0.45);
     color: v.$color-accent-purple;
@@ -291,6 +293,7 @@
 // Hero content – corner bracket accents (desktop only)
 // ================================================================
 .hero-content {
+
     @media (max-width: 950px) {
         gap: 12px !important;
     }
@@ -337,7 +340,8 @@
 }
 
 @keyframes heroGlowPulse {
-    0%, 100% {
+    0%,
+    100% {
         transform: scale(1);
         opacity: 0.65;
     }

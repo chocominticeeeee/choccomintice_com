@@ -1,34 +1,67 @@
-.home-content-wrapper {
+@use "../styles/variables" as v;
+@use "../styles/mixin" as mx;
+
+p {
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-family: v.$font-heading;
+    font-size: 1.8rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    border-bottom: 2px solid v.$color-pastel-lavender;
+    color: v.$color-accent-purple;
+    line-height: 2.2rem;
+}
+
+h3 {
+    font-family: v.$font-heading;
+    font-size: 1.5rem;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    border-bottom: 1.5px solid v.$color-pastel-pink;
+    color: v.$color-accent-purple;
+
+    line-height: 2rem;
+}
+
+main {
     padding: 10px;
     width: 100%;
     display: flex;
+    flex-flow: column;
     justify-content: center;
 
-    main {
-        box-shadow: 0 8px 32px rgba(160, 100, 200, 0.12), 0 2px 8px rgba(200, 150, 230, 0.08);
+    section {
         padding: 40px;
-        padding-bottom: 60px;
         width: 100%;
         max-width: 1000px;
-        margin-block: 20px;
-        margin-inline: auto;
+        margin: 20px auto;
+
+        color: #3d2c4a;
+
+        box-shadow:
+            0 8px 32px rgba(160, 100, 200, 0.12),
+            0 2px 8px rgba(200, 150, 230, 0.08);
         background-color: rgba(255, 255, 255, 0.72);
         backdrop-filter: blur(14px);
         border: 1.5px solid rgba(220, 190, 240, 0.45);
         border-radius: 2rem;
-        color: #3d2c4a;
+
+        h2 {
+            margin-top: 0;
+        }
 
         @media (max-width: 950px) {
             padding: 20px;
-            margin-block: 0;
+            margin: 5px auto;
             border-radius: 1.5rem;
         }
     }
 }
 
 .artworks-section {
-    margin: 2rem 0 3rem;
-
     &__desc {
         margin-bottom: 1.4rem;
         opacity: 0.75;
@@ -36,8 +69,6 @@
 }
 
 .vrchat-section {
-    margin: 2rem 0 3rem;
-
     &__intro {
         margin-bottom: 1.5rem;
 
@@ -78,7 +109,9 @@
             overflow: hidden;
             cursor: pointer;
             border: 1.5px solid rgba(220, 190, 240, 0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
             background: rgba(255, 255, 255, 0.5);
 
             img {

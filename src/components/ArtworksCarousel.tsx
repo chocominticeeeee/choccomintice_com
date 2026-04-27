@@ -17,8 +17,12 @@ const TWEEN_FACTOR_BASE = 0.2;
 const numberWithinRange = (number: number, min: number, max: number): number =>
     Math.min(Math.max(number, min), max);
 
-export default function ArtworksCarousel() {
-    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center" });
+interface Props {
+    startIndex?: number;
+}
+
+export default function ArtworksCarousel({ startIndex = 0 }: Props) {
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center", startIndex });
     const tweenFactor = useRef(0);
     const tweenNodes = useRef<HTMLElement[]>([]);
     const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
