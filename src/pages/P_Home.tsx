@@ -45,7 +45,11 @@ export default function P_Home() {
             { threshold: 0.05 }
         );
 
-        sections[0]?.classList.add("visible");
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                sections[0]?.classList.add("visible");
+            });
+        });
         sections.forEach((section, i) => {
             if (i !== 0) observer.observe(section);
         });
