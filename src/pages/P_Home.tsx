@@ -45,7 +45,10 @@ export default function P_Home() {
             { threshold: 0.05 }
         );
 
-        sections.forEach((section) => observer.observe(section));
+        sections[0]?.classList.add("visible");
+        sections.forEach((section, i) => {
+            if (i !== 0) observer.observe(section);
+        });
         return () => observer.disconnect();
     }, []);
 
