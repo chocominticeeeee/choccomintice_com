@@ -1,7 +1,6 @@
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import type { EmblaCarouselType, EmblaEventType } from "embla-carousel";
-import Lightbox from "./Lightbox";
 import "./ArtworksCarousel.scss";
 
 interface ImageModule {
@@ -23,8 +22,6 @@ export default function ArtworksCarousel({ startIndex = 0 }: Props) {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center", startIndex });
     const tweenFactor = useRef(0);
     const tweenNodes = useRef<HTMLElement[]>([]);
-    const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
-    const dragDistance = useRef(0);
     const [slides, setSlides] = useState<{ src: string; alt: string }[]>([]);
 
     useEffect(() => {
@@ -124,10 +121,6 @@ export default function ArtworksCarousel({ startIndex = 0 }: Props) {
                                             src={src}
                                             alt={alt}
                                             loading="lazy"
-                                            style={{ cursor: "zoom-in" }}
-                                            onPointerDown={() => { dragDistance.current = 0; }}
-                                            onPointerMove={(e) => { dragDistance.current += Math.abs(e.movementX) + Math.abs(e.movementY); }}
-                                            onClick={() => { if (dragDistance.current < 5) setLightbox({ src, alt }); }}
                                         />
                                     </div>
                                 </div>
@@ -144,7 +137,6 @@ export default function ArtworksCarousel({ startIndex = 0 }: Props) {
                     </button>
                 </div>
             </div>
-            {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
         </>
     );
 }

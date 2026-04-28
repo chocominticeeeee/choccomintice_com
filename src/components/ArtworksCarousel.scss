@@ -1,5 +1,8 @@
 .embla {
     --slide-height: 28rem;
+    @media (max-width: 950px) {
+        --slide-height: 20rem;
+    }
     --slide-spacing: 1rem;
     --slide-size: 75%;
 
@@ -38,7 +41,7 @@
     will-change: transform;
 
     &::before {
-        content: '';
+        content: "";
         position: absolute;
         inset: 0;
         z-index: -1;
@@ -68,7 +71,7 @@
 .embla__button {
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #fff;
+    color: #311147;
     border-radius: 50%;
     width: 3rem;
     height: 3rem;
@@ -79,7 +82,9 @@
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(6px);
-    transition: background 0.2s, border-color 0.2s;
+    transition:
+        background 0.2s,
+        border-color 0.2s;
 
     &:hover {
         background: rgba(255, 255, 255, 0.25);

@@ -169,7 +169,7 @@ export default function P_Home() {
                                 <div
                                     className="photo-card"
                                     key={index}
-                                    onClick={() => setSelectedImage({ src: url, alt: "VRChat Photo" })}
+                                    onClick={() => window.innerWidth > 950 && setSelectedImage({ src: url, alt: "VRChat Photo" })}
                                 >
                                     <img src={url} alt="VRChat Photo" loading="lazy" />
                                 </div>
