@@ -5,6 +5,7 @@ import Lightbox from "../components/Lightbox";
 import "./P_Home.scss";
 import KeyVisual from "../components/layout/KeyVisual";
 import Uni from "../components/Uni";
+import NoteSection from "../components/NoteSection";
 
 interface ImageModule {
     default: string;
@@ -20,6 +21,7 @@ const VRChatGlob = import.meta.glob<ImageModule>("../assets/images/VRChat/*");
 export default function P_Home() {
     const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
     const [vrChatUrls, setVrChatUrls] = useState<string[]>([]);
+
     const mainRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -169,7 +171,9 @@ export default function P_Home() {
                                 <div
                                     className="photo-card"
                                     key={index}
-                                    onClick={() => window.innerWidth > 950 && setSelectedImage({ src: url, alt: "VRChat Photo" })}
+                                    onClick={() =>
+                                        window.innerWidth > 950 && setSelectedImage({ src: url, alt: "VRChat Photo" })
+                                    }
                                 >
                                     <img src={url} alt="VRChat Photo" loading="lazy" />
                                 </div>
@@ -183,10 +187,21 @@ export default function P_Home() {
                 )}
 
                 <section>
+                    <h2>📒 note</h2>
+                    <p>VRChatでの出来事や個人的なニュースを記事に書いています🦀</p>
+                    <NoteSection />
+                </section>
+
+                <section>
                     <h2>👋 最後に！</h2>
                     <p>
-                        ここまで読んでくれてありがとうございました！ <br />
-                        基本的にフォロバ100％なので気軽にフォローしてからんでいただけると嬉しいです✨
+                        ここまで読んでくれてありがとうございました(*..)” <br />
+                        Twitterはフォロバ100％なので気軽にフォローして絡んでくれたら嬉しいです✨
+                    </p>
+                    <p>
+                        普段夜勤なので時間合うタイミングが少ないんですけど、ぶいちゃのフレンド、ゲームしてくれる人も募集してます。
+                        <br />
+                        もし遊びたいよ～！って人いたらDMで声かけてくれたらDiscordサーバー招待しますので一緒にあそぼー！🎮
                     </p>
                     <p>
                         全部読むくらい興味があるんだね...？ 鍵垢フォローしてみてね。

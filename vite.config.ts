@@ -10,5 +10,12 @@ export default defineConfig({
             usePolling: true,
             interval: 100,
         },
+        proxy: {
+            "/note-api": {
+                target: "https://note.com",
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/note-api/, ""),
+            },
+        },
     },
 });
