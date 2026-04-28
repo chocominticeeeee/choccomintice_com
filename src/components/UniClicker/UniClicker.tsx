@@ -1,21 +1,24 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import uniSfx from "../../assets/uni.wav";
+
 import { STORE_ITEMS } from "./store_items";
 import type { OwnedItems, SaveData, StoreItem } from "./uni_types";
-import { calcCost, calcCps, loadSave, SAVE_KEY } from "./uni_utils";
+import { calcCost, calcCps, loadData, SAVE_KEY, saveData, uniSound } from "./uni_utils";
 import "./UniClicker.scss";
+import { Info } from "lucide-react";
 
 export default function UniClicker() {
-    const save = loadSave();
+    const save = loadData();
     const [crabs, setCrabs] = useState(save.crabs);
     const [totalCrabs, setTotalCrabs] = useState(save.totalCrabs);
     const [owned, setOwned] = useState<OwnedItems>(save.owned);
     const [floats, setFloats] = useState<{ id: number; x: number; y: number }[]>([]);
     const [clicking, setClicking] = useState(false);
     const floatId = useRef(0);
+
     const crabsRef = useRef(crabs);
     const totalCrabsRef = useRef(totalCrabs);
     const ownedRef = useRef(owned);
+
     crabsRef.current = crabs;
     totalCrabsRef.current = totalCrabs;
     ownedRef.current = owned;
@@ -24,19 +27,32 @@ export default function UniClicker() {
 
     // オートセーブ
     useEffect(() => {
-        const doSave = () =>
-            localStorage.setItem(
-                SAVE_KEY,
-                JSON.stringify({ crabs: crabsRef.current, totalCrabs: totalCrabsRef.current, owned: ownedRef.current }),
-            );
-        const id = setInterval(doSave, 5000);
-        window.addEventListener("beforeunload", doSave);
+        const id = setInterval(() => {
+            const newData: SaveData = {
+                crabs: crabsRef.current,
+                totalCrabs: totalCrabsRef.current,
+                owned: ownedRef.current,
+            };
+            saveData(newData);
+            console.log("save");
+        }, 5000);
+
+        const handleUnload = () => {
+            saveData({
+                crabs: crabsRef.current,
+                totalCrabs: totalCrabsRef.current,
+                owned: ownedRef.current,
+            });
+        };
+
+        window.addEventListener("beforeunload", handleUnload);
+
         return () => {
             clearInterval(id);
-            window.removeEventListener("beforeunload", doSave);
-            doSave();
+            window.removeEventListener("beforeunload", handleUnload);
+            handleUnload();
         };
-    }, []); // refs で最新値を読むので deps 不要
+    }, []);
 
     // アイテムによる自動生産
     useEffect(() => {
@@ -49,7 +65,7 @@ export default function UniClicker() {
     }, [cps]);
 
     const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-        new Audio(uniSfx).play();
+        uniSound();
         setCrabs((p) => p + 1);
         setTotalCrabs((p) => p + 1);
         const rect = e.currentTarget.getBoundingClientRect();
@@ -61,6 +77,7 @@ export default function UniClicker() {
     }, []);
 
     const handleBuy = useCallback((item: StoreItem) => {
+        uniSound();
         const n = ownedRef.current[item.id] ?? 0;
         const cost = calcCost(item, n);
         if (crabsRef.current < cost) return;
@@ -70,7 +87,11 @@ export default function UniClicker() {
 
     const handleReset = useCallback(() => {
         if (!confirm("本当に🦀を海に放ちますか？※リセット")) return;
-        localStorage.removeItem(SAVE_KEY);
+        saveData({
+            crabs: 0,
+            totalCrabs: 0,
+            owned: {},
+        });
         setCrabs(0);
         setTotalCrabs(0);
         setOwned({});
@@ -84,7 +105,7 @@ export default function UniClicker() {
                     {/* counter */}
                     <div className="uni-clicker__counter">
                         <div className="uni-clicker__counter-main">🦀 {Math.floor(crabs).toLocaleString()}</div>
-                        <div className="uni-clicker__counter-sub">per second: {cps.toFixed(1)}</div>
+                        <div className="uni-clicker__counter-sub">per second: {cps.toFixed(0)}</div>
                     </div>
 
                     {/* big crab */}
@@ -137,7 +158,7 @@ export default function UniClicker() {
                                             <div className="uni-clicker__item-name">？？？</div>
                                             <div className="uni-clicker__item-desc">まだ解放されていません</div>
                                             <div className="uni-clicker__item-cps">
-                                                🦀 {calcCost(item, 0).toLocaleString()} から
+                                                🦀の総生産数 {calcCost(item, 0).toLocaleString()} で開放
                                             </div>
                                         </div>
                                     </div>

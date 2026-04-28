@@ -6,8 +6,7 @@ export const STORE_ITEMS: StoreItem[] = [
     { id: "rod", name: "釣り竿", emoji: "🎣", description: "釣り竿で狙い撃ち！", baseCost: 350, cps: 3 },
     { id: "boat", name: "漁船", emoji: "🚢", description: "沖まで出て大量捕獲", baseCost: 1500, cps: 12 },
     { id: "factory", name: "ウニ工場", emoji: "🏭", description: "大量生産体制の確立", baseCost: 7000, cps: 45 },
-    { id: "kingdom", name: "ウニ王国", emoji: "🌏", description: "全世界の🦀を支配する", baseCost: 35000, cps: 150 },
-
+    { id: "kingdom", name: "ウニ王国", emoji: "🌏", description: "全世界のウニを支配する", baseCost: 35000, cps: 150 },
     { id: "drone", name: "漁業ドローン", emoji: "🚁", description: "自動でウニを探索", baseCost: 140000, cps: 400 },
     {
         id: "submarine",
@@ -18,7 +17,14 @@ export const STORE_ITEMS: StoreItem[] = [
         cps: 1200,
     },
     { id: "lab", name: "ウニ研究所", emoji: "🔬", description: "効率を科学的に改善", baseCost: 3500000, cps: 3000 },
-    { id: "clone", name: "ウニクローン装置", emoji: "🧬", description: "ウニを無限増殖", baseCost: 14000000, cps: 9000 },
+    {
+        id: "clone",
+        name: "ウニクローン装置",
+        emoji: "🧬",
+        description: "ウニを無限増殖",
+        baseCost: 14000000,
+        cps: 9000,
+    },
     { id: "ai", name: "漁業AI", emoji: "🤖", description: "最適な漁を自動化", baseCost: 70000000, cps: 22000 },
     {
         id: "satellite",
@@ -64,7 +70,7 @@ export const STORE_ITEMS: StoreItem[] = [
     {
         id: "god",
         name: "ウニ神",
-        emoji: "🦀✨",
+        emoji: "🦀",
         description: "存在するだけでウニが増える",
         baseCost: 3500000000000,
         cps: 18000000,
