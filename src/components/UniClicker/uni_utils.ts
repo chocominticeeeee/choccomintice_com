@@ -5,10 +5,8 @@ import uniSfx from "../../assets/uni.wav";
 export const SAVE_KEY = "uniclicker_save";
 
 export function saveData(newData: SaveData) {
-     console.log("b");
     try {
         localStorage.setItem(SAVE_KEY, JSON.stringify(newData));
-        console.log("セーブしました🦀", newData);
     } catch {
         /* ignore */
     }

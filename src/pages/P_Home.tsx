@@ -196,8 +196,8 @@ export default function P_Home() {
                 <section>
                     <h2>👋 最後に！</h2>
                     <p>
-                        ここまで読んでくれてありがとうございました(*..)” <br />
-                        Twitterはフォロバ100％なので気軽にフォローして絡んでくれたら嬉しいです✨
+                        ここまで読んでくれてありがとう！(*..)” <br />
+                        Twitterフォロバ100％なので気軽にフォローして絡んでくれたら嬉しいです✨
                     </p>
                     <p>
                         普段夜勤なので時間合うタイミングが少ないんですけど、ぶいちゃのフレンド、ゲームしてくれる人も募集してます。
@@ -205,14 +205,12 @@ export default function P_Home() {
                         もし遊びたいよ～！って人いたらDMで声かけてくれたらDiscordサーバー招待しますので一緒にあそぼー！🎮
                     </p>
                     <p>
-                        全部読むくらい興味があるんだね...？ 鍵垢フォローしてみてね。
+                        全部読むくらい興味があるんだね...？ 鍵垢フォローしてみてね👉
                         <a href="https://x.com/Choccomintice_" target="_blank" rel="noopener noreferrer">
                             @Choccomintice_ 🗝
                         </a>
                     </p>
-                    <p>
-                        <Uni />
-                    </p>
+                    <Uni />
                 </section>
 
                 <section>

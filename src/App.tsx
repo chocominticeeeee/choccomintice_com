@@ -3,7 +3,7 @@ import Footer from "./components/layout/Footer";
 import P_Home from "./pages/P_Home";
 import P_Notfound from "./pages/P_Notfound";
 
-function App() {
+function App() {    
     return (
         <BrowserRouter basename="/">
             <Routes>

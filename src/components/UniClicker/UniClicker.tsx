@@ -34,7 +34,6 @@ export default function UniClicker() {
                 owned: ownedRef.current,
             };
             saveData(newData);
-            console.log("save");
         }, 5000);
 
         const handleUnload = () => {
