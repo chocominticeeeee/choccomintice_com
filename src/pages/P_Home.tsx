@@ -6,6 +6,7 @@ import "./P_Home.scss";
 import KeyVisual from "../components/layout/KeyVisual";
 import Uni from "../components/Uni";
 import NoteSection from "../components/NoteSection";
+import UniClicker from "../components/UniClicker/UniClicker";
 
 interface ImageModule {
     default: string;
@@ -185,6 +186,12 @@ export default function P_Home() {
                 {selectedImage && (
                     <Lightbox src={selectedImage.src} alt={selectedImage.alt} onClose={() => setSelectedImage(null)} />
                 )}
+
+                <section>
+                    <h2>🦀 ウニクリッカー</h2>
+                    <p>🦀をクリックしてウニを集めよう！</p>
+                    <UniClicker />
+                </section>
 
                 <section>
                     <h2>📒 note</h2>
