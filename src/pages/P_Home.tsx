@@ -163,9 +163,29 @@ export default function P_Home() {
                             大体JPTかプラべにいることが多いです。
                         </p>
                         <p>なでなでとV睡が好きで、普段はJPTかプラべにいることが多いです。</p>
+                        <p>
+                            大人数のインスタンスは自分の存在感が薄くなっていくのを感じるのが苦手でほとんど行くことがないです。
+                            <br />
+                            基本的に1対1でコミュニケーションすることがほとんどです。（フレ+に入れない...）
+                        </p>
+                        <p>愛莉ちゃん、しなのちゃんをメインで使っています🐈</p>
                     </div>
+                    <h2 className="vrchat-section__memories-title">🧩 VRChat非公式Web拡張</h2>
+                    <p>
+                        VRChatの公式サイトを見やすくする拡張機能をchromeストアで公開してます！
+                        <br />
+                        良かったら使ってみてね！👉
+                        <a
+                            href="https://chocominticeeeee.github.io/VRChat_Unofficial_Web_Extension_Web/#/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            VRChat非公式Web拡張 公式サイト
+                        </a>
+                    </p>
 
                     <h2 className="vrchat-section__memories-title">📸 Memories</h2>
+                    <p>たくさんの思い出たち。</p>
                     <div className="vrchat-section__gallery-scroll">
                         <div className="vrchat-section__gallery">
                             {vrChatUrls.map((url, index) => (
