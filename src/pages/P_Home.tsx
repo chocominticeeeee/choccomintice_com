@@ -188,12 +188,6 @@ export default function P_Home() {
                 )}
 
                 <section>
-                    <h2>🦀 ウニクリッカー</h2>
-                    <p>🦀をクリックしてウニを集めよう！</p>
-                    <UniClicker />
-                </section>
-
-                <section>
                     <h2>📒 note</h2>
                     <p>VRChatでの出来事や個人的なニュースを記事に書いています🦀</p>
                     <NoteSection />
@@ -219,6 +213,12 @@ export default function P_Home() {
                     <p>
                         <Uni />
                     </p>
+                </section>
+
+                <section>
+                    <h2>🦀 ウニクリッカー</h2>
+                    <p>🦀をクリックしてウニを集めよう！</p>
+                    <UniClicker />
                 </section>
             </main>
         </>
