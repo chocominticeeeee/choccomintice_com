@@ -7,6 +7,7 @@ import KeyVisual from "../components/layout/KeyVisual";
 import Uni from "../components/Uni";
 import NoteSection from "../components/NoteSection";
 import UniClicker from "../components/UniClicker/UniClicker";
+import VRChatGallery from "../components/VRChatGallery";
 
 interface ImageModule {
     default: string;
@@ -186,26 +187,12 @@ export default function P_Home() {
 
                     <h2 className="vrchat-section__memories-title">📸 Memories</h2>
                     <p>たくさんの思い出たち。</p>
-                    <div className="vrchat-section__gallery-scroll">
-                        <div className="vrchat-section__gallery">
-                            {vrChatUrls.map((url, index) => (
-                                <div
-                                    className="photo-card"
-                                    key={index}
-                                    onClick={() =>
-                                        window.innerWidth > 950 && setSelectedImage({ src: url, alt: "VRChat Photo" })
-                                    }
-                                >
-                                    <img src={url} alt="VRChat Photo" loading="lazy" />
-                                </div>
-                            ))}
-                            {Object.keys(VRChatGlob).length === 0 && <p className="no-images">No images found.</p>}
-                        </div>
-                    </div>
+                    <VRChatGallery
+                        urls={vrChatUrls}
+                        totalCount={Object.keys(VRChatGlob).length}
+                        onSelect={setSelectedImage}
+                    />
                 </section>
-                {selectedImage && (
-                    <Lightbox src={selectedImage.src} alt={selectedImage.alt} onClose={() => setSelectedImage(null)} />
-                )}
 
                 <section>
                     <h2>📒 note</h2>
@@ -238,6 +225,10 @@ export default function P_Home() {
                     <p>🦀をクリックしてウニを集めよう！</p>
                     <UniClicker />
                 </section>
+                
+                {selectedImage && (
+                    <Lightbox src={selectedImage.src} alt={selectedImage.alt} onClose={() => setSelectedImage(null)} />
+                )}
             </main>
         </>
     );

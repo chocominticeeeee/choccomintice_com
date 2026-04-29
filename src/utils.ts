@@ -23,7 +23,7 @@ export async function fetchNoteArticles(username: string, page = 1): Promise<Not
     const res = await fetch(
         `${base}/api/v2/creators/${username}/contents?kind=note&page=${page}`
     );
-    if (!res.ok) throw new Error(`Note API error: ${res.status}`);
+    if (!res.ok) throw new Error(`Note APIエラー: ${res.status}`);
     const json: NoteApiResponse = await res.json();
     return json.data.contents;
 }

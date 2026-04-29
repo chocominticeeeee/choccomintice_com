@@ -8,7 +8,7 @@ export function saveData(newData: SaveData) {
     try {
         localStorage.setItem(SAVE_KEY, JSON.stringify(newData));
     } catch {
-        /* ignore */
+        // localStorage が使えない環境では無視
     }
 }
 
@@ -17,7 +17,7 @@ export function loadData(): SaveData {
         const raw = localStorage.getItem(SAVE_KEY);
         if (raw) return JSON.parse(raw);
     } catch {
-        /* ignore */
+        // 破損データは無視して初期値を返す
     }
     return { crabs: 0, totalCrabs: 0, owned: {} };
 }
@@ -28,12 +28,6 @@ export function calcCps(owned: OwnedItems) {
 
 export function calcCost(item: StoreItem, n: number) {
     return Math.floor(item.baseCost * Math.pow(1.15, n));
-}
-
-export function calcCostN(item: StoreItem, n: number, qty: number) {
-    let t = 0;
-    for (let i = 0; i < qty; i++) t += calcCost(item, n + i);
-    return t;
 }
 
 export function uniSound() {

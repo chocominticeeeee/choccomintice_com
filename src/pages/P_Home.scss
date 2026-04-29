@@ -132,10 +132,18 @@ main {
             overflow: hidden;
             cursor: pointer;
             border: 1.5px solid rgba(220, 190, 240, 0.4);
-            transition:
-                transform 0.3s ease,
-                box-shadow 0.3s ease;
             background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            transition:
+                opacity 0.6s ease,
+                transform 0.6s ease,
+                box-shadow 0.3s ease;
+
+            &.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
 
             img {
                 width: 100%;

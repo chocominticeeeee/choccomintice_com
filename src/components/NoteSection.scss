@@ -1,5 +1,11 @@
 @use "../styles/variables" as v;
 
+.note-status {
+    margin-top: 1rem;
+    color: v.$color-text-sub;
+    font-size: 0.9rem;
+}
+
 .note-articles {
     display: flex;
     flex-direction: row;

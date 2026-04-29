@@ -1,10 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 
 import { STORE_ITEMS } from "./store_items";
 import type { OwnedItems, SaveData, StoreItem } from "./uni_types";
-import { calcCost, calcCps, loadData, SAVE_KEY, saveData, uniSound } from "./uni_utils";
+import { calcCost, calcCps, loadData, saveData, uniSound } from "./uni_utils";
 import "./UniClicker.scss";
-import { Info } from "lucide-react";
 
 export default function UniClicker() {
     const save = loadData();
@@ -25,15 +24,14 @@ export default function UniClicker() {
 
     const cps = calcCps(owned);
 
-    // オートセーブ
+    // オートセーブ（5秒ごと＋ページ離脱時）
     useEffect(() => {
         const id = setInterval(() => {
-            const newData: SaveData = {
+            saveData({
                 crabs: crabsRef.current,
                 totalCrabs: totalCrabsRef.current,
                 owned: ownedRef.current,
-            };
-            saveData(newData);
+            });
         }, 5000);
 
         const handleUnload = () => {
@@ -86,28 +84,85 @@ export default function UniClicker() {
 
     const handleReset = useCallback(() => {
         if (!confirm("本当に🦀を海に放ちますか？※リセット")) return;
-        saveData({
-            crabs: 0,
-            totalCrabs: 0,
-            owned: {},
-        });
+        saveData({ crabs: 0, totalCrabs: 0, owned: {} });
         setCrabs(0);
         setTotalCrabs(0);
         setOwned({});
     }, []);
 
+    // ショップアイテムの表示リストを計算
+    const storeRows = useMemo(() => {
+        const lastUnlocked = STORE_ITEMS.reduce(
+            (max, item, i) => (totalCrabs >= item.baseCost ? i : max),
+            0,
+        );
+        const teaserIdx = lastUnlocked + 1;
+
+        return STORE_ITEMS.map((item, i) => {
+            if (i > teaserIdx) return null;
+
+            // 次のアイテムのティーザー表示
+            if (i === teaserIdx) {
+                return (
+                    <div key={item.id} className="uni-clicker__item-row uni-clicker__item-row--teaser">
+                        <div className="uni-clicker__item-icon uni-clicker__item-icon--grayscale">🔒</div>
+                        <div className="uni-clicker__item-body">
+                            <div className="uni-clicker__item-name">？？？</div>
+                            <div className="uni-clicker__item-desc">まだ解放されていません</div>
+                            <div className="uni-clicker__item-cps">
+                                🦀の総生産数 {calcCost(item, 0).toLocaleString()} で開放
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // 通常アイテム行
+            const n = owned[item.id] ?? 0;
+            const cost1 = calcCost(item, n);
+            const can1 = crabs >= cost1;
+            return (
+                <div
+                    key={item.id}
+                    className={`uni-clicker__item-row${!can1 ? " uni-clicker__item-row--disabled" : ""}`}
+                >
+                    <div className="uni-clicker__item-icon">{item.emoji}</div>
+                    <div className="uni-clicker__item-body">
+                        <div className="uni-clicker__item-name">
+                            {item.name}
+                            <span className="uni-clicker__item-desc">{item.description}</span>
+                        </div>
+                        <div className="uni-clicker__item-cps">+{item.cps} 🦀/秒</div>
+                    </div>
+                    <div className="uni-clicker__buy-col">
+                        <button
+                            onClick={() => handleBuy(item)}
+                            disabled={!can1}
+                            className={`uni-clicker__buy-btn${can1 ? " uni-clicker__buy-btn--active" : ""}`}
+                        >
+                            <span className="uni-clicker__buy-cost">🦀{cost1.toLocaleString()}</span>
+                        </button>
+                    </div>
+                    <div className="count-badge-area">
+                        <div className="uni-clicker__count-badge">{n}</div>
+                    </div>
+                </div>
+            );
+        });
+    }, [totalCrabs, crabs, owned, handleBuy]);
+
     return (
         <div className="uni-clicker">
-            {/* ===== LEFT: clicker ===== */}
+            {/* 左パネル: クリッカー */}
             <div className="uni-clicker__left">
                 <div>
-                    {/* counter */}
+                    {/* カウンター */}
                     <div className="uni-clicker__counter">
                         <div className="uni-clicker__counter-main">🦀 {Math.floor(crabs).toLocaleString()}</div>
-                        <div className="uni-clicker__counter-sub">per second: {cps.toFixed(0)}</div>
+                        <div className="uni-clicker__counter-sub">毎秒: {cps.toFixed(0)}</div>
                     </div>
 
-                    {/* big crab */}
+                    {/* カニボタン */}
                     <div className="uni-clicker__crab-wrap">
                         <button
                             onClick={handleClick}
@@ -130,74 +185,12 @@ export default function UniClicker() {
                 </button>
             </div>
 
-            {/* ===== RIGHT: store ===== */}
+            {/* 右パネル: ショップ */}
             <div className="uni-clicker__right">
                 <div className="uni-clicker__store-head">
                     <span className="uni-clicker__store-head-text">🏪 ショップ</span>
                 </div>
-
-                <div className="uni-clicker__item-list">
-                    {(() => {
-                        const lastUnlocked = STORE_ITEMS.reduce((max, item, i) => {
-                            return totalCrabs >= item.baseCost ? i : max;
-                        }, 0);
-                        const teaserIdx = lastUnlocked + 1;
-
-                        return STORE_ITEMS.map((item, i) => {
-                            if (i > teaserIdx) return null;
-
-                            // teaser row
-                            if (i === teaserIdx) {
-                                return (
-                                    <div key={item.id} className="uni-clicker__item-row uni-clicker__item-row--teaser">
-                                        <div className="uni-clicker__item-icon uni-clicker__item-icon--grayscale">
-                                            🔒
-                                        </div>
-                                        <div className="uni-clicker__item-body">
-                                            <div className="uni-clicker__item-name">？？？</div>
-                                            <div className="uni-clicker__item-desc">まだ解放されていません</div>
-                                            <div className="uni-clicker__item-cps">
-                                                🦀の総生産数 {calcCost(item, 0).toLocaleString()} で開放
-                                            </div>
-                                        </div>
-                                    </div>
-                                );
-                            }
-
-                            // normal row
-                            const n = owned[item.id] ?? 0;
-                            const cost1 = calcCost(item, n);
-                            const can1 = crabs >= cost1;
-                            return (
-                                <div
-                                    key={item.id}
-                                    className={`uni-clicker__item-row${!can1 ? " uni-clicker__item-row--disabled" : ""}`}
-                                >
-                                    <div className="uni-clicker__item-icon">{item.emoji}</div>
-                                    <div className="uni-clicker__item-body">
-                                        <div className="uni-clicker__item-name">
-                                            {item.name}
-                                            <span className="uni-clicker__item-desc">{item.description}</span>
-                                        </div>
-                                        <div className="uni-clicker__item-cps">+{item.cps} 🦀/s each</div>
-                                    </div>
-                                    <div className="uni-clicker__buy-col">
-                                        <button
-                                            onClick={() => handleBuy(item)}
-                                            disabled={!can1}
-                                            className={`uni-clicker__buy-btn${can1 ? " uni-clicker__buy-btn--active" : ""}`}
-                                        >
-                                            <span className="uni-clicker__buy-cost">🦀{cost1.toLocaleString()}</span>
-                                        </button>
-                                    </div>
-                                    <div className="count-badge-area">
-                                        <div className="uni-clicker__count-badge">{n}</div>
-                                    </div>
-                                </div>
-                            );
-                        });
-                    })()}
-                </div>
+                <div className="uni-clicker__item-list">{storeRows}</div>
             </div>
         </div>
     );

@@ -5,10 +5,18 @@ import "./NoteSection.scss";
 
 export default function NoteSection() {
     const [articles, setArticles] = useState<NoteArticle[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
-        fetchNoteArticles("choccomintice").then(setArticles).catch(console.error);
+        fetchNoteArticles("choccomintice")
+            .then(setArticles)
+            .catch(() => setError(true))
+            .finally(() => setLoading(false));
     }, []);
+
+    if (loading) return <p className="note-status">読み込み中...</p>;
+    if (error) return <p className="note-status">記事の取得に失敗しました</p>;
 
     return (
         <>

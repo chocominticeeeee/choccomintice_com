@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
 import { useRef, useEffect } from "react";
 import "./KeyVisual.scss";
-// import backgroundImage from "../../assets/images/header.jpg";
 import avatarImage from "../../assets/images/アバター透過.png";
 import logoImage from "../../assets/images/ロゴ.png";
 import { HEADER_URL } from "../../CONFIG";
