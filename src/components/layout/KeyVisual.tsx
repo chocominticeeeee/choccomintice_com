@@ -3,6 +3,7 @@ import { useRef, useEffect } from "react";
 import "./KeyVisual.scss";
 import avatarImage from "../../assets/images/アバター透過.png";
 import logoImage from "../../assets/images/ロゴ.png";
+import HeaderImg from "../../assets/images/header.jpg";
 import { HEADER_URL } from "../../CONFIG";
 
 export default function KeyVisual() {
@@ -63,9 +64,15 @@ export default function KeyVisual() {
                     }}
                 />
                 <img
-                    src={HEADER_URL}
+                    src={HeaderImg ?? HEADER_URL}
                     alt="Key Visual"
-                    style={{ width: "100%", height: "120%", objectFit: "cover", objectPosition: "center", filter: "blur(6px)" }}
+                    style={{
+                        width: "100%",
+                        height: "120%",
+                        objectFit: "cover",
+                        objectPosition: "center",
+                        filter: "blur(6px)",
+                    }}
                 />
             </motion.div>
 

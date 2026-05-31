@@ -57,10 +57,18 @@ main {
             filter: blur(0);
         }
 
-        &:nth-child(1) { transition-delay: 0ms; }
-        &:nth-child(2) { transition-delay: 80ms; }
-        &:nth-child(3) { transition-delay: 160ms; }
-        &:nth-child(4) { transition-delay: 240ms; }
+        &:nth-child(1) {
+            transition-delay: 0ms;
+        }
+        &:nth-child(2) {
+            transition-delay: 80ms;
+        }
+        &:nth-child(3) {
+            transition-delay: 160ms;
+        }
+        &:nth-child(4) {
+            transition-delay: 240ms;
+        }
 
         color: #3d2c4a;
 
@@ -74,6 +82,17 @@ main {
 
         h2 {
             margin-top: 0;
+        }
+
+        h3 {
+            margin-top: 30px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 1rem;
         }
 
         @media (max-width: 950px) {
@@ -125,7 +144,6 @@ main {
         }
     }
 }
-
 
 .vrchat-section {
     &__intro {

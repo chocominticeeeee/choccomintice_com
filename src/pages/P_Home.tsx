@@ -8,6 +8,7 @@ import Uni from "../components/Uni";
 import NoteSection from "../components/NoteSection";
 import UniClicker from "../components/UniClicker/UniClicker";
 import VRChatGallery from "../components/VRChatGallery";
+import deskImg from "../assets/images/ちょこみんのデスク.png";
 
 interface ImageModule {
     default: string;
@@ -80,32 +81,24 @@ export default function P_Home() {
                     人生の半分以上はパソコンとにらめっこしてて、自作パソコンだったり、プログラミングだったり、 <br />
                     パソコンゲーム、ゲーミングデバイスとかとにかくパソコン関係に強いです💻 <br />
                     <h3>🎮 趣味</h3>
-                    <ul>
-                        <li>
-                            <h4>🔸音楽鑑賞 </h4>
-                            <div>
-                                好きなアーティストの音楽をよく聴いてます。 <br />
-                                ・藍月なくる🪼(@NakuruAitsuki) <br />
-                                ・棗いつき⚜(@itsukinatsume) <br />
-                                ・nayuta (@7utauta) <br />
-                                ・月乃 (@tsuki_nxo) <br />
-                                ・Imy (@Imy_official) <br />
-                            </div>
-                            <br />
-                        </li>
-
-                        <li>
-                            <h4>🔸ゲーム</h4>
-                            <div>
-                                <p>最近よく遊んでるゲームは DeltaForce、APEX、モンハンワールド、CS2です！</p>
-                                <p>
-                                    ハマったゲームは <br /> AVA / OW / タルコフ/ Valorant / SF2 / PUBG <br />
-                                    The cycle:frontier / osu! / モンハン / PSO2 などなど...
-                                </p>
-                            </div>
-                            <br />
-                        </li>
-                    </ul>
+                    <h4>🔸音楽鑑賞 </h4>
+                    <div>
+                        好きなアーティストの音楽をよく聴いてます。 <br />
+                        ・藍月なくる🪼(@NakuruAitsuki) <br />
+                        ・棗いつき⚜(@itsukinatsume) <br />
+                        ・nayuta (@7utauta) <br />
+                        ・月乃 (@tsuki_nxo) <br />
+                        ・Imy (@Imy_official) <br />
+                    </div>
+                    <br />
+                    <h4>🔸ゲーム</h4>
+                    <div>
+                        <p>最近よく遊んでるゲームは DeltaForce、APEX、モンハンワールド、CS2です！</p>
+                        <p>
+                            ハマったゲームは <br /> AVA / OW / タルコフ/ Valorant / SF2 / PUBG <br />
+                            The cycle:frontier / osu! / モンハン / PSO2 などなど...
+                        </p>
+                    </div>
                     <h3>🖥 おしごと</h3>
                     <p>
                         会社員とたまに副業をしています。 <br />
@@ -117,12 +110,26 @@ export default function P_Home() {
                         <br />
                         小規模であれば依頼は受け付けているので、気軽にご相談してみてくれると嬉しいです。 <br />
                     </p>
+                    <h3>💻 デスク紹介</h3>
+                    <p>
+                        <ul>
+                            <li>パソコン：Ryzen 7 9800X3D / RTX 4070Ti Super / RAM 64GB</li>
+                            <li>マウス：Pulsar X2</li>
+                            <li>マウスパッド：Pulsar Superglide-XL </li>
+                            <li>キーボード：Razer DeathStalker V2 Pro White</li>
+                            <li>オーディオインターフェース：Roland BRIDGE CAST</li>
+                            <li>液タブ：XPPEN Artist 22 Plus</li>
+                        </ul>
+                    </p>
+                    <img src={deskImg} alt="ちょこみんのデスク" />
                 </section>
 
                 <section className="artworks-section full-bleed">
                     <div className="artworks-section__head">
                         <h2>🎨 Artworks</h2>
-                        <p className="artworks-section__desc">たまにお絵描きしてます🖊 横にスクロール →</p>
+                        <p className="artworks-section__desc">
+                            たまにお絵描きしてます🖊 <br />
+                        </p>
                     </div>
                     <ArtworksScroll onSelect={setSelectedImage} />
                 </section>

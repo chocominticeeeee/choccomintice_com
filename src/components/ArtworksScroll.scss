@@ -93,22 +93,39 @@
     }
 
     @media (max-width: 768px) {
-        // モバイルでもカード高さは統一（画像比率に依存しない）
-        height: 72vh;
+        // モバイルではフレーム（カード枠）をなくし、画像そのものを大きく見せる
+        width: 100%;
+        height: auto;
         cursor: default;
-        border-radius: 1.25rem;
+        border-radius: 0;
+        overflow: visible;
+        box-shadow: none;
+
+        // ぼかし背景・グラデーション・余白などの枠装飾を除去
+        &__bg {
+            display: none;
+        }
+
+        &::after {
+            display: none;
+        }
 
         &__frame {
-            // 下部キャプション分の余白を確保
-            padding: 1.25rem 1.25rem 4rem;
+            position: static;
+            inset: auto;
+            padding: 0;
 
             img {
-                max-height: 100%;
+                width: 100%;
+                height: auto;
                 max-width: 100%;
+                max-height: none;
+                border-radius: 0.75rem;
+                box-shadow: 0 10px 30px rgba(120, 80, 170, 0.25);
             }
         }
 
-        // 左下に重ねる（PC同様）
+        // 画像左下に重ねる（PC同様）
         &__caption {
             left: 1rem;
             bottom: 1rem;

@@ -104,6 +104,8 @@
             width: 85vw;
             height: auto;
             scroll-snap-align: center;
+            // 一回のスワイプで複数枚を飛ばさず、必ず隣の1枚で止める
+            scroll-snap-stop: always;
         }
     }
 }
