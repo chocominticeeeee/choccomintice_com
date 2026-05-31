@@ -32,7 +32,8 @@ main {
     display: flex;
     flex-flow: column;
     justify-content: center;
-    perspective: 1200px;
+    // perspective はここではなく各 section の transform 関数内に持たせる。
+    // 親に perspective があると子孫の position: sticky（横スクロール演出）が壊れるため。
 
     section {
         padding: 40px;
@@ -41,7 +42,7 @@ main {
         margin: 20px auto;
 
         opacity: 0;
-        transform: translateY(60px) rotateX(12deg) scale(0.97);
+        transform: perspective(1200px) translateY(60px) rotateX(12deg) scale(0.97);
         transform-origin: top center;
         transform-style: preserve-3d;
         filter: blur(4px);
@@ -52,7 +53,7 @@ main {
 
         &.visible {
             opacity: 1;
-            transform: translateY(0) rotateX(0deg) scale(1);
+            transform: perspective(1200px) translateY(0) rotateX(0deg) scale(1);
             filter: blur(0);
         }
 
@@ -85,8 +86,42 @@ main {
 
 .artworks-section {
     &__desc {
-        margin-bottom: 1.4rem;
+        margin-bottom: 0;
         opacity: 0.75;
+    }
+}
+
+// 横スクロール演出を画面幅いっぱいに広げる。
+// カードの装飾・幅制約・transform/filter を外し、内包する sticky を生かす。
+.artworks-section.full-bleed {
+    max-width: none;
+    width: 100%;
+    margin: 20px 0;
+    padding: 40px 0 0;
+    background-color: transparent;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+
+    // 親の transform/filter は子孫の position: sticky を壊すため none にし、
+    // リビールは opacity のみで行う。
+    transform: none;
+    filter: none;
+
+    &.visible {
+        transform: none;
+    }
+
+    // 見出しはカード内と同じく中央寄せ＋左右余白を確保
+    .artworks-section__head {
+        max-width: 1000px;
+        margin: 0 auto 1.4rem;
+        padding: 0 40px;
+
+        @media (max-width: 950px) {
+            padding: 0 20px;
+        }
     }
 }
 

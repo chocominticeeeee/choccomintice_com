@@ -6,7 +6,10 @@
 
 html,
 body {
-  overflow-x: hidden;
+  /* `hidden` を使うと overflow-y が auto に昇格して body がスクロールコンテナになり、
+     横スクロール演出の position: sticky が壊れる。
+     clip は横はみ出しを抑えつつスクロールコンテナを作らないので sticky が生きる。 */
+  overflow-x: clip;
 }
 
 html {

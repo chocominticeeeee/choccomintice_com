@@ -1,0 +1,128 @@
+@use "../styles/variables" as v;
+
+.artwork-panel {
+    position: relative;
+    // 60vw のパネル内で左右に少し隙間を作り、両隣カードとの間を空ける
+    width: calc(100% - 1.25rem);
+    // 画像の比率に関わらずカード高さを統一する
+    height: min(80vh, 880px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-in;
+    overflow: hidden;
+    border-radius: 1.75rem;
+    box-shadow: 0 18px 50px rgba(120, 80, 170, 0.18);
+
+    // ぼかした背景（作品の色を画面いっぱいに広げる）
+    &__bg {
+        position: absolute;
+        inset: -5%;
+        background-size: cover;
+        background-position: center;
+        filter: blur(36px) saturate(1.25);
+        transform: scale(1.1);
+        opacity: 0.55;
+        z-index: 0;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(254, 248, 255, 0.1) 40%, rgba(70, 50, 90, 0.32) 100%);
+        z-index: 1;
+    }
+
+    // 中央の作品本体（カード全面に広げ、画像は contain で内側に収める）
+    &__frame {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // 下部キャプション分の余白を確保
+        padding: 2.25rem 2.25rem 4.75rem;
+
+        img {
+            max-height: 100%;
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 1rem;
+            box-shadow: 0 24px 60px rgba(120, 80, 170, 0.3);
+        }
+    }
+
+    // 左下キャプション（番号と作品名を横並びに）
+    &__caption {
+        position: absolute;
+        left: 1.75rem;
+        bottom: 1.5rem;
+        z-index: 3;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 0.2rem 0.85rem;
+        max-width: calc(100% - 3.5rem);
+        padding: 0.5rem 0.95rem;
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.62);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 6px 20px rgba(120, 80, 170, 0.18);
+    }
+
+    &__index {
+        flex-shrink: 0;
+        font-family: v.$font-heading;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        color: v.$color-accent-purple;
+    }
+
+    &__title {
+        font-family: v.$font-heading;
+        font-size: 1.5rem;
+        font-weight: 900;
+        line-height: 1.2;
+        color: v.$color-text-main;
+    }
+
+    @media (max-width: 768px) {
+        // モバイルでもカード高さは統一（画像比率に依存しない）
+        height: 72vh;
+        cursor: default;
+        border-radius: 1.25rem;
+
+        &__frame {
+            // 下部キャプション分の余白を確保
+            padding: 1.25rem 1.25rem 4rem;
+
+            img {
+                max-height: 100%;
+                max-width: 100%;
+            }
+        }
+
+        // 左下に重ねる（PC同様）
+        &__caption {
+            left: 1rem;
+            bottom: 1rem;
+            max-width: calc(100% - 2rem);
+            padding: 0.4rem 0.75rem;
+            gap: 0.15rem 0.6rem;
+        }
+
+        &__index {
+            font-size: 0.75rem;
+        }
+
+        &__title {
+            font-size: 1.15rem;
+        }
+    }
+}

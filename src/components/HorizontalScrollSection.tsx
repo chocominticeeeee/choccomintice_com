@@ -1,0 +1,134 @@
+import {
+    Children,
+    useRef,
+    useState,
+    useEffect,
+    type ReactNode,
+} from "react";
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "framer-motion";
+import "./HorizontalScrollSection.scss";
+
+interface Props {
+    children: ReactNode;
+    /** モバイル判定のブレークポイント (px) */
+    mobileBreakpoint?: number;
+    /** 1パネルの横幅 (vw)。100未満にすると両隣をチラ見せするカード型カルーセルになる */
+    panelWidthVw?: number;
+}
+
+/**
+ * 縦スクロールを横スクロールに変換するコンテナ。
+ * - 外コンテナの高さ = パネル数 × 100vh（スクロール空間）
+ * - 内コンテナは sticky で画面に固定
+ * - トラックを scrollYProgress に応じて横方向に動かす
+ * - モバイルでは sticky を無効化し、ネイティブの横スワイプ (scroll-snap) に切替
+ */
+export default function HorizontalScrollSection({
+    children,
+    mobileBreakpoint = 768,
+    panelWidthVw = 100,
+}: Props) {
+    const panels = Children.toArray(children);
+    const count = Math.max(panels.length, 1);
+
+    // 両端の余白 = (画面幅 - パネル幅) / 2。これで先頭・末尾カードも常に中央に来る
+    const sidePadVw = Math.max((100 - panelWidthVw) / 2, 0);
+
+    const targetRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
+    const [active, setActive] = useState(0);
+
+    useEffect(() => {
+        const mq = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`);
+        const update = () => setIsMobile(mq.matches);
+        update();
+        mq.addEventListener("change", update);
+        return () => mq.removeEventListener("change", update);
+    }, [mobileBreakpoint]);
+
+    const { scrollYProgress } = useScroll({ target: targetRef });
+
+    // 0 → 1 を 0vw → -(n-1)×panelWidthVw にマッピング。
+    // vw 基準にすることでパネル幅や両端パディングから独立して移動量が決まる。
+    const xRaw = useTransform(
+        scrollYProgress,
+        [0, 1],
+        ["0vw", `-${(count - 1) * panelWidthVw}vw`],
+    );
+    const x = useSpring(xRaw, { stiffness: 80, damping: 20, mass: 0.4 });
+
+    useMotionValueEvent(scrollYProgress, "change", (p) => {
+        const idx = Math.round(p * (count - 1));
+        setActive(Math.min(Math.max(idx, 0), count - 1));
+    });
+
+    // モバイル: ネイティブの横スワイプ (scroll-snap)。スクロール位置からアクティブを算出
+    const handleMobileScroll = (e: React.UIEvent<HTMLDivElement>) => {
+        const el = e.currentTarget;
+        const max = el.scrollWidth - el.clientWidth;
+        const p = max > 0 ? el.scrollLeft / max : 0;
+        const idx = Math.round(p * (count - 1));
+        setActive(Math.min(Math.max(idx, 0), count - 1));
+    };
+
+    if (isMobile) {
+        return (
+            <div className="hscroll hscroll--mobile">
+                <div className="hscroll__swipe" onScroll={handleMobileScroll}>
+                    {panels.map((panel, i) => (
+                        <div className="hscroll__panel" key={i}>
+                            {panel}
+                        </div>
+                    ))}
+                </div>
+
+                {count > 1 && (
+                    <div className="hscroll__dots hscroll__dots--mobile" aria-hidden="true">
+                        {panels.map((_, i) => (
+                            <span
+                                key={i}
+                                className={`hscroll__dot${i === active ? " is-active" : ""}`}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    return (
+        <div
+            className="hscroll"
+            ref={targetRef}
+            style={{ height: `${count * 100}vh` }}
+        >
+            <div className="hscroll__sticky">
+                <motion.div
+                    className="hscroll__track"
+                    style={{ x, paddingLeft: `${sidePadVw}vw`, paddingRight: `${sidePadVw}vw` }}
+                >
+                    {panels.map((panel, i) => (
+                        <div
+                            className="hscroll__panel"
+                            key={i}
+                            style={{ flexBasis: `${panelWidthVw}vw`, width: `${panelWidthVw}vw` }}
+                        >
+                            {panel}
+                        </div>
+                    ))}
+                </motion.div>
+
+                {count > 1 && (
+                    <div className="hscroll__dots" aria-hidden="true">
+                        {panels.map((_, i) => (
+                            <span
+                                key={i}
+                                className={`hscroll__dot${i === active ? " is-active" : ""}`}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}

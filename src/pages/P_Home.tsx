@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import MyTwitterCard from "../components/MyTwitterCard";
-import ArtworksCarousel from "../components/ArtworksCarousel";
+import ArtworksScroll from "../components/ArtworksScroll";
 import Lightbox from "../components/Lightbox";
 import "./P_Home.scss";
 import KeyVisual from "../components/layout/KeyVisual";
@@ -148,10 +148,12 @@ export default function P_Home() {
                     </p>
                 </section>
 
-                <section className="artworks-section">
-                    <h2>🎨 Artworks</h2>
-                    <p className="artworks-section__desc">たまにお絵描きしてます🖊</p>
-                    <ArtworksCarousel startIndex={1} />
+                <section className="artworks-section full-bleed">
+                    <div className="artworks-section__head">
+                        <h2>🎨 Artworks</h2>
+                        <p className="artworks-section__desc">たまにお絵描きしてます🖊 横にスクロール →</p>
+                    </div>
+                    <ArtworksScroll onSelect={setSelectedImage} />
                 </section>
 
                 <section id="vrchat" className="vrchat-section">
