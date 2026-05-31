@@ -15,8 +15,8 @@ export default function NoteSection() {
             .finally(() => setLoading(false));
     }, []);
 
-    if (loading) return <p className="note-status">読み込み中...</p>;
-    if (error) return <p className="note-status">記事の取得に失敗しました</p>;
+    if (loading) return <p className="note-status">よみこみ中だよ〜ちょっと待っててね…(´｡• ᵕ •｡`)</p>;
+    if (error) return <p className="note-status">記事のよみこみに失敗しちゃった…ごめんね(´;ω;`)</p>;
 
     return (
         <>
@@ -50,7 +50,7 @@ export default function NoteSection() {
                 rel="noopener noreferrer"
                 className="note-all-link"
             >
-                全ての記事を見る →
+                ぜんぶの記事を見てみる →(*´꒳`*)
             </a>
         </>
     );
