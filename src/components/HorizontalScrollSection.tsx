@@ -5,8 +5,68 @@ import {
     useEffect,
     type ReactNode,
 } from "react";
-import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "framer-motion";
+import {
+    motion,
+    useScroll,
+    useTransform,
+    useSpring,
+    useMotionValueEvent,
+    type MotionValue,
+} from "framer-motion";
 import "./HorizontalScrollSection.scss";
+
+/**
+ * 1枚のパネル。スクロール進捗に応じて、中央に来たカードを
+ * くっきり (opacity:1 / scale:1) に、両隣を少し縮めて薄く見せる
+ * 「センターフォーカス」演出を加える。
+ */
+function FocusPanel({
+    index,
+    count,
+    progress,
+    children,
+    panelWidthVw,
+}: {
+    index: number;
+    count: number;
+    progress: MotionValue<number>;
+    children: ReactNode;
+    panelWidthVw: number;
+}) {
+    // このパネルが画面中央に来るときのスクロール進捗
+    const center = count > 1 ? index / (count - 1) : 0;
+    const step = count > 1 ? 1 / (count - 1) : 1;
+    // 中央を少しでも外れるとすぐ薄くなるのを防ぐため、中央付近に
+    // フォーカスを保つ「平坦域」を設ける。hold の範囲内ではフル
+    // フォーカス (opacity:1 / scale:1) を維持し、その外側で減衰させる。
+    const hold = step * 0.55;
+    const range = [
+        center - step,
+        center - hold,
+        center,
+        center + hold,
+        center + step,
+    ];
+
+    const opacity = useTransform(progress, range, [0.3, 1, 1, 1, 0.3]);
+    const scale = useTransform(progress, range, [0.86, 1, 1, 1, 0.86]);
+    const y = useTransform(progress, range, [40, 0, 0, 0, 40]);
+
+    return (
+        <motion.div
+            className="hscroll__panel"
+            style={{
+                flexBasis: `${panelWidthVw}vw`,
+                width: `${panelWidthVw}vw`,
+                opacity,
+                scale,
+                y,
+            }}
+        >
+            {children}
+        </motion.div>
+    );
+}
 
 interface Props {
     children: ReactNode;
@@ -48,14 +108,22 @@ export default function HorizontalScrollSection({
 
     const { scrollYProgress } = useScroll({ target: targetRef });
 
+    // マウスホイールの離散入力で生の進捗はカクつくため、まず進捗自体をスプリングで
+    // 滑らかにする。トラックの横移動・各パネルのフォーカス演出をこの1つの値から
+    // 動かすことで、すべての動きが同期して滑らかになる。
+    const smoothProgress = useSpring(scrollYProgress, {
+        stiffness: 80,
+        damping: 20,
+        mass: 0.4,
+    });
+
     // 0 → 1 を 0vw → -(n-1)×panelWidthVw にマッピング。
     // vw 基準にすることでパネル幅や両端パディングから独立して移動量が決まる。
-    const xRaw = useTransform(
-        scrollYProgress,
+    const x = useTransform(
+        smoothProgress,
         [0, 1],
         ["0vw", `-${(count - 1) * panelWidthVw}vw`],
     );
-    const x = useSpring(xRaw, { stiffness: 80, damping: 20, mass: 0.4 });
 
     useMotionValueEvent(scrollYProgress, "change", (p) => {
         const idx = Math.round(p * (count - 1));
@@ -76,9 +144,16 @@ export default function HorizontalScrollSection({
             <div className="hscroll hscroll--mobile">
                 <div className="hscroll__swipe" onScroll={handleMobileScroll}>
                     {panels.map((panel, i) => (
-                        <div className="hscroll__panel" key={i}>
+                        <motion.div
+                            className="hscroll__panel"
+                            key={i}
+                            initial={{ opacity: 0, scale: 0.92, y: 24 }}
+                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                            viewport={{ amount: 0.6 }}
+                            transition={{ duration: 0.5, ease: "easeOut" }}
+                        >
                             {panel}
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
 
@@ -108,13 +183,15 @@ export default function HorizontalScrollSection({
                     style={{ x, paddingLeft: `${sidePadVw}vw`, paddingRight: `${sidePadVw}vw` }}
                 >
                     {panels.map((panel, i) => (
-                        <div
-                            className="hscroll__panel"
+                        <FocusPanel
                             key={i}
-                            style={{ flexBasis: `${panelWidthVw}vw`, width: `${panelWidthVw}vw` }}
+                            index={i}
+                            count={count}
+                            progress={smoothProgress}
+                            panelWidthVw={panelWidthVw}
                         >
                             {panel}
-                        </div>
+                        </FocusPanel>
                     ))}
                 </motion.div>
 
