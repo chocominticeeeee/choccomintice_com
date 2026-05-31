@@ -120,7 +120,6 @@ export default function ArtworksCarousel({ startIndex = 0 }: Props) {
                                             className="embla__parallax__img"
                                             src={src}
                                             alt={alt}
-                                            loading="lazy"
                                         />
                                     </div>
                                 </div>
