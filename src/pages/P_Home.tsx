@@ -82,15 +82,7 @@ export default function P_Home() {
                     <h3>🎮 趣味</h3>
                     <ul>
                         <li>
-                            <h4>① VRChat</h4>
-                            <p>
-                                VRChatは生活の一部っていうくらいでここには書ききれないので、詳しくは
-                                <a href="#vrchat">こっち</a>をみてね！
-                            </p>
-                        </li>
-
-                        <li>
-                            <h4>② 音楽鑑賞 </h4>
+                            <h4>🔸音楽鑑賞 </h4>
                             <div>
                                 好きなアーティストの音楽をよく聴いてます。 <br />
                                 ・藍月なくる🪼(@NakuruAitsuki) <br />
@@ -103,26 +95,11 @@ export default function P_Home() {
                         </li>
 
                         <li>
-                            <h4>③ イラスト</h4>
+                            <h4>🔸ゲーム</h4>
                             <div>
+                                <p>最近よく遊んでるゲームは DeltaForce、APEX、モンハンワールド、CS2です！</p>
                                 <p>
-                                    趣味絵描きです！ <br />
-                                    いつかイラストレーターになれたらいいな～。
-                                </p>
-                                <p>
-                                    本当に気まぐれで描きたい！っていう衝動にかられたときにペンを握ります...✒
-                                    <br />
-                                    そのくせずっとクリスタ契約し続けているし、無駄にでかい液タブで描いてます✍
-                                </p>
-                            </div>
-                            <br />
-                        </li>
-                        <li>
-                            <h4>④ ゲーム</h4>
-                            <div>
-                                <p>最近よく遊んでるゲームはAPEX、モンハンワールド、CS2、OWです！</p>
-                                <p>
-                                    ハマったゲームは <br /> AVA / CS2 / タルコフ/ Valorant / SF2 / PUBG / APEX <br />
+                                    ハマったゲームは <br /> AVA / OW / タルコフ/ Valorant / SF2 / PUBG <br />
                                     The cycle:frontier / osu! / モンハン / PSO2 などなど...
                                 </p>
                             </div>
@@ -131,20 +108,14 @@ export default function P_Home() {
                     </ul>
                     <h3>🖥 おしごと</h3>
                     <p>
-                        会社員とたまに副業でウェブ制作をしています。 <br />
-                        会社員のほうの仕事内容はかなり特殊で詳しくは話せませんが、
-                        某有名サービスのお問い合わせの受付などを行っています。 <br />
-                        <br />
+                        会社員とたまに副業をしています。 <br />
+                        会社員としてはマネージャーとして、某有名サービスのお問い合わせの受付などを行っています。 <br />
+                        社内SEでもありWEBマニュアル、社内システム、 MongoDB、web-apiなどフルスタックに開発しています⌨
                     </p>
                     <p>
-                        社内SEとしても仕事をしていて、自社用のWebマニュアルの作成やシステム開発、 <br />
-                        データベースを使用してログを管理するウェブアプリの開発などやってたりします⌨ <br />
+                        副業ではウェブ制作をしており、知り合いから頼まれたときにお仕事させていただいています！
                         <br />
-                    </p>
-                    <p>
-                        副業は自分からは営業はしていませんが、 知り合いから頼まれたときにお仕事させていただいています！
-                        <br />
-                        小規模であれば依頼は受け付けているので気軽にご相談してみてくれると嬉しいです。 <br />
+                        小規模であれば依頼は受け付けているので、気軽にご相談してみてくれると嬉しいです。 <br />
                     </p>
                 </section>
 
@@ -161,9 +132,7 @@ export default function P_Home() {
                     <div className="vrchat-section__intro">
                         <p>25/03/18～ PCVR + Pico4 + フルトラであそんでます！</p>
                         <p>
-                            リアルフレンドがほぼいないくて、ネッ友もあまりいないので友達がたくさんほしいなって思ってはじめました！
-                            <br />
-                            大体JPTかプラべにいることが多いです。
+                            始めたきっかけはリアルの友達いないくて、ネッ友も少ないので友達がたくさんほしいなって思ったからです；；
                         </p>
                         <p>なでなでとV睡が好きで、普段はJPTかプラべにいることが多いです。</p>
                         <p>
@@ -175,9 +144,9 @@ export default function P_Home() {
                     </div>
                     <h2 className="vrchat-section__memories-title">🧩 VRChat非公式Web拡張</h2>
                     <p>
-                        VRChatの公式サイトを見やすくする拡張機能をchromeストアで公開してます！
+                        VRChatの公式サイトを見やすく、使いやすくする拡張機能をchromeストアで公開してます！
+                        良かったら使ってみてね！👇
                         <br />
-                        良かったら使ってみてね！👉
                         <a
                             href="https://chocominticeeeee.github.io/VRChat_Unofficial_Web_Extension_Web/#/"
                             target="_blank"
@@ -227,7 +196,7 @@ export default function P_Home() {
                     <p>🦀をクリックしてウニを集めよう！</p>
                     <UniClicker />
                 </section>
-                
+
                 {selectedImage && (
                     <Lightbox src={selectedImage.src} alt={selectedImage.alt} onClose={() => setSelectedImage(null)} />
                 )}
