@@ -26,6 +26,7 @@ export default function P_Home() {
     const [vrChatUrls, setVrChatUrls] = useState<string[]>([]);
 
     const mainRef = useRef<HTMLElement>(null);
+    const deskImgRef = useRef<HTMLImageElement>(null);
 
     useEffect(() => {
         Promise.all(
@@ -62,12 +63,36 @@ export default function P_Home() {
         return () => observer.disconnect();
     }, []);
 
+    useEffect(() => {
+        const img = deskImgRef.current;
+        if (!img) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1 },
+        );
+
+        observer.observe(img);
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <>
             <KeyVisual />
             <main ref={mainRef}>
-                <section>
-                    <h2>💬 自己紹介</h2>
+                <section className="section--editorial">
+                    <div className="section__index">
+                        <span className="section__num">01</span>
+                        <span className="section__label">About</span>
+                    </div>
+                    <h2>自己紹介</h2>
                     <MyTwitterCard />
                     <h3>🧐 名前の由来</h3>
                     チョコミントアイスが大好きで、ちょっぴりバブみがあって(？)、 <br />
@@ -111,7 +136,7 @@ export default function P_Home() {
                     </p>
                     <h3>💻 デスク紹介</h3>
                     <p>
-                        <ul>
+                        <ul style={{paddingLeft:0}}>
                             <li>パソコン：Ryzen 7 9800X3D / RTX 4070Ti Super / RAM 64GB</li>
                             <li>マウス：Pulsar X2</li>
                             <li>マウスパッド：Pulsar Superglide-XL </li>
@@ -120,12 +145,16 @@ export default function P_Home() {
                             <li>液タブ：XPPEN Artist 22 Plus</li>
                         </ul>
                     </p>
-                    <img src={deskImg} alt="ちょこみんのデスク" />
+                    <img ref={deskImgRef} className="desk-img" src={deskImg} alt="ちょこみんのデスク" />
                 </section>
 
-                <section className="artworks-section full-bleed">
+                <section className="artworks-section full-bleed section--editorial">
                     <div className="artworks-section__head">
-                        <h2>🎨 Artworks</h2>
+                        <div className="section__index">
+                            <span className="section__num">02</span>
+                            <span className="section__label">Artworks</span>
+                        </div>
+                        <h2>イラスト</h2>
                         <p className="artworks-section__desc">
                             たまーにお絵描きしてるよ〜🖊<br />
                         </p>
@@ -133,8 +162,12 @@ export default function P_Home() {
                     <ArtworksScroll onSelect={setSelectedImage} />
                 </section>
 
-                <section id="vrchat" className="vrchat-section">
-                    <h2>🥽 VRChat</h2>
+                <section id="vrchat" className="vrchat-section section--editorial">
+                    <div className="section__index">
+                        <span className="section__num">03</span>
+                        <span className="section__label">VRChat</span>
+                    </div>
+                    <h2>VRChat</h2>
                     <div className="vrchat-section__intro">
                         <p>25/03/18～ PCVR + Pico4 + フルトラであそんでます！</p>
                         <p>
@@ -171,14 +204,22 @@ export default function P_Home() {
                     />
                 </section>
 
-                <section>
-                    <h2>📒 note</h2>
-                    <p>VRChでの出来事とか、ちょこっと個人的なニュースを記事に書いてるよ〜🦀(*´꒳`*)</p>
+                <section className="section--editorial">
+                    <div className="section__index">
+                        <span className="section__num">04</span>
+                        <span className="section__label">Note</span>
+                    </div>
+                    <h2>note</h2>
+                    <p>VRChatでの出来事とか、ちょこっと個人的なニュースを記事に書いてるよ〜🦀(*´꒳`*)</p>
                     <NoteSection />
                 </section>
 
-                <section>
-                    <h2>👋 最後に！</h2>
+                <section className="section--editorial">
+                    <div className="section__index">
+                        <span className="section__num">05</span>
+                        <span className="section__label">Outro</span>
+                    </div>
+                    <h2>最後に！</h2>
                     <p>
                         ここまで読んでくれてありがとう！(*..)” <br />
                         Twitterフォロバ100％なので気軽にフォローして絡んでくれたら嬉しいです✨
@@ -197,8 +238,12 @@ export default function P_Home() {
                     <Uni />
                 </section>
 
-                <section>
-                    <h2>🦀 ウニクリッカー</h2>
+                <section className="section--editorial">
+                    <div className="section__index">
+                        <span className="section__num">06</span>
+                        <span className="section__label">Uni Clicker</span>
+                    </div>
+                    <h2>ウニクリッカー</h2>
                     <p>🦀をクリックしてウニをいっぱい集めちゃおっ</p>
                     <UniClicker />
                 </section>

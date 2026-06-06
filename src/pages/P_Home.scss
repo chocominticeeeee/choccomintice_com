@@ -55,6 +55,11 @@ main {
             opacity: 1;
             transform: perspective(1200px) translateY(0) rotateX(0deg) scale(1);
             filter: blur(0);
+
+            // セクションが現れたら、インデックスの罫線を左から伸ばす
+            .section__index::after {
+                transform: scaleX(1);
+            }
         }
 
         &:nth-child(1) {
@@ -99,6 +104,180 @@ main {
             padding: 20px;
             margin: 5px auto;
             border-radius: 1.5rem;
+        }
+    }
+}
+
+/* ===== Editorial section (試作: 自己紹介) ===== */
+.section--editorial {
+    // カードの装飾を全て外して、背景の上に直接コンテンツを流す
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 70px 24px;
+
+    @media (max-width: 950px) {
+        padding: 48px 8px;
+    }
+
+    // 番号 + ラベル + 細い罫線のエディトリアルなインデックス
+    .section__index {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        margin-bottom: 1.1rem;
+        font-family: v.$font-heading;
+
+        .section__num {
+            font-size: 1.05rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            color: v.$color-accent-pink;
+            // 番号はやさしく明滅させて視線を引く
+            animation: num-pulse 3.5s ease-in-out infinite;
+        }
+
+        .section__label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: v.$color-text-sub;
+        }
+
+        // ラベルの右側に伸びる細い罫線。登場時に左から伸びる。
+        &::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(155, 127, 224, 0.35), transparent);
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s;
+        }
+    }
+
+    @keyframes num-pulse {
+        0%,
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 0.55;
+            transform: scale(0.92);
+        }
+    }
+
+    // 大きめのディスプレイ見出し。下線の箱っぽさをやめる
+    // （VRChat内の小見出し memories-title は対象外）
+    h2:not(.vrchat-section__memories-title) {
+        font-size: clamp(2.1rem, 5vw, 3rem);
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        border-bottom: none;
+        margin: 0 0 2.4rem;
+        // 3色をループさせて、見出しの中を光沢がゆっくり流れるように
+        background: linear-gradient(
+            120deg,
+            v.$color-accent-purple 0%,
+            v.$color-accent-pink 35%,
+            v.$color-accent-mint 50%,
+            v.$color-accent-pink 65%,
+            v.$color-accent-purple 100%
+        );
+        background-size: 220% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: heading-shimmer 8s linear infinite;
+
+        @media (max-width: 950px) {
+            margin-bottom: 1.6rem;
+        }
+    }
+
+    // VRChat内の中見出し（拡張機能 / Memories）は h3 と同じ扱いに
+    .vrchat-section__memories-title {
+        position: relative;
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-top: 3.2rem;
+        margin-bottom: 1rem;
+        padding-left: 0.9rem;
+        color: v.$color-accent-purple;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.15em;
+            bottom: 0.15em;
+            width: 4px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, v.$color-accent-purple, v.$color-accent-pink);
+        }
+    }
+
+    // 中見出しは太い色枠線をやめ、左のアクセントバー + 余白で区切る
+    h3 {
+        position: relative;
+        font-size: 1.35rem;
+        border-bottom: none;
+        margin-top: 3.2rem;
+        margin-bottom: 1rem;
+        padding-left: 0.9rem;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.15em;
+            bottom: 0.15em;
+            width: 4px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, v.$color-accent-purple, v.$color-accent-pink);
+        }
+    }
+
+    h4 {
+        font-size: 1.05rem;
+        color: v.$color-text-sub;
+        margin-top: 1rem;
+        margin-bottom: 0.4rem;
+    }
+
+    // 本文は読み物として行間と最大幅を整える
+    p,
+    ul,
+    > div {
+        line-height: 1.95;
+    }
+
+    ul {
+        padding-left: 1.2rem;
+
+        li {
+            margin-bottom: 0.3rem;
+        }
+    }
+
+    img {
+        border-radius: 0.75rem;
+    }
+
+    .desk-img {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+            opacity 0.6s ease,
+            transform 0.6s ease;
+
+        &.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     }
 }
@@ -222,5 +401,31 @@ main {
             padding: 2rem;
             opacity: 0.6;
         }
+    }
+}
+
+@keyframes heading-shimmer {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 220% center;
+    }
+}
+
+// 動きを抑える設定では、繰り返し系のアニメと登場時の重い変形を止める
+@media (prefers-reduced-motion: reduce) {
+    main section {
+        transform: none !important;
+        filter: none !important;
+        transition: opacity 0.4s ease;
+    }
+
+    .section--editorial h2:not(.vrchat-section__memories-title) {
+        animation: none;
+    }
+
+    .section--editorial .section__index .section__num {
+        animation: none;
     }
 }

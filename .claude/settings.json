@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:bnasimeji.vercel.app)"
+      "WebFetch(domain:bnasimeji.vercel.app)",
+      "WebFetch(domain:suumo.jp)",
+      "PowerShell(npm run build)"
     ]
   }
 }

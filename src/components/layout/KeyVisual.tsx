@@ -76,6 +76,24 @@ export default function KeyVisual() {
                 />
             </motion.div>
 
+            {/* エディトリアルな枠 – 四隅のかぎ括弧と小さなラベルで密度を出す */}
+            <motion.div
+                className="hero-frame"
+                aria-hidden="true"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 1.2, ease: "easeOut" }}
+            >
+                <span className="hero-frame__corner hero-frame__corner--tl" />
+                <span className="hero-frame__corner hero-frame__corner--tr" />
+                <span className="hero-frame__corner hero-frame__corner--bl" />
+                <span className="hero-frame__corner hero-frame__corner--br" />
+                <span className="hero-frame__label hero-frame__label--tl">BABUMIYA CHOCOMIN</span>
+                <span className="hero-frame__label hero-frame__label--tr">★ VRCHATTER</span>
+                <span className="hero-frame__label hero-frame__label--bl">EST. 2015</span>
+                <span className="hero-frame__label hero-frame__label--br">WELCOME ♡</span>
+            </motion.div>
+
             {/* ヒーローコンテンツ – ロゴを中央に配置 */}
             <motion.div
                 className="hero-layout"

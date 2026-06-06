@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(copy \"I:\\\\CreativeProjects\\\\CursorProjects\\\\choccomintice_com\\\\src\\\\assets\\\\images\\\\ヘッダー.jpg\" \"I:\\\\CreativeProjects\\\\CursorProjects\\\\choccomintice_com\\\\public\\\\ogp-image.jpg\")"
+      "Bash(copy \"I:\\\\CreativeProjects\\\\CursorProjects\\\\choccomintice_com\\\\src\\\\assets\\\\images\\\\ヘッダー.jpg\" \"I:\\\\CreativeProjects\\\\CursorProjects\\\\choccomintice_com\\\\public\\\\ogp-image.jpg\")",
+      "Bash(git checkout *)",
+      "Bash(curl -s http://localhost:5174/src/pages/P_Home.scss?direct)",
+      "Bash(curl -s \"http://localhost:5174/src/pages/P_Home.scss?direct\")",
+      "Bash(npx vite *)"
     ]
   }
 }

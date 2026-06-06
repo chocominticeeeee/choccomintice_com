@@ -46,7 +46,7 @@ export default function VRChatGallery({ urls, totalCount, onSelect }: Props) {
                             window.innerWidth > 950 && onSelect({ src: url, alt: "VRChatの写真" })
                         }
                     >
-                        <img src={url} alt="VRChatの写真" loading="lazy" />
+                        <img src={url} alt="VRChatの写真" />
                     </div>
                 ))}
                 {totalCount === 0 && <p className="no-images">画像が見つかりません</p>}
