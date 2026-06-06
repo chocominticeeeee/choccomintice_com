@@ -179,7 +179,7 @@ main {
         letter-spacing: -0.01em;
         border-bottom: none;
         margin: 0 0 2.4rem;
-        // 3色をループさせて、見出しの中を光沢がゆっくり流れるように
+        // 3色のグラデーションを見出しに適用（アニメーションなし）
         background: linear-gradient(
             120deg,
             v.$color-accent-purple 0%,
@@ -188,11 +188,9 @@ main {
             v.$color-accent-pink 65%,
             v.$color-accent-purple 100%
         );
-        background-size: 220% auto;
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: heading-shimmer 8s linear infinite;
 
         @media (max-width: 950px) {
             margin-bottom: 1.6rem;
@@ -401,15 +399,6 @@ main {
             padding: 2rem;
             opacity: 0.6;
         }
-    }
-}
-
-@keyframes heading-shimmer {
-    0% {
-        background-position: 0% center;
-    }
-    100% {
-        background-position: 220% center;
     }
 }
 

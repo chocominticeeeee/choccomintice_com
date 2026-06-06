@@ -236,7 +236,8 @@
     animation-name: sparkle-rise;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
-    filter: drop-shadow(0 2px 6px rgba(155, 127, 224, 0.3));
+    // カラー絵文字を白いシルエットに変換して、ふわっと淡く見せる
+    filter: brightness(0) invert(1) drop-shadow(0 2px 6px rgba(155, 127, 224, 0.25));
 }
 
 @keyframes sparkle-rise {
@@ -245,13 +246,13 @@
         opacity: 0;
     }
     12% {
-        opacity: 0.85;
+        opacity: 0.5;
     }
     50% {
         transform: translateY(-55vh) translateX(3vw) rotate(120deg) scale(1);
     }
     88% {
-        opacity: 0.7;
+        opacity: 0.4;
     }
     100% {
         transform: translateY(-108vh) translateX(-2vw) rotate(240deg) scale(0.6);
