@@ -89,7 +89,7 @@ export default function KeyVisual() {
                 <span className="hero-frame__corner hero-frame__corner--bl" />
                 <span className="hero-frame__corner hero-frame__corner--br" />
                 <span className="hero-frame__label hero-frame__label--tl">BABUMIYA CHOCOMIN</span>
-                <span className="hero-frame__label hero-frame__label--tr">★ VTUBER / VRCHATTER</span>
+                <span className="hero-frame__label hero-frame__label--tr">★ VRCHATTER</span>
                 <span className="hero-frame__label hero-frame__label--bl">EST. 2015</span>
                 <span className="hero-frame__label hero-frame__label--br">WELCOME ♡</span>
             </motion.div>
