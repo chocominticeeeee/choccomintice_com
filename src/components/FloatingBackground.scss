@@ -50,65 +50,26 @@
     max-width: 560px;
     max-height: 560px;
     border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
-    filter: blur(60px);
+    // blur は重いので 60→32px に。drift アニメは廃止し静止（一度だけラスタライズ
+    // すれば済むのでアイドル時の GPU 負荷がほぼゼロになる）。
+    filter: blur(32px);
     opacity: 0.7;
-    will-change: transform, border-radius;
-    animation:
-        blob-drift 26s ease-in-out infinite alternate,
-        blob-morph 18s ease-in-out infinite alternate;
 
     &--lavender {
         background: radial-gradient(circle at 30% 30%, rgba(220, 207, 250, 0.9), transparent 70%);
-        animation-duration: 28s, 20s;
-    }
-    &--pink {
-        background: radial-gradient(circle at 30% 30%, rgba(255, 200, 222, 0.85), transparent 70%);
-        animation-duration: 32s, 17s;
-        animation-direction: alternate-reverse, alternate;
     }
     &--mint {
         background: radial-gradient(circle at 30% 30%, rgba(200, 245, 239, 0.85), transparent 70%);
-        animation-duration: 30s, 22s;
     }
     &--peach {
         background: radial-gradient(circle at 30% 30%, rgba(255, 221, 200, 0.8), transparent 70%);
-        animation-duration: 34s, 19s;
-        animation-direction: alternate-reverse, alternate;
-    }
-    &--sky {
-        background: radial-gradient(circle at 30% 30%, rgba(200, 232, 255, 0.8), transparent 70%);
-        animation-duration: 27s, 21s;
     }
 
     @media (max-width: 950px) {
         width: 70vw;
         height: 70vw;
-        filter: blur(48px);
+        filter: blur(24px);
         opacity: 0.45;
-    }
-}
-
-@keyframes blob-drift {
-    0% {
-        transform: translate3d(0, 0, 0) scale(1);
-    }
-    50% {
-        transform: translate3d(6vw, 4vh, 0) scale(1.12);
-    }
-    100% {
-        transform: translate3d(-4vw, -3vh, 0) scale(0.95);
-    }
-}
-
-@keyframes blob-morph {
-    0% {
-        border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
-    }
-    50% {
-        border-radius: 63% 37% 38% 62% / 55% 62% 38% 45%;
-    }
-    100% {
-        border-radius: 40% 60% 54% 46% / 60% 38% 62% 40%;
     }
 }
 
@@ -131,14 +92,8 @@
     display: block;
     opacity: 0.8;
     will-change: transform;
+    // 常時アニメは float のみに限定（spin=無限回転は廃止して常時負荷を減らす）。
     animation: geo-float 12s ease-in-out infinite alternate;
-
-    // spin 指定があるものはゆっくり回転も重ねる
-    &[data-spin] {
-        animation:
-            geo-float 12s ease-in-out infinite alternate,
-            geo-spin var(--spin, 30s) linear infinite;
-    }
 
     // 輪郭だけの円
     &--ring {
@@ -213,12 +168,6 @@
     }
     100% {
         transform: translateY(-14px) translateX(8px);
-    }
-}
-
-@keyframes geo-spin {
-    to {
-        transform: rotate(360deg);
     }
 }
 

@@ -235,10 +235,9 @@ export default function P_Home() {
                             @Choccomintice_ 🗝
                         </a>
                     </p>
-                    <Uni />
                 </section>
 
-                <section className="section--editorial">
+                {/* <section className="section--editorial">
                     <div className="section__index">
                         <span className="section__num">06</span>
                         <span className="section__label">Uni Clicker</span>
@@ -246,7 +245,7 @@ export default function P_Home() {
                     <h2>ウニクリッカー</h2>
                     <p>🦀をクリックしてウニをいっぱい集めちゃおっ</p>
                     <UniClicker />
-                </section>
+                </section> */}
 
                 {selectedImage && (
                     <Lightbox src={selectedImage.src} alt={selectedImage.alt} onClose={() => setSelectedImage(null)} />

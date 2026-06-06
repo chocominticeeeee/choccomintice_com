@@ -8,15 +8,15 @@ import "./FloatingBackground.scss";
  * さらに白い幾何図形をスクロール連動のパララックスで流して情報量を足す。
  * 描画は transform / opacity のみに寄せて GPU で完結させている。
  */
+// blur(60px) の巨大 blob は GPU の塗りつぶし負荷が高く、枚数がそのまま重さに
+// 直結するため 5→3 に削減（縦に散らして全体をカバー）。drift アニメも廃止し静止。
 const BLOBS = [
     { className: "blob blob--lavender", style: { top: "8%", left: "-6%" } },
-    { className: "blob blob--pink", style: { top: "32%", right: "-8%" } },
-    { className: "blob blob--mint", style: { top: "58%", left: "-4%" } },
-    { className: "blob blob--peach", style: { top: "78%", right: "-6%" } },
-    { className: "blob blob--sky", style: { top: "120%", left: "30%" } },
+    { className: "blob blob--mint", style: { top: "52%", left: "-4%" } },
+    { className: "blob blob--peach", style: { top: "82%", right: "-6%" } },
 ];
 
-const SPARKLES = ["✨", "🫧", "🩵", "✨", "🫧", "💜", "✨", "🩷", "🫧", "✨"];
+const SPARKLES = ["✨", "🫧", "💜", "🩷"];
 
 // 白い幾何図形。type で形、depth(0=遠い〜3=手前) でパララックスの速さが変わる。
 // 手前ほど速く・大きく動き、奥は控えめ。位置はビューポート基準（%）。
@@ -31,32 +31,21 @@ type Shape = {
     delay: number; // 浮遊アニメの開始ずらし
 };
 
+// 枚数は描画コストに直結するため厳選（24→12）。縦の散らばり・形・depth の
+// バランスは保ちつつ、よく動く手前(depth3)を多めにして奥行き感を強める。
 const SHAPES: Shape[] = [
     { type: "ring", top: "10%", left: "7%", size: 130, depth: 3, spin: 0, delay: 0 },
     { type: "cross", top: "16%", right: "12%", size: 26, depth: 2, spin: 24, delay: 1.2 },
-    { type: "dot", top: "24%", left: "22%", size: 12, depth: 1, spin: 0, delay: 2.4 },
     { type: "square", top: "30%", right: "8%", size: 54, depth: 3, spin: 30, delay: 0.6 },
     { type: "triangle", top: "38%", left: "12%", size: 70, depth: 2, spin: 40, delay: 1.8 },
     { type: "ring", top: "46%", right: "18%", size: 88, depth: 1, spin: 0, delay: 3 },
-    { type: "dot", top: "52%", left: "6%", size: 16, depth: 2, spin: 0, delay: 0.9 },
+    { type: "square", top: "50%", left: "26%", size: 28, depth: 0, spin: 32, delay: 3.1 },
     { type: "disc", top: "58%", right: "10%", size: 40, depth: 0, spin: 0, delay: 2 },
     { type: "cross", top: "64%", left: "18%", size: 22, depth: 3, spin: 20, delay: 1.5 },
     { type: "ring", top: "72%", left: "9%", size: 110, depth: 2, spin: 0, delay: 0.3 },
-    { type: "square", top: "78%", right: "16%", size: 38, depth: 1, spin: 26, delay: 2.7 },
     { type: "dot", top: "84%", left: "30%", size: 13, depth: 3, spin: 0, delay: 1 },
-    { type: "triangle", top: "90%", right: "9%", size: 60, depth: 2, spin: 34, delay: 2.2 },
-    { type: "disc", top: "94%", left: "14%", size: 30, depth: 1, spin: 0, delay: 0.5 },
-    // 追加分 – 密度を上げて主張を強める
-    { type: "dot", top: "14%", left: "42%", size: 10, depth: 0, spin: 0, delay: 1.4 },
-    { type: "ring", top: "20%", right: "26%", size: 56, depth: 1, spin: 0, delay: 2.6 },
-    { type: "cross", top: "34%", left: "34%", size: 18, depth: 0, spin: 28, delay: 0.4 },
-    { type: "dot", top: "44%", right: "6%", size: 14, depth: 3, spin: 0, delay: 1.9 },
-    { type: "square", top: "50%", left: "26%", size: 28, depth: 0, spin: 32, delay: 3.1 },
-    { type: "disc", top: "62%", left: "40%", size: 22, depth: 2, spin: 0, delay: 0.7 },
-    { type: "cross", top: "70%", right: "30%", size: 24, depth: 1, spin: 22, delay: 2.1 },
-    { type: "dot", top: "80%", right: "24%", size: 11, depth: 0, spin: 0, delay: 1.1 },
     { type: "ring", top: "88%", left: "36%", size: 66, depth: 3, spin: 0, delay: 0.2 },
-    { type: "triangle", top: "26%", left: "2%", size: 44, depth: 1, spin: 38, delay: 2.9 },
+    { type: "triangle", top: "90%", right: "9%", size: 60, depth: 2, spin: 34, delay: 2.2 },
 ];
 
 export default function FloatingBackground() {
@@ -65,10 +54,12 @@ export default function FloatingBackground() {
     // 図形は top 10〜94% に散らしてあるので、この程度の移動量なら画面外に
     // 抜けきらず常にどこかに見えている。
     const { scrollYProgress } = useScroll();
-    const yFar = useTransform(scrollYProgress, [0, 1], [0, -70]); // depth 0
-    const yMid = useTransform(scrollYProgress, [0, 1], [0, -180]); // depth 1
-    const yNear = useTransform(scrollYProgress, [0, 1], [0, -320]); // depth 2
-    const yFront = useTransform(scrollYProgress, [0, 1], [0, -480]); // depth 3
+    // 移動量は per-frame コストにほぼ無関係（重さは図形=合成レイヤーの「数」で決まる）。
+    // なので奥行き感を出すため depth ごとの差はむしろ大きめに。手前ほどよく動く。
+    const yFar = useTransform(scrollYProgress, [0, 1], [0, -40]); // depth 0
+    const yMid = useTransform(scrollYProgress, [0, 1], [0, -160]); // depth 1
+    const yNear = useTransform(scrollYProgress, [0, 1], [0, -340]); // depth 2
+    const yFront = useTransform(scrollYProgress, [0, 1], [0, -560]); // depth 3
     const layers = [yFar, yMid, yNear, yFront];
 
     return (
@@ -98,11 +89,7 @@ export default function FloatingBackground() {
                                 width: shape.size,
                                 height: shape.size,
                                 animationDelay: `${shape.delay}s`,
-                                ...(shape.spin
-                                    ? { ["--spin" as string]: `${shape.spin}s` }
-                                    : {}),
                             }}
-                            data-spin={shape.spin ? "1" : undefined}
                         />
                     </motion.span>
                 ))}

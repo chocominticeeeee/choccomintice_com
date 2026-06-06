@@ -3,7 +3,11 @@
     "allow": [
       "WebFetch(domain:bnasimeji.vercel.app)",
       "WebFetch(domain:suumo.jp)",
-      "PowerShell(npm run build)"
+      "PowerShell(npm run build)",
+      "Bash(npx -p typescript tsc --noEmit)",
+      "Bash(sort -k5 -n)",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(echo \"exit:$?\")"
     ]
   }
 }

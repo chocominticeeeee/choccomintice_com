@@ -9,7 +9,8 @@ import { HEADER_URL } from "../../CONFIG";
 export default function KeyVisual() {
     const ref = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+    // ぼかし済みフルスクリーン背景をスクロールで動かすと毎フレーム再ラスタライズが
+    // 走って重いため、背景のパララックスは廃止。前景(ロゴ等)だけ控えめに動かす。
     const heroY = useTransform(scrollYProgress, [0, 0.6], [0, -50]);
     const logoControls = useAnimation();
 
@@ -49,7 +50,7 @@ export default function KeyVisual() {
             {/* パララックス背景 */}
             <motion.div
                 className="hero-bg"
-                style={{ position: "absolute", inset: 0, zIndex: 0, y: bgY }}
+                style={{ position: "absolute", inset: 0, zIndex: 0 }}
                 initial={{ scale: 1.15, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 1.8, ease: "easeOut" }}

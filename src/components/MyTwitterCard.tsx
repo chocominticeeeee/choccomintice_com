@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { AVATAR_URL, HEADER_URL } from "../CONFIG";
 import "./MyTwitterCard.scss";
 import { Cake, Link as LinkIcon, CalendarDays } from "lucide-react";
@@ -9,6 +9,9 @@ import marshmallowIcon from "../assets/images/MyTwitterCard/ましゅまろ.png"
 import noteIcon from "../assets/images/MyTwitterCard/note.png";
 import pixivIcon from "../assets/images/MyTwitterCard/pixiv.png";
 import boothIcon from "../assets/images/MyTwitterCard/booth.png";
+import uniSfx from "../assets/uni.wav";
+
+import { useRef } from "react";
 
 const socials = [
     { name: "Twitter", icon: twitterIcon, href: "https://x.com/Choccomintice_" },
@@ -19,7 +22,7 @@ const socials = [
     { name: "BOOTH", icon: boothIcon, href: "https://choccomintice.booth.pm/" },
 ];
 
-const card = {
+const card: Variants = {
     hidden: { opacity: 0, y: 40 },
     show: {
         opacity: 1,
@@ -28,12 +31,38 @@ const card = {
     },
 };
 
-const item = {
+const item: Variants = {
     hidden: { opacity: 0, y: 14 },
     show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 };
 
 export default function MyTwitterCard() {
+    const count = useRef(0);
+
+    const playUni = () => {
+        const audio = new Audio(uniSfx);
+        audio.volume = 0.7;
+        audio.play();
+        count.current += 1;
+        if (count.current === 10) {
+            alert("連打するな！タコにするぞ...🐙");
+        }
+        if (count.current === 20) {
+            alert("いじめないで・・・；；");
+        }
+        if (count.current === 30) {
+            alert("もうよくない？飽きないね～ｗ");
+        }
+        if (count.current === 50) {
+            alert("キュアアルカナチョコミン！参上❣");
+        }
+        if (count.current === 100) {
+            alert("100クリックおめでとう!もう何もないよｗ");
+        }
+        if (count.current === 110) {
+            alert("https://booth.pm/gifts/cba406e3-6944-4a65-af4d-f12fd388a9cc");
+        }
+    };
     return (
         <motion.div
             id="MyTwitterCard"
@@ -50,17 +79,14 @@ export default function MyTwitterCard() {
 
             <div className="mtc-body">
                 {/* バナーに重なるアバター */}
-                <motion.a
-                    href="https://x.com/Choccomintice"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <motion.div
                     className="mtc-avatar"
                     variants={item}
                     whileHover={{ scale: 1.06, rotate: 3 }}
                     transition={{ type: "spring", stiffness: 300, damping: 18 }}
                 >
-                    <img src={AVATAR_URL} alt="ばぶ宮ちょこみん" />
-                </motion.a>
+                    <img src={AVATAR_URL} alt="ばぶ宮ちょこみん" onClick={playUni} style={{cursor:"pointer"}}/>
+                </motion.div>
 
                 <motion.div className="mtc-head" variants={item}>
                     <div className="mtc-head__name-row">
