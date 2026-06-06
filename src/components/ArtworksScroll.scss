@@ -13,6 +13,10 @@
     overflow: hidden;
     border-radius: 1.75rem;
     box-shadow: 0 18px 50px rgba(120, 80, 170, 0.18);
+    // 画面外のカードはぼかし・画像の描画を丸ごとスキップさせ、
+    // 同時に見える 2〜3 枚分だけを描く（横スクロール時の負荷を大幅に削減）
+    content-visibility: auto;
+    contain-intrinsic-size: auto 46vw auto 80vh;
 
     // ぼかした背景（作品の色を画面いっぱいに広げる）
     &__bg {
@@ -20,7 +24,8 @@
         inset: -5%;
         background-size: cover;
         background-position: center;
-        filter: blur(36px) saturate(1.25);
+        // ぼかしコストは半径にほぼ比例するため控えめに（背景なので見た目は同等）
+        filter: blur(18px) saturate(1.25);
         transform: scale(1.1);
         opacity: 0.55;
         z-index: 0;
@@ -70,8 +75,10 @@
         max-width: calc(100% - 3.5rem);
         padding: 0.5rem 0.95rem;
         border-radius: 1rem;
-        background: rgba(255, 255, 255, 0.62);
-        backdrop-filter: blur(10px);
+        // backdrop-filter は毎フレーム背景を再サンプルする重い処理。
+        // 不透明度を上げてぼかし半径を抑え、視認性を保ちつつ負荷を下げる
+        background: rgba(255, 255, 255, 0.78);
+        backdrop-filter: blur(4px);
         box-shadow: 0 6px 20px rgba(120, 80, 170, 0.18);
     }
 

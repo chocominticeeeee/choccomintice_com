@@ -41,7 +41,7 @@ export default function ArtworksScroll({ onSelect }: Props) {
     if (works.length === 0) return null;
 
     return (
-        <HorizontalScrollSection panelWidthVw={46}>
+        <HorizontalScrollSection panelWidthVw={40}>
             {works.map((work, i) => (
                 <div
                     className="artwork-panel"

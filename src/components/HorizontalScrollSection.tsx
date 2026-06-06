@@ -1,5 +1,7 @@
 import {
     Children,
+    memo,
+    useMemo,
     useRef,
     useState,
     useEffect,
@@ -15,12 +17,15 @@ import {
 } from "framer-motion";
 import "./HorizontalScrollSection.scss";
 
+/** 非フォーカスのパネルを傾ける最大角度(度) */
+const ROTATE_DEG = 5;
+
 /**
  * 1枚のパネル。スクロール進捗に応じて、中央に来たカードを
  * くっきり (opacity:1 / scale:1) に、両隣を少し縮めて薄く見せる
  * 「センターフォーカス」演出を加える。
  */
-function FocusPanel({
+const FocusPanel = memo(function FocusPanel({
     index,
     count,
     progress,
@@ -39,7 +44,7 @@ function FocusPanel({
     // 中央を少しでも外れるとすぐ薄くなるのを防ぐため、中央付近に
     // フォーカスを保つ「平坦域」を設ける。hold の範囲内ではフル
     // フォーカス (opacity:1 / scale:1) を維持し、その外側で減衰させる。
-    const hold = step * 0.55;
+    const hold = step * 0.3;
     const range = [
         center - step,
         center - hold,
@@ -48,9 +53,11 @@ function FocusPanel({
         center + step,
     ];
 
-    const opacity = useTransform(progress, range, [0.3, 1, 1, 1, 0.3]);
-    const scale = useTransform(progress, range, [0.86, 1, 1, 1, 0.86]);
+    const opacity = useTransform(progress, range, [0.1, 1, 1, 1, 0.1]);
+    const scale = useTransform(progress, range, [0.95, 1, 1, 1, 0.95]);
     const y = useTransform(progress, range, [40, 0, 0, 0, 40]);
+    // 中央の右側(center未満)は右に傾き、フォーカス中(hold域)は0度、左側は左に傾く
+    const rotate = useTransform(progress, range, [ROTATE_DEG, 0, 0, 0, -ROTATE_DEG]);
 
     return (
         <motion.div
@@ -61,12 +68,14 @@ function FocusPanel({
                 opacity,
                 scale,
                 y,
+                // rotate,
+                transformOrigin: "bottom center",
             }}
         >
             {children}
         </motion.div>
     );
-}
+});
 
 interface Props {
     children: ReactNode;
@@ -88,7 +97,8 @@ export default function HorizontalScrollSection({
     mobileBreakpoint = 768,
     panelWidthVw = 100,
 }: Props) {
-    const panels = Children.toArray(children);
+    // 毎レンダリングで新しい配列を作らないようメモ化（FocusPanel の memo を効かせるため）
+    const panels = useMemo(() => Children.toArray(children), [children]);
     const count = Math.max(panels.length, 1);
 
     // 両端の余白 = (画面幅 - パネル幅) / 2。これで先頭・末尾カードも常に中央に来る
@@ -97,6 +107,9 @@ export default function HorizontalScrollSection({
     const targetRef = useRef<HTMLDivElement>(null);
     const [isMobile, setIsMobile] = useState(false);
     const [active, setActive] = useState(0);
+    // active の最新値を保持し、実際に値が変わったときだけ setActive を呼ぶ
+    // （スクロール中は毎フレーム発火するため、無駄な更新を防ぐ）
+    const activeRef = useRef(0);
 
     useEffect(() => {
         const mq = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`);
@@ -125,18 +138,29 @@ export default function HorizontalScrollSection({
         ["0vw", `-${(count - 1) * panelWidthVw}vw`],
     );
 
+    const commitActive = (idx: number) => {
+        const clamped = Math.min(Math.max(idx, 0), count - 1);
+        if (activeRef.current !== clamped) {
+            activeRef.current = clamped;
+            setActive(clamped);
+        }
+    };
+
     useMotionValueEvent(scrollYProgress, "change", (p) => {
-        const idx = Math.round(p * (count - 1));
-        setActive(Math.min(Math.max(idx, 0), count - 1));
+        commitActive(Math.round(p * (count - 1)));
     });
 
-    // モバイル: ネイティブの横スワイプ (scroll-snap)。スクロール位置からアクティブを算出
+    // モバイル: ネイティブの横スワイプ (scroll-snap)。スクロール位置からアクティブを算出。
+    // onScroll は1スワイプで大量発火するため rAF で1フレームに間引く
+    const rafRef = useRef<number | null>(null);
     const handleMobileScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const el = e.currentTarget;
-        const max = el.scrollWidth - el.clientWidth;
-        const p = max > 0 ? el.scrollLeft / max : 0;
-        const idx = Math.round(p * (count - 1));
-        setActive(Math.min(Math.max(idx, 0), count - 1));
+        if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+        rafRef.current = requestAnimationFrame(() => {
+            const max = el.scrollWidth - el.clientWidth;
+            const p = max > 0 ? el.scrollLeft / max : 0;
+            commitActive(Math.round(p * (count - 1)));
+        });
     };
 
     if (isMobile) {
@@ -175,13 +199,10 @@ export default function HorizontalScrollSection({
         <div
             className="hscroll"
             ref={targetRef}
-            style={{ height: `${count * 100}vh` }}
+            style={{ height: `${count * 100}vh`, "--side-pad": `${sidePadVw}vw` } as React.CSSProperties}
         >
             <div className="hscroll__sticky">
-                <motion.div
-                    className="hscroll__track"
-                    style={{ x, paddingLeft: `${sidePadVw}vw`, paddingRight: `${sidePadVw}vw` }}
-                >
+                <motion.div className="hscroll__track" style={{ x }}>
                     {panels.map((panel, i) => (
                         <FocusPanel
                             key={i}

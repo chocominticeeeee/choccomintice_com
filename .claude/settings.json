@@ -7,7 +7,14 @@
       "Bash(npx -p typescript tsc --noEmit)",
       "Bash(sort -k5 -n)",
       "Bash(./node_modules/.bin/tsc --noEmit)",
-      "Bash(echo \"exit:$?\")"
+      "Bash(echo \"exit:$?\")",
+      "Bash(bunx playwright *)",
+      "Read(//c/Users/chocominNT/.cache/**)",
+      "Bash(cd \"i:\\\\CreativeProjects\\\\CursorProjects\\\\choccomintice_com\" && bun add -d playwright-core 2>&1 | tail -3; echo \"===\"; ls \"C:/Program Files/Google/Chrome/Application/chrome.exe\" 2>/dev/null && echo \"chrome found\" || echo \"no chrome at default\")",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Bash(node /i/tmp/probe.mjs)",
+      "Bash(cp /i/tmp/probe.mjs ./probe.mjs)",
+      "Bash(node ./probe.mjs)"
     ]
   }
 }

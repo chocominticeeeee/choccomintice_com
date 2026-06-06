@@ -9,6 +9,7 @@ import NoteSection from "../components/NoteSection";
 import UniClicker from "../components/UniClicker/UniClicker";
 import VRChatGallery from "../components/VRChatGallery";
 import deskImg from "../assets/images/ちょこみんのデスク.png";
+import ArtworksCoverflow from "../components/ArtworksCoverflow";
 
 interface ImageModule {
     default: string;
@@ -126,7 +127,8 @@ export default function P_Home() {
                     </div>
                     <h3>🖥 おしごと</h3>
                     <p>
-                        会社員さんをしながら、たまーに副業もしてます！<br />
+                        会社員さんをしながら、たまーに副業もしてます！
+                        <br />
                         会社ではマネージャーとして、某有名サービスのお問い合わせ受付とかをしてるよ。 <br />
                         社内SEでもあって、WEBマニュアルや社内システム、MongoDB、web-apiまでフルスタックに開発してます⌨
                     </p>
@@ -136,7 +138,7 @@ export default function P_Home() {
                     </p>
                     <h3>💻 デスク紹介</h3>
                     <p>
-                        <ul style={{paddingLeft:0}}>
+                        <ul style={{ paddingLeft: 0 }}>
                             <li>パソコン：Ryzen 7 9800X3D / RTX 4070Ti Super / RAM 64GB</li>
                             <li>マウス：Pulsar X2</li>
                             <li>マウスパッド：Pulsar Superglide-XL </li>
@@ -156,9 +158,11 @@ export default function P_Home() {
                         </div>
                         <h2>イラスト</h2>
                         <p className="artworks-section__desc">
-                            たまーにお絵描きしてるよ〜🖊<br />
+                            たまーにお絵描きしてるよ〜🖊
+                            <br />
                         </p>
                     </div>
+                    {/* <ArtworksCoverflow onSelect={setSelectedImage} /> */}
                     <ArtworksScroll onSelect={setSelectedImage} />
                 </section>
 

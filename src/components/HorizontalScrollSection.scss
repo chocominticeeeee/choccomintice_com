@@ -23,6 +23,9 @@
         display: flex;
         flex-flow: row nowrap;
         height: 100%;
+        // 両端の余白はインラインスタイルではなく CSS 変数経由で受け取る
+        // （motion の style から静的値を外し、x の transform だけを管理させる）
+        padding-inline: var(--side-pad, 0);
         will-change: transform;
     }
 
