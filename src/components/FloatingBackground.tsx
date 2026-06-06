@@ -19,6 +19,8 @@ const SPARKLES = ["✨", "🫧", "🩵", "✨", "🫧", "💜", "✨", "🩷", "
 export default function FloatingBackground() {
     return (
         <div className="floating-bg" aria-hidden="true">
+            {/* うっすら敷いた方眼の罫線。中央が濃く、端はふわっと消える */}
+            <div className="floating-bg__grid" />
             {BLOBS.map((blob, i) => (
                 <span key={i} className={blob.className} style={blob.style} />
             ))}

@@ -11,6 +11,37 @@
     pointer-events: none;
 }
 
+// 方眼の罫線レイヤー。細い線（minor）と太い線（major）を重ねて、
+// 製図用紙のような密度を出す。端は radial マスクでふわっと溶かす。
+.floating-bg__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        // major（太め）56px ごと
+        linear-gradient(to right, rgba(155, 127, 224, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(155, 127, 224, 0.1) 1px, transparent 1px),
+        // minor（細め）14px ごと
+        linear-gradient(to right, rgba(155, 127, 224, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(155, 127, 224, 0.045) 1px, transparent 1px);
+    background-size:
+        56px 56px,
+        56px 56px,
+        14px 14px,
+        14px 14px;
+    // 中央上寄りを濃く、外周をふわっと消す
+    -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 28%, #000 25%, transparent 82%);
+    mask-image: radial-gradient(ellipse 95% 85% at 50% 28%, #000 25%, transparent 82%);
+
+    @media (max-width: 950px) {
+        background-size:
+            40px 40px,
+            40px 40px,
+            10px 10px,
+            10px 10px;
+        opacity: 0.7;
+    }
+}
+
 // にじむパステルのブロブ。drift で位置、morph で形をゆっくり変える。
 .blob {
     position: absolute;
