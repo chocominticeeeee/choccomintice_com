@@ -1,0 +1,129 @@
+@use "../styles/variables" as v;
+
+// ================================================================
+// アンビエント背景 – サイト全体の背後でゆっくり動き続けるレイヤー
+// ================================================================
+.floating-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+// にじむパステルのブロブ。drift で位置、morph で形をゆっくり変える。
+.blob {
+    position: absolute;
+    width: 42vw;
+    height: 42vw;
+    max-width: 560px;
+    max-height: 560px;
+    border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+    filter: blur(60px);
+    opacity: 0.7;
+    will-change: transform, border-radius;
+    animation:
+        blob-drift 26s ease-in-out infinite alternate,
+        blob-morph 18s ease-in-out infinite alternate;
+
+    &--lavender {
+        background: radial-gradient(circle at 30% 30%, rgba(220, 207, 250, 0.9), transparent 70%);
+        animation-duration: 28s, 20s;
+    }
+    &--pink {
+        background: radial-gradient(circle at 30% 30%, rgba(255, 200, 222, 0.85), transparent 70%);
+        animation-duration: 32s, 17s;
+        animation-direction: alternate-reverse, alternate;
+    }
+    &--mint {
+        background: radial-gradient(circle at 30% 30%, rgba(200, 245, 239, 0.85), transparent 70%);
+        animation-duration: 30s, 22s;
+    }
+    &--peach {
+        background: radial-gradient(circle at 30% 30%, rgba(255, 221, 200, 0.8), transparent 70%);
+        animation-duration: 34s, 19s;
+        animation-direction: alternate-reverse, alternate;
+    }
+    &--sky {
+        background: radial-gradient(circle at 30% 30%, rgba(200, 232, 255, 0.8), transparent 70%);
+        animation-duration: 27s, 21s;
+    }
+
+    @media (max-width: 950px) {
+        width: 70vw;
+        height: 70vw;
+        filter: blur(48px);
+        opacity: 0.45;
+    }
+}
+
+@keyframes blob-drift {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(6vw, 4vh, 0) scale(1.12);
+    }
+    100% {
+        transform: translate3d(-4vw, -3vh, 0) scale(0.95);
+    }
+}
+
+@keyframes blob-morph {
+    0% {
+        border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+    }
+    50% {
+        border-radius: 63% 37% 38% 62% / 55% 62% 38% 45%;
+    }
+    100% {
+        border-radius: 40% 60% 54% 46% / 60% 38% 62% 40%;
+    }
+}
+
+// ゆっくり昇っていくきらきら。各粒子は左位置・速度・遅延を個別に持つ。
+.floating-bg__sparkles {
+    position: absolute;
+    inset: 0;
+}
+
+.sparkle {
+    position: absolute;
+    bottom: -8%;
+    opacity: 0;
+    will-change: transform, opacity;
+    animation-name: sparkle-rise;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    filter: drop-shadow(0 2px 6px rgba(155, 127, 224, 0.3));
+}
+
+@keyframes sparkle-rise {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.7);
+        opacity: 0;
+    }
+    12% {
+        opacity: 0.85;
+    }
+    50% {
+        transform: translateY(-55vh) translateX(3vw) rotate(120deg) scale(1);
+    }
+    88% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-108vh) translateX(-2vw) rotate(240deg) scale(0.6);
+        opacity: 0;
+    }
+}
+
+// 動きを抑える設定のユーザーには静かな背景を見せる
+@media (prefers-reduced-motion: reduce) {
+    .blob {
+        animation: none;
+    }
+    .sparkle {
+        display: none;
+    }
+}

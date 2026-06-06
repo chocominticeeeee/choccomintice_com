@@ -12,6 +12,22 @@
     }
 }
 
+@keyframes avatar-idle {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-16px) rotate(-1.2deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-avatar-full img {
+        animation: none;
+    }
+}
+
 // ================================================================
 // ヒーローレイアウト – アバターとコンテンツの横並び
 // ================================================================
@@ -49,6 +65,9 @@
             object-fit: contain;
             filter: drop-shadow(0 12px 48px rgba(155, 127, 224, 0.4));
             display: block;
+            // 登場後もずっとゆらゆら呼吸するようにアイドル浮遊させる
+            animation: avatar-idle 6s ease-in-out infinite;
+            transform-origin: bottom center;
         }
 
         @media (max-width: 950px) {
