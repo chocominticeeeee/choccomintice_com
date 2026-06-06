@@ -5,7 +5,9 @@
       "Bash(git checkout *)",
       "Bash(curl -s http://localhost:5174/src/pages/P_Home.scss?direct)",
       "Bash(curl -s \"http://localhost:5174/src/pages/P_Home.scss?direct\")",
-      "Bash(npx vite *)"
+      "Bash(npx vite *)",
+      "Bash(git stash *)",
+      "Bash(git merge *)"
     ]
   }
 }
