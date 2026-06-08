@@ -213,7 +213,7 @@ export default function P_Home() {
                         <span className="section__label">Note</span>
                     </div>
                     <h2>note</h2>
-                    <p>VRChatでの出来事とか、ちょこっと個人的なニュースを記事に書いてるよ〜🦀(*´꒳`*)</p>
+                    <p>VRChatでの出来事とか、ちょこっと個人的なニュースを記事に書いてるよ〜🦀</p>
                     <NoteSection />
                 </section>
 

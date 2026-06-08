@@ -50,7 +50,7 @@ export default function NoteSection() {
                 rel="noopener noreferrer"
                 className="note-all-link"
             >
-                ぜんぶの記事を見てみる →(*´꒳`*)
+                記事をぜんぶ見る
             </a>
         </>
     );
