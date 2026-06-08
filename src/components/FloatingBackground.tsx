@@ -34,18 +34,24 @@ type Shape = {
 // 枚数は描画コストに直結するため厳選（24→12）。縦の散らばり・形・depth の
 // バランスは保ちつつ、よく動く手前(depth3)を多めにして奥行き感を強める。
 const SHAPES: Shape[] = [
-    { type: "ring", top: "10%", left: "7%", size: 130, depth: 3, spin: 0, delay: 0 },
-    { type: "cross", top: "16%", right: "12%", size: 26, depth: 2, spin: 24, delay: 1.2 },
-    { type: "square", top: "30%", right: "8%", size: 54, depth: 3, spin: 30, delay: 0.6 },
-    { type: "triangle", top: "38%", left: "12%", size: 70, depth: 2, spin: 40, delay: 1.8 },
-    { type: "ring", top: "46%", right: "18%", size: 88, depth: 1, spin: 0, delay: 3 },
-    { type: "square", top: "50%", left: "26%", size: 28, depth: 0, spin: 32, delay: 3.1 },
-    { type: "disc", top: "58%", right: "10%", size: 40, depth: 0, spin: 0, delay: 2 },
-    { type: "cross", top: "64%", left: "18%", size: 22, depth: 3, spin: 20, delay: 1.5 },
-    { type: "ring", top: "72%", left: "9%", size: 110, depth: 2, spin: 0, delay: 0.3 },
-    { type: "dot", top: "84%", left: "30%", size: 13, depth: 3, spin: 0, delay: 1 },
-    { type: "ring", top: "88%", left: "36%", size: 66, depth: 3, spin: 0, delay: 0.2 },
-    { type: "triangle", top: "90%", right: "9%", size: 60, depth: 2, spin: 34, delay: 2.2 },
+    { type: "ring", top: "20%", left: "7%", size: 130, depth: 3, spin: 0, delay: 0 },
+    { type: "cross", top: "28%", right: "12%", size: 26, depth: 2, spin: 24, delay: 1.2 },
+    { type: "square", top: "42%", right: "8%", size: 54, depth: 3, spin: 30, delay: 0.6 },
+    { type: "triangle", top: "50%", left: "12%", size: 70, depth: 2, spin: 40, delay: 1.8 },
+    { type: "ring", top: "56%", right: "18%", size: 88, depth: 1, spin: 0, delay: 3 },
+    { type: "square", top: "60%", left: "26%", size: 28, depth: 0, spin: 32, delay: 3.1 },
+    { type: "disc", top: "66%", right: "10%", size: 40, depth: 0, spin: 0, delay: 2 },
+    { type: "cross", top: "72%", left: "18%", size: 22, depth: 3, spin: 20, delay: 1.5 },
+    { type: "ring", top: "80%", left: "9%", size: 110, depth: 2, spin: 0, delay: 0.3 },
+    { type: "dot", top: "90%", left: "30%", size: 13, depth: 3, spin: 0, delay: 1 },
+    { type: "ring", top: "94%", left: "36%", size: 66, depth: 3, spin: 0, delay: 0.2 },
+    { type: "triangle", top: "98%", right: "9%", size: 60, depth: 2, spin: 34, delay: 2.2 },
+    // 最下部の埋め。奥(depth 0〜1)は上へ流れにくいので底に残り、
+    // top>100% の手前は画面下から昇ってきて最下部の隙間を埋める。
+    { type: "disc", top: "96%", left: "16%", size: 34, depth: 0, spin: 0, delay: 1.4 },
+    { type: "square", top: "104%", right: "22%", size: 46, depth: 1, spin: 28, delay: 0.9 },
+    { type: "ring", top: "112%", left: "44%", size: 96, depth: 2, spin: 0, delay: 2.6 },
+    { type: "cross", top: "118%", right: "14%", size: 24, depth: 3, spin: 22, delay: 1.7 },
 ];
 
 export default function FloatingBackground() {
@@ -56,10 +62,10 @@ export default function FloatingBackground() {
     const { scrollYProgress } = useScroll();
     // 移動量は per-frame コストにほぼ無関係（重さは図形=合成レイヤーの「数」で決まる）。
     // なので奥行き感を出すため depth ごとの差はむしろ大きめに。手前ほどよく動く。
-    const yFar = useTransform(scrollYProgress, [0, 1], [0, -40]); // depth 0
-    const yMid = useTransform(scrollYProgress, [0, 1], [0, -160]); // depth 1
-    const yNear = useTransform(scrollYProgress, [0, 1], [0, -340]); // depth 2
-    const yFront = useTransform(scrollYProgress, [0, 1], [0, -560]); // depth 3
+    const yFar = useTransform(scrollYProgress, [0, 1], [0, -240]); // depth 0
+    const yMid = useTransform(scrollYProgress, [0, 1], [0, -420]); // depth 1（中景）
+    const yNear = useTransform(scrollYProgress, [0, 1], [0, -900]); // depth 2（中景）
+    const yFront = useTransform(scrollYProgress, [0, 1], [0, -1500]); // depth 3（前景）
     const layers = [yFar, yMid, yNear, yFront];
 
     return (
