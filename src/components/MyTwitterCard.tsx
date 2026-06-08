@@ -71,10 +71,9 @@ export default function MyTwitterCard() {
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
         >
-            {/* バナー – ふんわりした帯にグラデの光沢が流れる */}
+            {/* バナー */}
             <div className="mtc-banner">
                 <img src={bannerImg ?? HEADER_URL} alt="" className="mtc-banner__img" />
-                <div className="mtc-banner__sheen" />
             </div>
 
             <div className="mtc-body">
@@ -91,7 +90,6 @@ export default function MyTwitterCard() {
                 <motion.div className="mtc-head" variants={item}>
                     <div className="mtc-head__name-row">
                         <h3 className="mtc-name">ばぶ宮ちょこみん🍼🌱</h3>
-                        <span className="mtc-badge">超健康VRChatter</span>
                     </div>
                     <p className="mtc-handle">@Choccomintice</p>
                 </motion.div>

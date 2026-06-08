@@ -87,7 +87,7 @@ export default function P_Home() {
         <>
             <KeyVisual />
             <main ref={mainRef}>
-                <section className="section--editorial">
+                <section id="about" className="section--editorial">
                     <div className="section__index">
                         <span className="section__num">01</span>
                         <span className="section__label">About</span>
@@ -149,7 +149,7 @@ export default function P_Home() {
                     <img ref={deskImgRef} className="desk-img" src={deskImg} alt="ちょこみんのデスク" />
                 </section>
 
-                <section className="artworks-section full-bleed section--editorial">
+                <section id="artworks" className="artworks-section full-bleed section--editorial">
                     <div className="artworks-section__head">
                         <div className="section__index">
                             <span className="section__num">02</span>
@@ -207,7 +207,7 @@ export default function P_Home() {
                     />
                 </section>
 
-                <section className="section--editorial">
+                <section id="note" className="section--editorial">
                     <div className="section__index">
                         <span className="section__num">04</span>
                         <span className="section__label">Note</span>

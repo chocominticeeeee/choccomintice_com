@@ -54,21 +54,6 @@
             transform: scale(1.05);
         }
 
-        // 流れる光沢
-        &__sheen {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                115deg,
-                transparent 30%,
-                rgba(255, 255, 255, 0.35) 48%,
-                transparent 66%
-            );
-            background-size: 220% 100%;
-            animation: mtc-sheen 6s ease-in-out infinite;
-            mix-blend-mode: screen;
-        }
-
         // 下端を本体になじませる
         &::after {
             content: "";
@@ -278,16 +263,6 @@
     }
 }
 
-@keyframes mtc-sheen {
-    0% {
-        background-position: 120% 0;
-    }
-    60%,
-    100% {
-        background-position: -120% 0;
-    }
-}
-
 @keyframes mtc-avatar-float {
     0%,
     100% {
@@ -299,7 +274,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    #MyTwitterCard .mtc-banner__sheen,
     #MyTwitterCard .mtc-avatar img {
         animation: none;
     }

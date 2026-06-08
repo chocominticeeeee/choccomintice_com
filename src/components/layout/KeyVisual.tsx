@@ -1,10 +1,17 @@
 import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import "./KeyVisual.scss";
 import avatarImage from "../../assets/images/アバター透過.png";
 import logoImage from "../../assets/images/ロゴ.png";
 import HeaderImg from "../../assets/images/header.jpg";
 import { HEADER_URL } from "../../CONFIG";
+
+// ロゴ左側に縦並びで出すナビゲーション項目
+const NAV_ITEMS = [
+    { label: "自己紹介", target: "about" },
+    { label: "イラスト", target: "artworks" },
+    { label: "note", target: "note" },
+];
 
 export default function KeyVisual() {
     const ref = useRef<HTMLElement>(null);
@@ -13,6 +20,12 @@ export default function KeyVisual() {
     // 走って重いため、背景のパララックスは廃止。前景(ロゴ等)だけ控えめに動かす。
     const heroY = useTransform(scrollYProgress, [0, 0.6], [0, -50]);
     const logoControls = useAnimation();
+    // アバターのアニメーションが終わったらナビゲーションを出現させる
+    const [navVisible, setNavVisible] = useState(false);
+
+    const handleNavClick = (target: string) => {
+        document.getElementById(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
 
     useEffect(() => {
         // ロゴのエントリーアニメーション
@@ -24,10 +37,12 @@ export default function KeyVisual() {
         });
 
         // アバターが登場してから少し後にロゴを左へシフト
+        // spring だと収束の尾を引き、直後に出るナビと動きが重なって二段階に
+        // 見えるため、終わりが明確な tween にする。
         const t = setTimeout(() => {
             logoControls.start({
                 x: -40,
-                transition: { duration: 1, type: "spring", stiffness: 60, damping: 18 },
+                transition: { duration: 1, ease: [0.16, 1, 0.3, 1] },
             });
         }, 2000);
 
@@ -40,7 +55,7 @@ export default function KeyVisual() {
             className="hero-section"
             style={{
                 position: "relative",
-                height: "70dvh",
+                height: "100dvh",
                 overflow: "hidden",
                 display: "flex",
                 alignItems: "center",
@@ -81,9 +96,9 @@ export default function KeyVisual() {
             <motion.div
                 className="hero-frame"
                 aria-hidden="true"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1, duration: 1.2, ease: "easeOut" }}
+                initial={false}
+                animate={{ opacity: navVisible ? 1 : 0 }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
             >
                 <span className="hero-frame__corner hero-frame__corner--tl" />
                 <span className="hero-frame__corner hero-frame__corner--tr" />
@@ -116,6 +131,46 @@ export default function KeyVisual() {
                     initial={{ x: -60, opacity: 0, rotate: -4 }}
                     animate={logoControls}
                 >
+                    {/* ナビゲーション – アバター登場後にロゴ左側へ出現 (PCのみ) */}
+                    <motion.nav
+                        className="hero-nav"
+                        aria-label="メインナビゲーション"
+                        initial={false}
+                        animate={navVisible ? "visible" : "hidden"}
+                        variants={{
+                            // ボーダーも透明から始めてふわっと出す
+                            hidden: { borderLeftColor: "rgba(255, 255, 255, 0)" },
+                            // 親(ロゴ列)の左シフトが完全に終わってから動かし始める
+                            visible: {
+                                borderLeftColor: "rgba(255, 255, 255, 0.74)",
+                                transition: {
+                                    staggerChildren: 0.1,
+                                    delayChildren: 0.2,
+                                    borderLeftColor: { duration: 0.8, ease: "easeOut" },
+                                },
+                            },
+                        }}
+                    >
+                        {NAV_ITEMS.map((item) => (
+                            <motion.button
+                                key={item.target}
+                                type="button"
+                                className="hero-nav__item"
+                                onClick={() => handleNavClick(item.target)}
+                                variants={{
+                                    hidden: { opacity: 0 },
+                                    visible: {
+                                        opacity: 1,
+                                        transition: { duration: 0.6, ease: "easeOut" },
+                                    },
+                                }}
+                            >
+                                <span className="hero-nav__dot" />
+                                {item.label}
+                            </motion.button>
+                        ))}
+                    </motion.nav>
+
                     {/* ロゴ画像 */}
                     <motion.img
                         src={logoImage}
@@ -136,6 +191,7 @@ export default function KeyVisual() {
                         animate={{ x: 0, y: 0, rotateZ: 5, opacity: 1 }}
                         transition={{ delay: 2, duration: 1, type: "tween", ease: [0.16, 1, 0.3, 1] }}
                         style={{ transformOrigin: "bottom" }}
+                        onAnimationComplete={() => setNavVisible(true)}
                     >
                         <div className="hero-avatar-full">
                             <img src={avatarImage} alt="ばぶ宮ちょこみん" />
@@ -158,40 +214,45 @@ export default function KeyVisual() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    gap: "8px",
+                    gap: "10px",
                     pointerEvents: "none",
                 }}
             >
                 <span
                     style={{
-                        fontSize: "0.65rem",
-                        letterSpacing: "3px",
-                        color: "rgba(155,127,224,0.75)",
+                        fontSize: "0.8rem",
+                        letterSpacing: "4px",
+                        color: "#ffffff",
                         fontFamily: "'Outfit', sans-serif",
-                        fontWeight: 600,
+                        fontWeight: 700,
+                        textShadow: "0 0 12px rgba(244,125,181,0.9), 0 2px 6px rgba(155,127,224,0.7)",
                     }}
                 >
                     SCROLL
                 </span>
                 <div
                     style={{
-                        width: "22px",
-                        height: "36px",
-                        borderRadius: "11px",
-                        border: "2px solid rgba(155,127,224,0.55)",
+                        width: "26px",
+                        height: "42px",
+                        borderRadius: "13px",
+                        border: "2.5px solid rgba(255,255,255,0.9)",
+                        background: "rgba(155,127,224,0.18)",
+                        boxShadow:
+                            "0 0 18px rgba(244,125,181,0.7), inset 0 0 10px rgba(255,255,255,0.3)",
                         display: "flex",
                         justifyContent: "center",
-                        paddingTop: "7px",
+                        paddingTop: "8px",
                     }}
                 >
                     <motion.div
-                        animate={{ y: [0, 12, 0], opacity: [1, 0.2, 1] }}
+                        animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
                         transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
                         style={{
-                            width: "4px",
-                            height: "8px",
-                            borderRadius: "2px",
-                            background: "linear-gradient(to bottom, #9b7fe0, #f47db5)",
+                            width: "5px",
+                            height: "10px",
+                            borderRadius: "3px",
+                            background: "linear-gradient(to bottom, #ffffff, #f47db5)",
+                            boxShadow: "0 0 8px rgba(244,125,181,0.9)",
                         }}
                     />
                 </div>
