@@ -9,7 +9,6 @@ import NoteSection from "../components/NoteSection";
 import UniClicker from "../components/UniClicker/UniClicker";
 import VRChatGallery from "../components/VRChatGallery";
 import deskImg from "../assets/images/ちょこみんのデスク.png";
-import ArtworksCoverflow from "../components/ArtworksCoverflow";
 
 interface ImageModule {
     default: string;

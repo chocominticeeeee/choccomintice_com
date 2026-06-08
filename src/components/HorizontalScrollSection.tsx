@@ -44,7 +44,7 @@ const FocusPanel = memo(function FocusPanel({
     // 中央を少しでも外れるとすぐ薄くなるのを防ぐため、中央付近に
     // フォーカスを保つ「平坦域」を設ける。hold の範囲内ではフル
     // フォーカス (opacity:1 / scale:1) を維持し、その外側で減衰させる。
-    const hold = step * 0.3;
+    const hold = step * 0.2;
     const range = [
         center - step,
         center - hold,
@@ -54,7 +54,7 @@ const FocusPanel = memo(function FocusPanel({
     ];
 
     const opacity = useTransform(progress, range, [0.1, 1, 1, 1, 0.1]);
-    const scale = useTransform(progress, range, [0.95, 1, 1, 1, 0.95]);
+    const scale = useTransform(progress, range, [0.8, 1, 1, 1, 0.8]);
     const y = useTransform(progress, range, [40, 0, 0, 0, 40]);
     // 中央の右側(center未満)は右に傾き、フォーカス中(hold域)は0度、左側は左に傾く
     const rotate = useTransform(progress, range, [ROTATE_DEG, 0, 0, 0, -ROTATE_DEG]);
@@ -67,9 +67,9 @@ const FocusPanel = memo(function FocusPanel({
                 width: `${panelWidthVw}vw`,
                 opacity,
                 scale,
-                y,
+                // y,
                 // rotate,
-                transformOrigin: "bottom center",
+                transformOrigin: "center center",
             }}
         >
             {children}
