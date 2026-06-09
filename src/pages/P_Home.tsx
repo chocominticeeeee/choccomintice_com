@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import MyTwitterCard from "../components/MyTwitterCard";
 import ArtworksScroll from "../components/ArtworksScroll";
 import Lightbox from "../components/Lightbox";
@@ -157,11 +158,9 @@ export default function P_Home() {
                         </div>
                         <h2>イラスト</h2>
                         <p className="artworks-section__desc">
-                            たまーにお絵描きしてるよ〜🖊
-                            <br />
+                            たまーにお絵描きしてるよ〜🖊 👇お気に入りのイラストたち！
                         </p>
                     </div>
-                    {/* <ArtworksCoverflow onSelect={setSelectedImage} /> */}
                     <ArtworksScroll onSelect={setSelectedImage} />
                 </section>
 
@@ -215,6 +214,9 @@ export default function P_Home() {
                     <h2>note</h2>
                     <p>VRChatでの出来事とか、ちょこっと個人的なニュースを記事に書いてるよ〜🦀</p>
                     <NoteSection />
+                    <Link to="/note" className="note-page-link">
+                        📖 noteの記事一覧をみる →
+                    </Link>
                 </section>
 
                 <section className="section--editorial">

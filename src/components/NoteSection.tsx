@@ -10,9 +10,11 @@ export default function NoteSection() {
 
     useEffect(() => {
         fetchNoteArticles("choccomintice")
-            .then(setArticles)
+            .then(({ contents }) => setArticles(contents))
             .catch(() => setError(true))
-            .finally(() => setLoading(false));
+            .finally(() => {
+                setLoading(false);
+            });
     }, []);
 
     if (loading) return <p className="note-status">よみこみ中だよ〜ちょっと待っててね…(´｡• ᵕ •｡`)</p>;
@@ -21,37 +23,30 @@ export default function NoteSection() {
     return (
         <>
             <div className="note-articles">
-                {articles.map((article) => (
-                    <a
-                        key={article.key}
-                        href={article.noteUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="note-article-card"
-                    >
-                        {article.eyecatch && (
-                            <img src={article.eyecatch} alt={article.name} loading="lazy" />
-                        )}
-                        <div className="note-article-card__body">
-                            <p className="note-article-card__title">{article.name}</p>
-                            <div className="note-article-card__meta">
-                                <p className="note-article-card__date">
-                                    {new Date(article.publishAt).toLocaleDateString("ja-JP")}
-                                </p>
-                                <p className="note-article-card__likes">♡ {article.likeCount}</p>
+                {articles.map((article) => {
+                    // console.log(article);
+                    return (
+                        <a
+                            key={article.key}
+                            href={article.noteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="note-article-card"
+                        >
+                            {article.eyecatch && <img src={article.eyecatch} alt={article.name} loading="lazy" />}
+                            <div className="note-article-card__body">
+                                <p className="note-article-card__title">{article.name}</p>
+                                <div className="note-article-card__meta">
+                                    <p className="note-article-card__date">
+                                        {new Date(article.publishAt).toLocaleDateString("ja-JP")}
+                                    </p>
+                                    <p className="note-article-card__likes">♡ {article.likeCount}</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                ))}
+                        </a>
+                    );
+                })}
             </div>
-            <a
-                href="https://note.com/choccomintice"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="note-all-link"
-            >
-                記事をぜんぶ見る
-            </a>
         </>
     );
 }

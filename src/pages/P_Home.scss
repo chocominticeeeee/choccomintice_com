@@ -197,6 +197,40 @@ main {
         }
     }
 
+    // note セクション内の「記事一覧ページへ」誘導リンク。
+    // 外部リンク（記事をぜんぶ見る）の下に並ぶので、塗りのボタンで内部ページと区別する。
+    .note-page-link {
+        display: inline-block;
+        margin-top: 1rem;
+        margin-left: 0.6rem;
+        padding: 0.5rem 1.4rem;
+        border-radius: 2rem;
+        border: 1.5px solid transparent;
+        background: linear-gradient(120deg, v.$color-accent-purple, v.$color-accent-pink);
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: bold;
+        text-decoration: none;
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            filter 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 16px rgba(155, 127, 224, 0.35);
+        }
+
+        @media (max-width: 950px) {
+            margin-left: 0;
+
+            &:hover {
+                transform: none;
+            }
+        }
+    }
+
     // VRChat内の中見出し（拡張機能 / Memories）は h3 と同じ扱いに
     .vrchat-section__memories-title {
         position: relative;

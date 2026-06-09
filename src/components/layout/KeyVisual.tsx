@@ -13,7 +13,12 @@ const NAV_ITEMS = [
     { label: "note", target: "note" },
 ];
 
-export default function KeyVisual() {
+interface KeyVisualProps {
+    /** Home以外のページ用。高さを低くし、アバター・ナビ・スクロール表示を省く */
+    compact?: boolean;
+}
+
+export default function KeyVisual({ compact = false }: KeyVisualProps) {
     const ref = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
     // ぼかし済みフルスクリーン背景をスクロールで動かすと毎フレーム再ラスタライズが
@@ -36,6 +41,13 @@ export default function KeyVisual() {
             transition: { delay: 0.5, duration: 0.8, type: "spring", stiffness: 80, damping: 18 },
         });
 
+        // compact (Home以外) ではアバターもナビも出さないので、ロゴは中央のまま。
+        // フレームを表示させるためのフラグだけ立てる。
+        if (compact) {
+            setNavVisible(true);
+            return;
+        }
+
         // アバターが登場してから少し後にロゴを左へシフト
         // spring だと収束の尾を引き、直後に出るナビと動きが重なって二段階に
         // 見えるため、終わりが明確な tween にする。
@@ -47,15 +59,15 @@ export default function KeyVisual() {
         }, 2000);
 
         return () => clearTimeout(t);
-    }, [logoControls]);
+    }, [logoControls, compact]);
 
     return (
         <header
             ref={ref}
-            className="hero-section"
+            className={`hero-section${compact ? " hero-section--compact" : ""}`}
             style={{
                 position: "relative",
-                height: "100dvh",
+                height: compact ? "clamp(260px, 42dvh, 420px)" : "100dvh",
                 overflow: "hidden",
                 display: "flex",
                 alignItems: "center",
@@ -65,9 +77,9 @@ export default function KeyVisual() {
             {/* パララックス背景 */}
             <motion.div
                 className="hero-bg"
-                style={{ position: "absolute", inset: 0, zIndex: 0 }}
-                initial={{ scale: 1.15, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
+                style={{ position: "absolute", inset: 0, zIndex: 0, backgroundColor: "#ffffff" }}
+                initial={{ scale: 1.15 }}
+                animate={{ scale: 1 }}
                 transition={{ duration: 1.8, ease: "easeOut" }}
             >
                 <div
@@ -78,6 +90,20 @@ export default function KeyVisual() {
                             "linear-gradient(to bottom, rgba(255,240,252,0.12) 0%, rgba(218,198,255,0.82) 100%)",
                         zIndex: 1,
                     }}
+                />
+                {/* 画像を真っ白からフェードイン – opacity だと裏の図形が透けるため、
+                    白いオーバーレイを上から消すことで「白→画像」のフェードにする */}
+                <motion.div
+                    style={{
+                        position: "absolute",
+                        inset: 0,
+                        backgroundColor: "#ffffff",
+                        zIndex: 2,
+                        pointerEvents: "none",
+                    }}
+                    initial={{ opacity: 1 }}
+                    animate={{ opacity: 0 }}
+                    transition={{ duration: 1.8, ease: "easeOut" }}
                 />
                 <img
                     src={HeaderImg ?? HEADER_URL}
@@ -116,7 +142,8 @@ export default function KeyVisual() {
                 style={{
                     position: "relative",
                     zIndex: 2,
-                    y: heroY,
+                    // compact (Home以外) ではパララックスをOFF
+                    y: compact ? 0 : heroY,
                 }}
             >
                 {/* ロゴ＋サブタイトル＋アバター */}
@@ -131,7 +158,8 @@ export default function KeyVisual() {
                     initial={{ x: -60, opacity: 0, rotate: -4 }}
                     animate={logoControls}
                 >
-                    {/* ナビゲーション – アバター登場後にロゴ左側へ出現 (PCのみ) */}
+                    {/* ナビゲーション – アバター登場後にロゴ左側へ出現 (PCのみ・Homeのみ) */}
+                    {!compact && (
                     <motion.nav
                         className="hero-nav"
                         aria-label="メインナビゲーション"
@@ -170,6 +198,7 @@ export default function KeyVisual() {
                             </motion.button>
                         ))}
                     </motion.nav>
+                    )}
 
                     {/* ロゴ画像 */}
                     <motion.img
@@ -184,12 +213,17 @@ export default function KeyVisual() {
                         }}
                     />
 
-                    {/* 全身アバター – ロゴ基準で絶対配置 */}
+                    {/* 全身アバター – ロゴ基準で絶対配置。compactでは小さめに表示 */}
                     <motion.div
-                        className="hero-avatar-wrapper"
+                        className={`hero-avatar-wrapper${compact ? " hero-avatar-wrapper--compact" : ""}`}
                         initial={{ x: 150, y: 20, rotateZ: 20, opacity: 0 }}
                         animate={{ x: 0, y: 0, rotateZ: 5, opacity: 1 }}
-                        transition={{ delay: 2, duration: 1, type: "tween", ease: [0.16, 1, 0.3, 1] }}
+                        transition={{
+                            delay: compact ? 0.4 : 2,
+                            duration: 1,
+                            type: "tween",
+                            ease: [0.16, 1, 0.3, 1],
+                        }}
                         style={{ transformOrigin: "bottom" }}
                         onAnimationComplete={() => setNavVisible(true)}
                     >
@@ -200,7 +234,8 @@ export default function KeyVisual() {
                 </motion.div>
             </motion.div>
 
-            {/* スクロールインジケーター */}
+            {/* スクロールインジケーター (Homeのみ) */}
+            {!compact && (
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -257,6 +292,7 @@ export default function KeyVisual() {
                     />
                 </div>
             </motion.div>
+            )}
         </header>
     );
 }

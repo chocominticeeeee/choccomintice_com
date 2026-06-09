@@ -12,6 +12,7 @@ interface Artwork {
 }
 
 const ArtworksGlob = import.meta.glob<ImageModule>("../assets/images/Artworks/*");
+const VIEW_IMAGES_COUNT = 4;
 
 /** ファイル名から作品タイトルを抽出（先頭の "!"・番号・拡張子を除去） */
 function parseTitle(path: string): string {
@@ -35,7 +36,9 @@ export default function ArtworksScroll({ onSelect }: Props) {
                     src: (await loader()).default,
                     title: parseTitle(key),
                 })),
-        ).then(setWorks);
+        ).then((result) => {
+            setWorks(result.slice(0, VIEW_IMAGES_COUNT));
+        });
     }, []);
 
     if (works.length === 0) return null;
@@ -46,10 +49,7 @@ export default function ArtworksScroll({ onSelect }: Props) {
                 <div
                     className="artwork-panel"
                     key={i}
-                    onClick={() =>
-                        window.innerWidth > 950 &&
-                        onSelect?.({ src: work.src, alt: work.title })
-                    }
+                    onClick={() => window.innerWidth > 950 && onSelect?.({ src: work.src, alt: work.title })}
                 >
                     <div className="artwork-panel__bg" style={{ backgroundImage: `url(${work.src})` }} />
                     <div className="artwork-panel__frame">

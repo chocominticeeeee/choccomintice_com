@@ -83,6 +83,39 @@
     }
 }
 
+// ================================================================
+// compact (Home以外) – 低い高さのバナー。ロゴを小さめに収める
+// ================================================================
+.hero-section--compact {
+    .hero-logo {
+        width: 340px;
+
+        @media (max-width: 950px) {
+            width: 220px;
+        }
+    }
+}
+
+// compact用アバター – 低いバナーに収まるよう小さめにしてロゴ右に配置
+.hero-avatar-wrapper--compact {
+    top: 50%;
+    left: 78%;
+    transform: translateY(-50%);
+    z-index: 1;
+
+    .hero-avatar-full img {
+        height: 320px;
+    }
+
+    @media (max-width: 950px) {
+        left: 58%;
+
+        .hero-avatar-full img {
+            height: 220px;
+        }
+    }
+}
+
 @keyframes avatar-idle {
     0%,
     100% {

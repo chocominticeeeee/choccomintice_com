@@ -15,7 +15,12 @@
       "Bash(node /i/tmp/probe.mjs)",
       "Bash(cp /i/tmp/probe.mjs ./probe.mjs)",
       "Bash(node ./probe.mjs)",
-      "Bash(./node_modules/.bin/tsc.exe --noEmit)"
+      "Bash(./node_modules/.bin/tsc.exe --noEmit)",
+      "PowerShell(npx tsc --noEmit)",
+      "Bash(./node_modules/.bin/tsc.exe --noEmit -p tsconfig.app.json)",
+      "Bash(echo \"EXIT:$?\")",
+      "PowerShell(npx tsc --noEmit -p tsconfig.app.json 2>&1)",
+      "PowerShell(npm run build 2>&1)"
     ]
   }
 }
