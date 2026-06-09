@@ -67,7 +67,6 @@ export default function KeyVisual({ compact = false }: KeyVisualProps) {
             className={`hero-section${compact ? " hero-section--compact" : ""}`}
             style={{
                 position: "relative",
-                height: compact ? "clamp(260px, 42dvh, 420px)" : "100dvh",
                 overflow: "hidden",
                 display: "flex",
                 alignItems: "center",

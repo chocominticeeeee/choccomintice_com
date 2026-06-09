@@ -6,7 +6,7 @@
     padding: 6rem 40px 4rem;
 
     @media (max-width: 950px) {
-        padding: 6rem 20px 4rem;
+        padding: 3rem 20px 2.5rem;
     }
 
     &__list {
@@ -27,7 +27,8 @@
     display: flex;
     flex-direction: column;
     border-radius: 1.5rem;
-    width: 700px;
+    max-width: 700px;
+    width: 100%;
     margin: 0 auto;
     overflow: hidden;
     border: 1.5px solid rgba(220, 190, 240, 0.45);
@@ -131,14 +132,51 @@
     @media (max-width: 700px) {
         &__body {
             padding: 1.5rem 1.4rem 1.75rem;
+            gap: 0.7rem;
+        }
+
+        &__meta {
+            font-size: 0.8rem;
+            gap: 0.7rem;
         }
 
         &__title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.35;
+        }
+
+        &__excerpt {
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        &__read {
+            font-size: 0.85rem;
+            padding: 0.5rem 1.3rem;
         }
 
         &:hover {
             transform: none;
+        }
+    }
+
+    @media (max-width: 480px) {
+        &__body {
+            padding: 1.25rem 1.15rem 1.5rem;
+        }
+
+        &__meta {
+            font-size: 0.75rem;
+        }
+
+        &__title {
+            font-size: 1.15rem;
+        }
+
+        &__excerpt {
+            font-size: 0.85rem;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
         }
     }
 }
