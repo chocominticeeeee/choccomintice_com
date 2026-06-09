@@ -26,7 +26,7 @@ h3 {
     line-height: 2rem;
 }
 
-main {
+main.home-main {
     padding: 10px;
     width: 100%;
     display: flex;
@@ -227,6 +227,47 @@ main {
 
             &:hover {
                 transform: none;
+            }
+        }
+    }
+
+    // ちょこみん検定への導線（Outroの最後）
+    .kentei-cta {
+        margin-top: 2rem;
+        text-align: center;
+
+        &__lead {
+            margin: 0 0 0.9rem;
+            font-size: 0.95rem;
+            color: v.$color-accent-purple;
+            font-weight: 600;
+        }
+
+        &__btn {
+            display: inline-block;
+            padding: 0.75rem 1.8rem;
+            border-radius: 2rem;
+            border: 1.5px solid transparent;
+            background: linear-gradient(120deg, v.$color-accent-purple, v.$color-accent-pink);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                filter 0.2s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+                filter: brightness(1.05);
+                box-shadow: 0 6px 16px rgba(155, 127, 224, 0.35);
+            }
+
+            @media (max-width: 950px) {
+                &:hover {
+                    transform: none;
+                }
             }
         }
     }

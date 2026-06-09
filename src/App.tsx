@@ -6,6 +6,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import P_Home from "./pages/P_Home";
 import P_note from "./pages/P_note";
 import P_Artworks from "./pages/P_Artworks";
+import P_Kentei from "./pages/P_Kentei";
 import P_Notfound from "./pages/P_Notfound";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/" element={<P_Home />} />
                 <Route path="/note" element={<P_note />} />
                 <Route path="/artworks" element={<P_Artworks />} />
+                <Route path="/kentei" element={<P_Kentei />} />
                 <Route path="*" element={<P_Notfound />} />
             </Routes>
             <Footer />

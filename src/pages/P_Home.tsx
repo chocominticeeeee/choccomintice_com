@@ -87,7 +87,7 @@ export default function P_Home() {
     return (
         <>
             <KeyVisual />
-            <main ref={mainRef}>
+            <main ref={mainRef} className="home-main">
                 <section id="about" className="section--editorial">
                     <div className="section__index">
                         <span className="section__num">01</span>
@@ -240,6 +240,13 @@ export default function P_Home() {
                             @Choccomintice_ 🗝
                         </a>
                     </p>
+
+                    <div className="kentei-cta">
+                        <p className="kentei-cta__lead">ちょこみんのこと、どれくらい知ってるかな？</p>
+                        <Link to="/kentei" className="kentei-cta__btn">
+                            📝 ちょこみん検定を受験する →
+                        </Link>
+                    </div>
                 </section>
 
                 {/* <section className="section--editorial">
