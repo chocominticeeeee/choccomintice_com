@@ -14,7 +14,7 @@ import uniSfx from "../assets/uni.wav";
 import { useRef } from "react";
 
 const socials = [
-    { name: "Twitter", icon: twitterIcon, href: "https://x.com/Choccomintice_" },
+    { name: "Twitter", icon: twitterIcon, href: "https://x.com/Choccomintice" },
     { name: "Youtube", icon: youtubeIcon, href: "https://www.youtube.com/@choccomintice/featured" },
     { name: "ましゅまろ", icon: marshmallowIcon, href: "https://marshmallow-qa.com/3hklej66hlyeldi?t=vroIjo" },
     { name: "note", icon: noteIcon, href: "https://note.com/choccomintice" },
