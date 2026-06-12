@@ -8,82 +8,13 @@ import kentei1 from "../assets/images/kentei_1.jpg";
 import kentei2 from "../assets/images/kentei_2.jpg";
 import kentei4 from "../assets/images/kentei_4.jpg";
 import "./P_Kentei.scss";
-
-interface Question {
-    /** 設問 */
-    q: string;
-    /** 選択肢 */
-    options: string[];
-    /** 正解の選択肢インデックス */
-    answer: number;
-    /** 解説（任意） */
-    hint?: string;
-}
-
-const QUESTIONS: Question[] = [
-    {
-        q: "「ちょこみん」の名前の由来になった食べ物は？",
-        options: ["チョコミントアイス", "いちごパフェ", "抹茶ラテ", "メロンクリームソーダ"],
-        answer: 0,
-        hint: "チョコミントアイスが大好きだから、この名前にしたんだよ〜🍫🌿",
-    },
-    {
-        q: "ちょこみんの年齢は？",
-        options: ["17歳", "永遠の18歳", "24歳", "27歳"],
-        answer: 3,
-        hint: "27歳でした！",
-    },
-    {
-        q: "ちょこみんのお仕事の働き方は？",
-        options: ["在宅フリーランス", "学生", "会社員", "カフェ店員さん"],
-        answer: 2,
-        hint: "夜勤の会社員！🌙 ",
-    },
-    {
-        q: "ちょこみんがVRChatを始めたのはいつ？",
-        options: ["2025年3月18日", "2024年1月1日", "2023年12月25日", "2025年8月8日"],
-        answer: 0,
-        hint: "25/03/18～　バイトの後輩君に誘われたのがきっかけだよ",
-    },
-    {
-        q: "ちょこみんがVRChatで好きなことは？",
-        options: ["イベント", "なでなでとV睡", "JUST", "ワールド巡り"],
-        answer: 1,
-        hint: "なでなでとV睡が好き、大人数は苦手なので基本1対1でまったりしてるよ。",
-    },
-    {
-        q: "ちょこみんのパソコンのCPUは？",
-        options: ["Core i5-12400", "Ryzen 5 5600X", "Ryzen 7 9800X3D", "Core i9-14900K"],
-        answer: 2,
-        hint: "Ryzen 7 9800X3D / RTX 4070Ti Super / RAM 64GB の自作PCだよ💻",
-    },
-    {
-        q: "ちょこみんが使っているマウスは？",
-        options: ["Pulsar X2", "Logicool G Pro", "Razer Viper", "Zowie EC2"],
-        answer: 0,
-        hint: "マウスは Pulsar X2、マウスパッドも Pulsar Superglide-XL だよ🖱",
-    },
-    {
-        q: "ちょこみんの液タブはどれ？",
-        options: ["Wacom Cintiq", "iPad Pro", "HUION Kamvas", "XPPEN Artist 22 Plus"],
-        answer: 3,
-        hint: "液タブは XPPEN Artist 22 Plus！これでイラスト描いてるよ🎨",
-    },
-    {
-        q: "ちょこみんが最近よく遊んでるゲームじゃないのはどれ？",
-        options: ["DeltaForce", "APEX", "モンハンワールド", "スプラトゥーン"],
-        answer: 3,
-        hint: "最近は DeltaForce / APEX / モンハンワールド / CS2 をよく遊んでるよ🎮",
-    },
-    {
-        q: "ちょこみんのTwitter(X)アカウントは？",
-        options: ["@Chocomint", "@Choccomintice", "@babumiya", "@mint_choco"],
-        answer: 1,
-        hint: "フォロバ100％だよ✨ 気軽に絡んでね！",
-    },
-];
+import { QUESTIONS, type Question } from "../assets/data/questions";
 
 type Screen = "start" | "quiz" | "result";
+
+interface ShuffledQuestion extends Question {
+	correctIndex: number;
+}
 
 interface Rank {
     /** このランクに必要な最低正解数 */
@@ -95,23 +26,25 @@ interface Rank {
     image: string;
 }
 
+const QUIZ_COUNT = 10;
+
 const RANKS: Rank[] = [
     {
-        min: QUESTIONS.length,
+        min: QUIZ_COUNT,
         emoji: "🏆",
         title: "1級合格",
         message: "全問正解〜！ちょこみん検定1級合格おめでとう！",
         image: kentei4,
     },
     {
-        min: Math.ceil(QUESTIONS.length * 0.8),
+        min: Math.ceil(QUIZ_COUNT * 0.8),
         emoji: "✨",
         title: "2級合格",
         message: "すごい！ちょこみん検定2級合格です！",
         image: kentei2,
     },
     {
-        min: Math.ceil(QUESTIONS.length * 0.5),
+        min: Math.ceil(QUIZ_COUNT * 0.5),
         emoji: "🌱",
         title: "3級合格",
         message: "まぁまぁだね！ｗ",
@@ -135,12 +68,20 @@ export default function P_Kentei() {
     const [current, setCurrent] = useState(0);
     const [selected, setSelected] = useState<number | null>(null);
     const [score, setScore] = useState(0);
+    const [quizQuestions, setQuizQuestions] = useState<ShuffledQuestion[]>([]);
 
-    const total = QUESTIONS.length;
-    const question = QUESTIONS[current];
+    const total = quizQuestions.length;
+    const question = quizQuestions[current];
     const isLast = current === total - 1;
 
     const start = () => {
+        const shuffled = [...QUESTIONS].sort(() => Math.random() - 0.5);
+        const withShuffledOptions: ShuffledQuestion[] = shuffled.slice(0, QUIZ_COUNT).map((q) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const correctIndex = shuffledOptions.indexOf(q.options[0]);
+            return { ...q, options: shuffledOptions, correctIndex };
+        });
+        setQuizQuestions(withShuffledOptions);
         setScreen("quiz");
         setCurrent(0);
         setSelected(null);
@@ -150,7 +91,7 @@ export default function P_Kentei() {
     const choose = (index: number) => {
         if (selected !== null) return;
         setSelected(index);
-        if (index === question.answer) setScore((s) => s + 1);
+        if (index === question.correctIndex) setScore((s) => s + 1);
     };
 
     const next = () => {
@@ -173,7 +114,7 @@ export default function P_Kentei() {
 
                 {screen === "start" && (
                     <section className="kentei-card kentei-start">
-                        <p className="kentei-start__lead">ぜんぶで {total} 問！</p>
+                        <p className="kentei-start__lead">ぜんぶで {QUIZ_COUNT} 問！</p>
                         <p className="kentei-start__sub">
                             ちょこみんに関する豆知識クイズだよ。
                             <br />
@@ -208,7 +149,7 @@ export default function P_Kentei() {
                             <ul className="kentei-quiz__options">
                                 {question.options.map((opt, i) => {
                                     const answered = selected !== null;
-                                    const isAnswer = i === question.answer;
+                                    const isAnswer = i === question.correctIndex;
                                     const isPicked = i === selected;
                                     const state = !answered
                                         ? ""
@@ -244,10 +185,10 @@ export default function P_Kentei() {
                                     <p
                                         className={
                                             "kentei-quiz__judge" +
-                                            (selected === question.answer ? " is-correct" : " is-wrong")
+                                            (selected === question.correctIndex ? " is-correct" : " is-wrong")
                                         }
                                     >
-                                        {selected === question.answer ? "せいかい！🎉" : "ざんねん…(´；ω；`)"}
+                                        {selected === question.correctIndex ? "せいかい！🎉" : "ざんねん…(´；ω；`)"}
                                     </p>
                                     {question.hint && <p className="kentei-quiz__hint">{question.hint}</p>}
                                     <button type="button" className="kentei-btn" onClick={next}>

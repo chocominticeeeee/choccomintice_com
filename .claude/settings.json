@@ -20,7 +20,8 @@
       "Bash(./node_modules/.bin/tsc.exe --noEmit -p tsconfig.app.json)",
       "Bash(echo \"EXIT:$?\")",
       "PowerShell(npx tsc --noEmit -p tsconfig.app.json 2>&1)",
-      "PowerShell(npm run build 2>&1)"
+      "PowerShell(npm run build 2>&1)",
+      "Bash(node -e ' *)"
     ]
   }
 }
