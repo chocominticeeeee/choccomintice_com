@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./KeyVisual.scss";
 import avatarImage from "../../assets/images/アバター透過.png";
 import logoImage from "../../assets/images/ロゴ.png";
@@ -7,10 +8,12 @@ import HeaderImg from "../../assets/images/header.jpg";
 import { HEADER_URL } from "../../CONFIG";
 
 // ロゴ左側に縦並びで出すナビゲーション項目
-const NAV_ITEMS = [
+// target: ホーム内のセクションへスクロール / to: 別ページへルート遷移
+const NAV_ITEMS: { label: string; target?: string; to?: string }[] = [
     { label: "自己紹介", target: "about" },
     { label: "イラスト", target: "artworks" },
     { label: "note", target: "note" },
+    { label: "個人ブログ", target: "blog" },
 ];
 
 interface KeyVisualProps {
@@ -25,11 +28,20 @@ export default function KeyVisual({ compact = false }: KeyVisualProps) {
     // 走って重いため、背景のパララックスは廃止。前景(ロゴ等)だけ控えめに動かす。
     const heroY = useTransform(scrollYProgress, [0, 0.6], [0, -50]);
     const logoControls = useAnimation();
+    const navigate = useNavigate();
     // アバターのアニメーションが終わったらナビゲーションを出現させる
     const [navVisible, setNavVisible] = useState(false);
 
-    const handleNavClick = (target: string) => {
-        document.getElementById(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const handleNavClick = (item: { target?: string; to?: string }) => {
+        if (item.to) {
+            navigate(item.to);
+            return;
+        }
+        if (item.target) {
+            document
+                .getElementById(item.target)
+                ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
     };
 
     useEffect(() => {
@@ -180,10 +192,10 @@ export default function KeyVisual({ compact = false }: KeyVisualProps) {
                     >
                         {NAV_ITEMS.map((item) => (
                             <motion.button
-                                key={item.target}
+                                key={item.label}
                                 type="button"
                                 className="hero-nav__item"
-                                onClick={() => handleNavClick(item.target)}
+                                onClick={() => handleNavClick(item)}
                                 variants={{
                                     hidden: { opacity: 0 },
                                     visible: {

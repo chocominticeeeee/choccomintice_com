@@ -1,9 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import blogOgpManifest from "./vite-plugin-blog-ogp";
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [react()],
+    plugins: [react(), blogOgpManifest()],
     server: {
         host: true,
         watch: {

@@ -7,7 +7,11 @@
       "Bash(curl -s \"http://localhost:5174/src/pages/P_Home.scss?direct\")",
       "Bash(npx vite *)",
       "Bash(git stash *)",
-      "Bash(git merge *)"
+      "Bash(git merge *)",
+      "Bash(node \"C:/Users/CHOCOM~1/AppData/Local/Temp/claude/i--CreativeProjects-CursorProjects-choccomintice-com/91b4cd69-2e55-4fe7-aa26-82b89c3e7ec6/scratchpad/test-ogp.mjs\")",
+      "Bash(echo \"exit: $?\")",
+      "PowerShell(npx tsc --noEmit -p tsconfig.json 2>&1)",
+      "Bash(./node_modules/.bin/tsc.exe --noEmit -p tsconfig.json)"
     ]
   }
 }

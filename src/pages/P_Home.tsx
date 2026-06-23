@@ -7,9 +7,11 @@ import "./P_Home.scss";
 import KeyVisual from "../components/layout/KeyVisual";
 import Uni from "../components/Uni";
 import NoteSection from "../components/NoteSection";
+import BlogSection from "../components/BlogSection";
 import UniClicker from "../components/UniClicker/UniClicker";
 import VRChatGallery from "../components/VRChatGallery";
 import deskImg from "../assets/images/ちょこみんのデスク.png";
+import ScrollProgress from "../components/ScrollProgress";
 
 interface ImageModule {
     default: string;
@@ -86,6 +88,7 @@ export default function P_Home() {
 
     return (
         <>
+            <ScrollProgress />
             <KeyVisual />
             <main ref={mainRef} className="home-main">
                 <section id="about" className="section--editorial">
@@ -219,9 +222,22 @@ export default function P_Home() {
                     </Link>
                 </section>
 
-                <section className="section--editorial">
+                <section id="blog" className="section--editorial">
                     <div className="section__index">
                         <span className="section__num">05</span>
+                        <span className="section__label">Blog</span>
+                    </div>
+                    <h2>個人ブログ</h2>
+                    <p>個人的なニュースとか、いろいろをここに書いていくよ〜📝</p>
+                    <BlogSection />
+                    <Link to="/blog" className="note-page-link">
+                        📖 ブログの記事一覧をみる →
+                    </Link>
+                </section>
+
+                <section className="section--editorial">
+                    <div className="section__index">
+                        <span className="section__num">06</span>
                         <span className="section__label">Outro</span>
                     </div>
                     <h2>最後に！</h2>
@@ -251,7 +267,7 @@ export default function P_Home() {
 
                 {/* <section className="section--editorial">
                     <div className="section__index">
-                        <span className="section__num">06</span>
+                        <span className="section__num">07</span>
                         <span className="section__label">Uni Clicker</span>
                     </div>
                     <h2>ウニクリッカー</h2>

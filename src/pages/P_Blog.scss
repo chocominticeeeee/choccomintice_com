@@ -1,0 +1,381 @@
+@use "../styles/variables" as v;
+
+.blog-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 6rem 40px 4rem;
+
+    @media (max-width: 950px) {
+        padding: 3rem 20px 2.5rem;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+}
+
+.blog-status {
+    text-align: center;
+    margin-top: 2rem;
+    color: v.$color-text-sub;
+    font-size: 0.95rem;
+    line-height: 2;
+}
+
+/* ===== 一覧カード（note と同じスタイル） ===== */
+.blog-post {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1.5rem;
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1.5px solid rgba(220, 190, 240, 0.45);
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 20px rgba(155, 127, 224, 0.1);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(155, 127, 224, 0.2);
+        border-color: rgba(155, 127, 224, 0.5);
+    }
+
+    &__thumb {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+    }
+
+    &:hover &__thumb img {
+        transform: scale(1.04);
+    }
+
+    &__body {
+        padding: 2rem 2.25rem 2.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        min-width: 0;
+    }
+
+    &__meta {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        font-size: 0.85rem;
+        color: v.$color-text-sub;
+    }
+
+    &__date {
+        font-family: v.$font-heading;
+        color: v.$color-accent-purple;
+        font-weight: bold;
+    }
+
+    &__title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        line-height: 1.4;
+        margin: 0;
+        color: v.$color-text-main;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    &__excerpt {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: v.$color-text-sub;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    &__read {
+        align-self: flex-start;
+        margin-top: 0.5rem;
+        padding: 0.55rem 1.5rem;
+        border-radius: 2rem;
+        background: linear-gradient(90deg, v.$color-accent-purple, v.$color-accent-pink);
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(155, 127, 224, 0.3);
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            opacity 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            opacity: 0.92;
+            box-shadow: 0 8px 18px rgba(155, 127, 224, 0.4);
+        }
+    }
+
+    @media (max-width: 700px) {
+        &__body {
+            padding: 1.5rem 1.4rem 1.75rem;
+            gap: 0.7rem;
+        }
+
+        &__meta {
+            font-size: 0.8rem;
+            gap: 0.7rem;
+        }
+
+        &__title {
+            font-size: 1.3rem;
+            line-height: 1.35;
+        }
+
+        &__excerpt {
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        &__read {
+            font-size: 0.85rem;
+            padding: 0.5rem 1.3rem;
+        }
+
+        &:hover {
+            transform: none;
+        }
+    }
+
+    @media (max-width: 480px) {
+        &__body {
+            padding: 1.25rem 1.15rem 1.5rem;
+        }
+
+        &__meta {
+            font-size: 0.75rem;
+        }
+
+        &__title {
+            font-size: 1.15rem;
+        }
+
+        &__excerpt {
+            font-size: 0.85rem;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+        }
+    }
+}
+
+/* ===== 記事詳細 ===== */
+.blog-article {
+    margin: 0 auto;
+    padding: 2.5rem 2.5rem 3rem;
+    border-radius: 1.5rem;
+    border: 1.5px solid v.$glass-border;
+    background: v.$glass-bg;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 20px rgba(155, 127, 224, 0.1);
+
+    &__date {
+        display: block;
+        font-family: v.$font-heading;
+        font-size: 0.9rem;
+        color: v.$color-accent-purple;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    &__body {
+        color: v.$color-text-main;
+        line-height: 1.9;
+        font-size: 1rem;
+        word-break: break-word;
+
+        h1 {
+            font-size: 2rem;
+            line-height: 1.35;
+            margin: 0 0 1.5rem;
+            color: v.$color-text-main;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid rgba(155, 127, 224, 0.25);
+            color: v.$color-text-main;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin: 2rem 0 0.8rem;
+            color: v.$color-text-main;
+        }
+
+        p {
+            margin: 0 0 1.25rem;
+        }
+
+        a {
+            color: v.$color-accent-purple;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+
+            &:hover {
+                color: v.$color-accent-pink;
+            }
+        }
+
+        ul,
+        ol {
+            margin: 0 0 1.25rem;
+            padding-left: 1.5rem;
+            line-height: 1.9;
+        }
+
+        ul {
+            list-style: disc;
+        }
+
+        ol {
+            list-style: decimal;
+        }
+
+        li {
+            margin-bottom: 0.4rem;
+        }
+
+        blockquote {
+            margin: 0 0 1.25rem;
+            padding: 0.75rem 1.25rem;
+            border-left: 4px solid v.$color-accent-purple;
+            background: rgba(155, 127, 224, 0.08);
+            border-radius: 0 0.75rem 0.75rem 0;
+            color: v.$color-text-sub;
+
+            p {
+                margin: 0;
+            }
+        }
+
+        img {
+            max-width: min(700px, 100%);
+            height: auto;
+            border-radius: 1rem;
+            display: block;
+            margin: 1.5rem auto;
+        }
+
+        code {
+            font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+            font-size: 0.9em;
+            background: rgba(155, 127, 224, 0.12);
+            padding: 0.15em 0.4em;
+            border-radius: 0.35rem;
+        }
+
+        pre {
+            background: rgba(61, 44, 74, 0.95);
+            color: #f5f0ff;
+            padding: 1.25rem 1.5rem;
+            border-radius: 1rem;
+            overflow-x: auto;
+            margin: 0 0 1.25rem;
+
+            code {
+                background: none;
+                padding: 0;
+                color: inherit;
+            }
+        }
+
+        hr {
+            border: none;
+            border-top: 1.5px solid rgba(155, 127, 224, 0.25);
+            margin: 2.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 0 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        th,
+        td {
+            border: 1px solid rgba(155, 127, 224, 0.3);
+            padding: 0.6rem 0.9rem;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(155, 127, 224, 0.1);
+        }
+    }
+
+    @media (max-width: 700px) {
+        padding: 1.75rem 1.4rem 2.25rem;
+
+        &__body {
+            font-size: 0.95rem;
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            h3 {
+                font-size: 1.1rem;
+            }
+        }
+    }
+}
+
+.blog-back {
+    display: block;
+    width: fit-content;
+    margin: 2.5rem auto 0;
+    padding: 0.6rem 1.5rem;
+    border-radius: 2rem;
+    border: 1.5px solid rgba(155, 127, 224, 0.5);
+    background: rgba(255, 255, 255, 0.6);
+    color: v.$color-accent-purple;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+
+    &:hover {
+        background: rgba(155, 127, 224, 0.12);
+        box-shadow: 0 4px 12px rgba(155, 127, 224, 0.2);
+    }
+}

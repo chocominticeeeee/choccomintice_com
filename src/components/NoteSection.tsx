@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchNoteArticles } from "../utils";
 import type { NoteArticle } from "../utils";
-import "./NoteSection.scss";
+import ArticleCard from "./ArticleCard";
 
 export default function NoteSection() {
     const [articles, setArticles] = useState<NoteArticle[]>([]);
@@ -17,36 +17,21 @@ export default function NoteSection() {
             });
     }, []);
 
-    if (loading) return <p className="note-status">よみこみ中だよ〜ちょっと待っててね…(´｡• ᵕ •｡`)</p>;
-    if (error) return <p className="note-status">記事のよみこみに失敗しちゃった…ごめんね(´;ω;`)</p>;
+    if (loading) return <p className="blog-status">よみこみ中だよ〜ちょっと待っててね…(´｡• ᵕ •｡`)</p>;
+    if (error) return <p className="blog-status">記事のよみこみに失敗しちゃった…ごめんね(´;ω;`)</p>;
 
     return (
-        <>
-            <div className="note-articles">
-                {articles.map((article) => {
-                    // console.log(article);
-                    return (
-                        <a
-                            key={article.key}
-                            href={article.noteUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="note-article-card"
-                        >
-                            {article.eyecatch && <img src={article.eyecatch} alt={article.name} loading="lazy" />}
-                            <div className="note-article-card__body">
-                                <p className="note-article-card__title">{article.name}</p>
-                                <div className="note-article-card__meta">
-                                    <p className="note-article-card__date">
-                                        {new Date(article.publishAt).toLocaleDateString("ja-JP")}
-                                    </p>
-                                    <p className="note-article-card__likes">♡ {article.likeCount}</p>
-                                </div>
-                            </div>
-                        </a>
-                    );
-                })}
-            </div>
-        </>
+        <div className="blog-articles">
+            {articles.map((article) => (
+                <ArticleCard
+                    key={article.key}
+                    href={article.noteUrl}
+                    title={article.name}
+                    dateLabel={new Date(article.publishAt).toLocaleDateString("ja-JP")}
+                    thumbnail={article.eyecatch}
+                    likeCount={article.likeCount}
+                />
+            ))}
+        </div>
     );
 }

@@ -7,6 +7,8 @@ import P_Home from "./pages/P_Home";
 import P_note from "./pages/P_note";
 import P_Artworks from "./pages/P_Artworks";
 import P_Kentei from "./pages/P_Kentei";
+import P_Blog from "./pages/P_Blog";
+import P_BlogPost from "./pages/P_BlogPost";
 import P_Notfound from "./pages/P_Notfound";
 
 function App() {
@@ -14,12 +16,13 @@ function App() {
         <BrowserRouter basename="/">
             <ScrollToTop />
             <FloatingBackground />
-            <ScrollProgress />
             <Routes>
                 <Route path="/" element={<P_Home />} />
                 <Route path="/note" element={<P_note />} />
                 <Route path="/artworks" element={<P_Artworks />} />
                 <Route path="/kentei" element={<P_Kentei />} />
+                <Route path="/blog" element={<P_Blog />} />
+                <Route path="/blog/:slug" element={<P_BlogPost />} />
                 <Route path="*" element={<P_Notfound />} />
             </Routes>
             <Footer />
