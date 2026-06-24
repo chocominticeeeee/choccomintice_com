@@ -236,7 +236,11 @@ export default function KeyVisual({ compact = false }: KeyVisualProps) {
                             ease: [0.16, 1, 0.3, 1],
                         }}
                         style={{ transformOrigin: "bottom" }}
-                        onAnimationComplete={() => setNavVisible(true)}
+                        onAnimationComplete={() => {
+                            setNavVisible(true);
+                            // モバイルのハンバーガーボタンをこのタイミングで出現させる
+                            window.dispatchEvent(new CustomEvent("hero:ready"));
+                        }}
                     >
                         <div className="hero-avatar-full">
                             <img src={avatarImage} alt="ばぶ宮ちょこみん" />

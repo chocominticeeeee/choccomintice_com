@@ -14,7 +14,7 @@ export interface PageDef {
 }
 
 export const PAGES = {
-    home: { label: "Home", path: "/" },
+    home: { label: "トップページ", path: "/" },
     note: { label: "note", path: "/note" },
     artworks: { label: "イラスト", path: "/artworks" },
     kentei: { label: "ちょこみん検定", path: "/kentei" },

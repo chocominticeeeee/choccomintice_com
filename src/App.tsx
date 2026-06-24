@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Footer from "./components/layout/Footer";
+import MobileNav from "./components/layout/MobileNav";
 import FloatingBackground from "./components/FloatingBackground";
 import ScrollProgress from "./components/ScrollProgress";
 import ScrollToTop from "./components/ScrollToTop";
@@ -15,6 +16,7 @@ function App() {
     return (
         <BrowserRouter basename="/">
             <ScrollToTop />
+            <MobileNav />
             <FloatingBackground />
             <Routes>
                 <Route path="/" element={<P_Home />} />

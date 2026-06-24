@@ -1,0 +1,189 @@
+@use "../../styles/variables" as v;
+
+// ================================================================
+// モバイル専用ハンバーガーメニュー
+// デスクトップ(>950px)では .hero-nav を使うため非表示
+// ================================================================
+.mobile-nav {
+    @media (min-width: 951px) {
+        display: none;
+    }
+}
+
+// ----------------------------------------------------------------
+// 右上のトグルボタン
+// ----------------------------------------------------------------
+.mobile-nav__toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: #{v.$z-modal + 1};
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    border-radius: 14px;
+    background: rgba(155, 127, 224, 0.32);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(155, 127, 224, 0.3);
+    cursor: pointer;
+
+    // 既定では非表示（フェード+ちょい上から）
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease,
+        background 0.25s ease;
+
+    &.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .mobile-nav__bar {
+        display: block;
+        width: 22px;
+        height: 2.5px;
+        border-radius: 2px;
+        background: #ffffff;
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+        transition:
+            transform 0.3s ease,
+            opacity 0.3s ease;
+    }
+
+    // 開いている時は×印に変形
+    &.is-open {
+        background: rgba(244, 125, 181, 0.4);
+
+        .mobile-nav__bar:nth-child(1) {
+            transform: translateY(7.5px) rotate(45deg);
+        }
+        .mobile-nav__bar:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-nav__bar:nth-child(3) {
+            transform: translateY(-7.5px) rotate(-45deg);
+        }
+    }
+}
+
+// ----------------------------------------------------------------
+// 背景オーバーレイ
+// ----------------------------------------------------------------
+.mobile-nav__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: #{v.$z-modal};
+    background: rgba(61, 44, 74, 0.4);
+    backdrop-filter: blur(2px);
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+
+    &.is-open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+// ----------------------------------------------------------------
+// 右からスライドインするパネル
+// ----------------------------------------------------------------
+.mobile-nav__panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: #{v.$z-modal + 1};
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: min(78vw, 320px);
+    height: 100dvh;
+    padding: 80px 28px 40px;
+
+    background: linear-gradient(
+        160deg,
+        rgba(255, 240, 252, 0.96) 0%,
+        rgba(220, 207, 250, 0.96) 100%
+    );
+    backdrop-filter: blur(16px);
+    box-shadow: -8px 0 32px rgba(155, 127, 224, 0.28);
+
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &.is-open {
+        transform: translateX(0);
+    }
+}
+
+.mobile-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mobile-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border: 1.5px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+
+    font-family: v.$font-heading;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: v.$color-text-main;
+    text-align: left;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+
+    .mobile-nav__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: v.$color-accent-pink;
+        box-shadow: 0 0 8px rgba(244, 125, 181, 0.6);
+        flex-shrink: 0;
+        transition:
+            transform 0.25s ease,
+            background 0.25s ease;
+    }
+
+    &:hover,
+    &:active {
+        transform: translateX(4px);
+        background: rgba(255, 255, 255, 0.55);
+        border-color: rgba(155, 127, 224, 0.4);
+
+        .mobile-nav__dot {
+            transform: scale(1.4);
+            background: v.$color-accent-purple;
+        }
+    }
+}
