@@ -119,6 +119,7 @@ export default function KeyVisual({ compact = false }: KeyVisualProps) {
                 <img
                     src={HeaderImg ?? HEADER_URL}
                     alt="Key Visual"
+                    draggable={false}
                     style={{
                         width: "100%",
                         height: "120%",
@@ -216,6 +217,7 @@ export default function KeyVisual({ compact = false }: KeyVisualProps) {
                         src={logoImage}
                         alt="ばぶ宮ちょこみん"
                         className="hero-logo"
+                        draggable={false}
                         initial={{ scale: 0.7, opacity: 0, filter: "blur(12px)" }}
                         animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
                         transition={{ delay: 0.85, duration: 0.7, type: "spring", bounce: 0.3 }}
@@ -243,7 +245,7 @@ export default function KeyVisual({ compact = false }: KeyVisualProps) {
                         }}
                     >
                         <div className="hero-avatar-full">
-                            <img src={avatarImage} alt="ばぶ宮ちょこみん" />
+                            <img src={avatarImage} alt="ばぶ宮ちょこみん" draggable={false} />
                         </div>
                     </motion.div>
                 </motion.div>
