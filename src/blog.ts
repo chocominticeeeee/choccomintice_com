@@ -3,19 +3,55 @@
 //   src/ブログ/2026-06-23/photo.png      … その記事用の画像（md内で ![](./photo.png) と相対参照）
 // フォルダ名は必ず YYYY-MM-DD の形式。URL のスラッグも兼ねる。
 
-import { extractTitle, buildExcerpt, extractFirstImage } from "./blogMeta";
+// --- マークダウンから素のメタ情報を取り出す純粋関数 ---
+// import.meta.glob などの環境依存を持たないため、ブラウザ側だけでなく
+// ビルド時のViteプラグイン（Node, vite-plugin-blog-ogp.ts）からも利用できる。
 
-const RAW_POSTS = import.meta.glob("./ブログ/*/*.md", {
-    query: "?raw",
-    import: "default",
-    eager: true,
-}) as Record<string, string>;
+/** マークダウンの先頭の見出し1（# ...）を取り出す。無ければ null */
+export function extractTitle(markdown: string): string | null {
+    const match = markdown.match(/^\s*#\s+(.+?)\s*$/m);
+    return match ? match[1].trim() : null;
+}
+
+/** マークダウンからプレーンテキストの抜粋を作る */
+export function buildExcerpt(markdown: string, max = 120): string {
+    const text = markdown
+        .replace(/^\s*#.*$/gm, "") // 見出し行を除去
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, "") // 画像
+        .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1") // リンクはラベルだけ残す
+        .replace(/[`*_>#~-]/g, "") // 記号
+        .replace(/\s+/g, " ")
+        .trim();
+    if (text.length <= max) return text;
+    return text.slice(0, max) + "…";
+}
+
+/** マークダウン本文中の最初の画像参照のsrc（"./images/photo.png" など）を返す。無ければ null */
+export function extractFirstImage(markdown: string): string | null {
+    const match = markdown.match(/!\[[^\]]*\]\(([^)\s]+)/);
+    return match ? match[1].trim() : null;
+}
+
+// 記事本文と画像は import.meta.glob でビルド時に収集する。これは Vite アプリの
+// ビルドでのみ変換される機能なので、Node（Viteプラグイン）から本ファイルを import
+// しても実行されないよう、遅延評価（初回 getAllPosts 呼び出し時に解決）にしている。
+let RAW_POSTS_CACHE: Record<string, string> | null = null;
+function rawPosts(): Record<string, string> {
+    return (RAW_POSTS_CACHE ??= import.meta.glob("./ブログ/*/*.md", {
+        query: "?raw",
+        import: "default",
+        eager: true,
+    }) as Record<string, string>);
+}
 
 // 記事フォルダ内の画像。パス→公開URL（Viteがハッシュ付きで出力）に解決される。
-const POST_IMAGES = import.meta.glob("./ブログ/**/*.{png,jpg,jpeg,gif,webp,svg,avif}", {
-    eager: true,
-    import: "default",
-}) as Record<string, string>;
+let POST_IMAGES_CACHE: Record<string, string> | null = null;
+function postImages(): Record<string, string> {
+    return (POST_IMAGES_CACHE ??= import.meta.glob("./ブログ/**/*.{png,jpg,jpeg,gif,webp,svg,avif}", {
+        eager: true,
+        import: "default",
+    }) as Record<string, string>);
+}
 
 export interface BlogPost {
     /** フォルダ名から取った日付（YYYY-MM-DD）。URL のスラッグも兼ねる */
@@ -58,7 +94,7 @@ function formatDate(slug: string): string {
 function imagesForDir(dir: string): Record<string, string> {
     const prefix = dir + "/";
     const map: Record<string, string> = {};
-    for (const [path, url] of Object.entries(POST_IMAGES)) {
+    for (const [path, url] of Object.entries(postImages())) {
         if (!path.startsWith(prefix)) continue;
         const rel = path.slice(prefix.length); // 例: "images/photo.png"
         const base = rel.split("/").pop() ?? rel; // 例: "photo.png"
@@ -90,7 +126,7 @@ function resolveThumbnail(content: string, images: Record<string, string>): stri
 
 /** 全ブログ記事を新しい日付順（降順）で返す */
 export function getAllPosts(): BlogPost[] {
-    return Object.entries(RAW_POSTS)
+    return Object.entries(rawPosts())
         .map(([path, content]) => {
             const dir = path.slice(0, path.lastIndexOf("/"));
             const slug = slugFromDir(dir);

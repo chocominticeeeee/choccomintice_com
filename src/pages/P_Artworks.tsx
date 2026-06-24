@@ -40,7 +40,7 @@ export default function P_Artworks() {
         <>
             <KeyVisual compact />
             <main className="artworks-page">
-                <Breadcrumb items={[{ label: "イラスト" }]} />
+                <Breadcrumb items={["artworks"]} />
                 <PageHeader
                     title="イラスト"
                     emoji="🎨"

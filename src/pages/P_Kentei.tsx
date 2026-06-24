@@ -109,7 +109,7 @@ export default function P_Kentei() {
         <>
             <KeyVisual compact />
             <main className="kentei-page">
-                <Breadcrumb items={[{ label: "ちょこみん検定" }]} />
+                <Breadcrumb items={["kentei"]} />
                 <PageHeader title="ちょこみん検定" emoji="📝" description="ちょこみんのことどれくらい知ってるかな？" />
 
                 {screen === "start" && (

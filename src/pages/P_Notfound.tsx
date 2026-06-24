@@ -10,7 +10,7 @@ export default function P_Notfound() {
         <>
             <KeyVisual compact />
             <main className="notfound-page">
-                <Breadcrumb items={[{ label: "404" }]} />
+                <Breadcrumb items={["notfound"]} />
 
                 <motion.div
                     className="notfound"

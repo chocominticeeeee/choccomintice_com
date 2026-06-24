@@ -12,7 +12,7 @@
         padding: 0;
         list-style: none;
         font-family: v.$font-heading;
-        font-size: 0.8rem;
+        font-size: 0.95rem;
         font-weight: 600;
         letter-spacing: 0.04em;
     }
@@ -23,6 +23,8 @@
     }
 
     &__link {
+        display: inline-flex;
+        align-items: center;
         color: v.$color-text-sub;
         text-decoration: none;
         transition: color 0.2s ease;
@@ -33,6 +35,10 @@
         }
     }
 
+    &__home-icon {
+        display: block;
+    }
+
     &__current {
         color: v.$color-accent-pink;
     }
@@ -40,5 +46,6 @@
     &__sep {
         color: v.$color-text-light;
         user-select: none;
+        margin-inline: 5px;
     }
 }

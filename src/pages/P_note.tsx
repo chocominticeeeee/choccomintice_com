@@ -46,7 +46,7 @@ export default function P_note() {
         <>
             <KeyVisual compact />
             <main className="note-page">
-            <Breadcrumb items={[{ label: "note" }]} />
+            <Breadcrumb items={["note"]} />
             <PageHeader
                 title="note"
                 emoji="📖"
@@ -63,16 +63,17 @@ export default function P_note() {
             {!loading && !error && (
                 <div className="note-page__list">
                     {visibleArticles.map((article) => (
-                        <article key={article.key} className="note-post">
+                        <a
+                            key={article.key}
+                            href={article.noteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="note-post"
+                        >
                             {article.eyecatch && (
-                                <a
-                                    href={article.noteUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="note-post__thumb"
-                                >
+                                <div className="note-post__thumb">
                                     <img src={article.eyecatch} alt={article.name} loading="lazy" />
-                                </a>
+                                </div>
                             )}
                             <div className="note-post__body">
                                 <div className="note-post__meta">
@@ -85,16 +86,8 @@ export default function P_note() {
                                 {article.body && (
                                     <p className="note-post__excerpt">{excerpt(article.body)}</p>
                                 )}
-                                <a
-                                    href={article.noteUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="note-post__read"
-                                >
-                                    noteで読む →
-                                </a>
                             </div>
-                        </article>
+                        </a>
                     ))}
                 </div>
             )}
