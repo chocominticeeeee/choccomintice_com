@@ -1,4 +1,4 @@
-import { getAllPosts } from "../blog";
+import { getAllPosts } from "../content/blog";
 import ArticleCard from "./ArticleCard";
 
 export default function BlogSection() {

@@ -37,7 +37,7 @@ export function extractFirstImage(markdown: string): string | null {
 // しても実行されないよう、遅延評価（初回 getAllPosts 呼び出し時に解決）にしている。
 let RAW_POSTS_CACHE: Record<string, string> | null = null;
 function rawPosts(): Record<string, string> {
-    return (RAW_POSTS_CACHE ??= import.meta.glob("./ブログ/*/*.md", {
+    return (RAW_POSTS_CACHE ??= import.meta.glob("../ブログ/*/*.md", {
         query: "?raw",
         import: "default",
         eager: true,
@@ -47,7 +47,7 @@ function rawPosts(): Record<string, string> {
 // 記事フォルダ内の画像。パス→公開URL（Viteがハッシュ付きで出力）に解決される。
 let POST_IMAGES_CACHE: Record<string, string> | null = null;
 function postImages(): Record<string, string> {
-    return (POST_IMAGES_CACHE ??= import.meta.glob("./ブログ/**/*.{png,jpg,jpeg,gif,webp,svg,avif}", {
+    return (POST_IMAGES_CACHE ??= import.meta.glob("../ブログ/**/*.{png,jpg,jpeg,gif,webp,svg,avif}", {
         eager: true,
         import: "default",
     }) as Record<string, string>);

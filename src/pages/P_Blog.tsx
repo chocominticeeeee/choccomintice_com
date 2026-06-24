@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getAllPosts } from "../blog";
+import { getAllPosts } from "../content/blog";
 import KeyVisual from "../components/layout/KeyVisual";
 import PageHeader from "../components/layout/PageHeader";
 import Breadcrumb from "../components/layout/Breadcrumb";

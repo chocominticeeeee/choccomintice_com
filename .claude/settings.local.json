@@ -12,7 +12,8 @@
       "Bash(echo \"exit: $?\")",
       "PowerShell(npx tsc --noEmit -p tsconfig.json 2>&1)",
       "Bash(./node_modules/.bin/tsc.exe --noEmit -p tsconfig.json)",
-      "Bash(node ./node_modules/typescript/bin/tsc --noEmit)"
+      "Bash(node ./node_modules/typescript/bin/tsc --noEmit)",
+      "Bash(git mv *)"
     ]
   }
 }

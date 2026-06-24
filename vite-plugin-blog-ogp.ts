@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync, mkdirSync, copyFileSync, writeFileSync } from "node:fs";
 import { resolve, join, extname } from "node:path";
 import type { Plugin } from "vite";
-import { extractTitle, buildExcerpt, extractFirstImage } from "./src/blog";
+import { extractTitle, buildExcerpt, extractFirstImage } from "./src/content/blog";
 
 // ビルド時に記事ごとのOGPメタデータを dist/blog-ogp.json に書き出すViteプラグイン。
 // 併せて各記事の先頭画像を dist/blog-ogp/<slug>.<ext> へコピーし、

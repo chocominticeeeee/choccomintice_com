@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { fetchAllNoteArticles } from "../utils";
-import type { NoteArticle } from "../utils";
+import { fetchAllNoteArticles } from "../content/note";
+import type { NoteArticle } from "../content/note";
 import KeyVisual from "../components/layout/KeyVisual";
 import PageHeader from "../components/layout/PageHeader";
 import Breadcrumb from "../components/layout/Breadcrumb";

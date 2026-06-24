@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { getPostBySlug } from "../blog";
+import { getPostBySlug } from "../content/blog";
 import KeyVisual from "../components/layout/KeyVisual";
 import Breadcrumb from "../components/layout/Breadcrumb";
 import Lightbox from "../components/Lightbox";

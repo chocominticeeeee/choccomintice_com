@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { fetchNoteArticles } from "../utils";
-import type { NoteArticle } from "../utils";
+import { fetchNoteArticles } from "../content/note";
+import type { NoteArticle } from "../content/note";
 import ArticleCard from "./ArticleCard";
 
 export default function NoteSection() {
